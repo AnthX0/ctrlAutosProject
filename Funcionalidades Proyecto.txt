@@ -1,0 +1,87 @@
+- Agencia de Vehiculos -
+
+MODULO DE LICENCIAS :
+
+1.- Una persona puede solicitar una licencia siempre y cuando cumpla con los siguientes
+requisitos:
+● RFC
+● Nombre completo
+● Fecha de nacimiento
+● Teléfono
+2.- Tenga bien claro que una licencia puede ser generada con un mínimo de un año y máximo
+de 3 años de vigencia a partir de la fecha de expedición.
+3.- Dependiendo los años este será el
+monto a pagar al realizar el trámite. 
+4.- Cada persona puede solicitar varias licencias a lo largo
+del tiempo y cada una de ellas identifica a una única persona.
+
+MODULO DE PLACAS :
+
+1.-Una persona puede solicitar placas para un automóvil nuevo o usado.
+2.- Las placas deben incluir un número alfanumérico 
+de seis caracteres que las identifique utilizando el formato: 3
+letras + un guión + 3 dígitos (ej. AAA-111)
+3.- Deben incluir una fecha de emisión generada automáticamente
+al realizar el trámite
+4.- Debe incluir una fecha de recepción que se registrará cuando el automóvil cambie
+de placas.
+5.- Es posible realizar la solicitud de placas para un automóvil varias veces, pero
+solo pueden existir unas placas activas al mismo tiempo, es decir las placas activas en ese
+momento (si hubiera) deberán desactivarse.
+6.- Para automóviles nuevos:
+● El automóvil no debe haberse registrado previamente.
+● Número de serie, marca, línea, color y modelo del automóvil que permitan el registro
+del automóvil (ej. ABC-123, Honda, Civic, Negro, 2003).
+● Tener una licencia vigente que deberá poder buscarse en el sistema.
+7.- Para automóviles usados:
+● El automóvil debe haberse registrado previamente.
+● Número de placas anteriores que permitan la búsqueda del automóvil ya registrado.
+● Tener una licencia vigente que deberá poder buscarse en el sistema.
+● Es importante señalar que se debe mantener un historial de las diferentes placas
+que un automóvil ha tenido a lo largo de su vida, además de los costos que han sido
+cubiertos en dichos trámites.
+
+MODULO DE CONSULTAS :
+
+1.- Es necesario que el sistema permita buscar el historial de licencias y placas que una
+persona ha solicitado a lo largo del tiempo.
+2.- Se debe permitir buscar por CURP, por
+nombres similares de persona y por año de nacimiento.
+3.- Primero debería buscarse a las personas
+que cumplan con los criterios.
+4.- Posteriormente se deberá seleccionar a la persona
+específica de la que se desee visualizar el historial.
+
+MODULO DE REPORTES :
+
+1.- Es necesario que el sistema permita generar un “Reporte de Trámites Realizados”.
+2.- El reporte debe mostrar la fecha en que se realizó el trámite, el tipo de trámite (Expedición de
+placas, Expedición de Licencia), el nombre de la persona que lo solicitó, y el costo.
+3.- El usuario necesita poder hacer búsquedas por un periodo de
+tiempo, por tipo de trámite y por nombres similares de persona.
+4.- El reporte debe poder visualizarse dentro del sistema y de ser necesario, tener la
+opción de exportarlo a un archivo PDF para su posterior uso.
+5.- Al generar el PDF el documento debe 
+incluir en la parte de arriba el título, fecha en que se generó y números de
+página.
+6.- Como contenido del reporte se deberá incluir una tabla con los trámites realizados
+con los mismos datos explicados en el párrafo anterior.
+
+
+DATOS ADICIONALES :
+
+1.- Al no existir módulos para registrar personas, el sistema deberá incluir la posibilidad
+de hacer una inserción “masiva” de 20 registros de personas si el usuario lo solicita.
+2.- El nombre de las personas
+deben encriptarse al momento de almacenarse.
+3.- Validación de datos de entrada (por ejemplo formato y campos vacíos).
+4.- No se permita guardar información repetida (por ejemplo que existan 2 placas
+repetidas).
+5.- Validaciones lógicas (por ejemplo no pueden solicitarse placas de
+automóvil usado si no se ha registrado previamente, o una licencia no puede
+expedirse para un menor de edad).
+6.- La información debe presentarse de forma 
+legible incluyendo formatos de fechas 
+y de dinero cuando sea conveniente.
+7.- El sistema debería informar siempre de los resultados de las
+operaciones realizadas a los usuarios con mensajes claros y concisos.
