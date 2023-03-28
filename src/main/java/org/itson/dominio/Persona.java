@@ -6,12 +6,16 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  * @author Victor y Samuel
@@ -20,9 +24,10 @@ import javax.persistence.Table;
 @Table(name = "personas")
 public class Persona implements Serializable {
     //ATRIBUTOS
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
     
     @Column(name = "rfc", nullable = false, length = 20)
@@ -32,6 +37,7 @@ public class Persona implements Serializable {
     private String nombreCompleto;
     
     @Column(name = "fecha_nacimiento", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar fechaNacimiento;
     
     @Column(name = "curp", nullable = true, length = 20)
@@ -40,7 +46,13 @@ public class Persona implements Serializable {
     @Column(name = "telefono", nullable = false)
     private String telefono;
     
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, 
+        CascadeType.REMOVE})
+    @Column(name = "licencias", nullable = true)
+    private List<Licencia> licencias;
+    
     //CONSTRUCTORES
+    
     /**
      * Constructor por defecto
      */
@@ -55,7 +67,8 @@ public class Persona implements Serializable {
      * en formato dd/mm/yy
      * @param telefono Teléfono de la persona
      */
-    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, String telefono) {
+    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, 
+            String telefono) {
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
@@ -71,7 +84,8 @@ public class Persona implements Serializable {
      * @param curp CURP de la persona
      * @param telefono Teléfono de la persona
      */
-    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono) {
+    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, 
+            String curp, String telefono) {
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
@@ -79,7 +93,27 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
     /**
-     * Constructor que inicializa TODOS los atributos de la Persona
+     * Constructor que inicializa los atributos de la Persona, incluyendo
+     * la curp y las licencias
+     * @param rfc RFC de la persona
+     * @param nombreCompleto Nombre completo de la persona
+     * @param fechaNacimiento Fecha de nacimiento de la persona 
+     * en formato dd/mm/yy
+     * @param curp CURP de la persona
+     * @param telefono Teléfono de la persona
+     * @param licencias Lista de las licencias que tiene la persona
+     */
+    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, 
+            String curp, String telefono, List<Licencia> licencias) {
+        this.rfc = rfc;
+        this.nombreCompleto = nombreCompleto;
+        this.fechaNacimiento = fechaNacimiento;
+        this.curp = curp;
+        this.telefono = telefono;
+        this.licencias = licencias;
+    }
+    /**
+     * Constructor que inicializa TODOS los atributos de la clase
      * @param id Identificador de la persona
      * @param rfc RFC de la persona
      * @param nombreCompleto Nombre completo de la persona
@@ -87,16 +121,18 @@ public class Persona implements Serializable {
      * en formato dd/mm/yy
      * @param curp CURP de la persona
      * @param telefono Teléfono de la persona
+     * @param licencias Lista de las licencias que tiene la persona
      */
-    public Persona(Long id, String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono) {
+    public Persona(Long id, String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, List<Licencia> licencias) {    
         this.id = id;
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
         this.telefono = telefono;
+        this.licencias = licencias;
     }
-    
+
     //GETTERS Y SETTERS
     
     public Long getId() {
@@ -135,6 +171,12 @@ public class Persona implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    public List<Licencia> getLicencias() {
+        return licencias;
+    }
+    public void setLicencias(List<Licencia> licencias) {
+        this.licencias = licencias;
+    }
     
     //MÉTODOS DE CONSTRUCCIÓN
 
@@ -155,6 +197,7 @@ public class Persona implements Serializable {
      */
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Persona)) {
             return false;
         }
@@ -170,6 +213,6 @@ public class Persona implements Serializable {
      */
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + '}';
+        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", licencias=" + licencias + '}';
     }
 }
