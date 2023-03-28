@@ -3,12 +3,10 @@
  */
 
 package org.itson.main;
-
 /**
  * @author Victor y Samuel
  */
 public class AgenciaTransito {
-
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
