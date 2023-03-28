@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author Victor y Samuel
@@ -37,7 +38,7 @@ public class Persona implements Serializable {
     private String nombreCompleto;
     
     @Column(name = "fecha_nacimiento", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaNacimiento;
     
     @Column(name = "curp", nullable = true, length = 20)
@@ -50,6 +51,9 @@ public class Persona implements Serializable {
         CascadeType.REMOVE})
     @Column(name = "licencias", nullable = true)
     private List<Licencia> licencias;
+    
+    @OneToMany(mappedBy = "persona")
+    private List<PersonaVehiculo> vehiculosActuales;
     
     //CONSTRUCTORES
     
@@ -113,6 +117,29 @@ public class Persona implements Serializable {
         this.licencias = licencias;
     }
     /**
+     * Constructor que inicializa los atributos de la Persona, incluyendo
+     * la curp, las licencias y los vehículos actuales
+     * @param rfc RFC de la persona
+     * @param nombreCompleto Nombre completo de la persona
+     * @param fechaNacimiento Fecha de nacimiento de la persona 
+     * en formato dd/mm/yy
+     * @param curp CURP de la persona
+     * @param telefono Teléfono de la persona
+     * @param licencias Lista de las licencias que tiene la persona
+     * @param vehiculosActuales Vehículos actuales de la persona
+     */
+    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, 
+            String curp, String telefono, List<Licencia> licencias, 
+            List<PersonaVehiculo> vehiculosActuales) {
+        this.rfc = rfc;
+        this.nombreCompleto = nombreCompleto;
+        this.fechaNacimiento = fechaNacimiento;
+        this.curp = curp;
+        this.telefono = telefono;
+        this.licencias = licencias;
+        this.vehiculosActuales = vehiculosActuales;
+    }
+    /**
      * Constructor que inicializa TODOS los atributos de la clase
      * @param id Identificador de la persona
      * @param rfc RFC de la persona
@@ -122,8 +149,11 @@ public class Persona implements Serializable {
      * @param curp CURP de la persona
      * @param telefono Teléfono de la persona
      * @param licencias Lista de las licencias que tiene la persona
+     * @param vehiculosActuales Vehículos actuales de la persona
      */
-    public Persona(Long id, String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, List<Licencia> licencias) {    
+    public Persona(Long id, String rfc, String nombreCompleto, 
+            Calendar fechaNacimiento, String curp, String telefono, 
+            List<Licencia> licencias, List<PersonaVehiculo> vehiculosActuales) {
         this.id = id;
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
@@ -131,6 +161,7 @@ public class Persona implements Serializable {
         this.curp = curp;
         this.telefono = telefono;
         this.licencias = licencias;
+        this.vehiculosActuales = vehiculosActuales;
     }
 
     //GETTERS Y SETTERS
@@ -177,6 +208,12 @@ public class Persona implements Serializable {
     public void setLicencias(List<Licencia> licencias) {
         this.licencias = licencias;
     }
+    public List<PersonaVehiculo> getVehiculosActuales() {
+        return vehiculosActuales;
+    }
+    public void setVehiculosActuales(List<PersonaVehiculo> vehiculosActuales) {
+        this.vehiculosActuales = vehiculosActuales;
+    }
     
     //MÉTODOS DE CONSTRUCCIÓN
 
@@ -213,6 +250,6 @@ public class Persona implements Serializable {
      */
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", licencias=" + licencias + '}';
+        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", licencias=" + licencias + ", vehiculosActuales=" + vehiculosActuales + '}';
     }
 }

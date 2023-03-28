@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author Victor y Samuel
@@ -29,7 +30,7 @@ public class Licencia implements Serializable {
     private Long id;
     
     @Column(name = "fecha_expedicion", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaExpedicion;
     
     @Column(name = "años_vigencia", nullable = false)

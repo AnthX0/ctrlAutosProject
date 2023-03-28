@@ -5,11 +5,13 @@
 package org.itson.dominio;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,6 +42,9 @@ public class Vehiculo implements Serializable {
     @Column(name = "modelo", nullable = false)
     private Integer modelo;
     
+    @OneToMany(mappedBy = "vehiculo")
+    private List<PersonaVehiculo> antiguosDuenios;
+    
     //CONSTRUCTORES
 
     /**
@@ -49,14 +54,15 @@ public class Vehiculo implements Serializable {
     }
     /**
      * Constructor que inicializa los atributos de la clase 
-     * sin el identificador
+     * sin el identificador ni los dueños antiguos
      * @param numeroSerie Número de serie del vehículo : ABC-123
      * @param marca Marca del vehículo
      * @param linea Linea del vehículo
      * @param color Color del vehículo
      * @param modelo Año/Modelo del vehículo
      */
-    public Vehiculo(String numeroSerie, String marca, String linea, String color, Integer modelo) {
+    public Vehiculo(String numeroSerie, String marca, String linea,
+            String color, Integer modelo) {
         this.numeroSerie = numeroSerie;
         this.marca = marca;
         this.linea = linea;
@@ -64,25 +70,49 @@ public class Vehiculo implements Serializable {
         this.modelo = modelo;
     }
     /**
-     * Constructor que inicializa TODOS los valores de la clase
+     * Constructor que inicializa los atributos de la clase 
+     * sin el identificador
+     * @param numeroSerie Número de serie del vehículo : ABC-123
+     * @param marca Marca del vehículo
+     * @param linea Linea del vehículo
+     * @param color Color del vehículo
+     * @param modelo Año/Modelo del vehículo
+     * @param antiguosDuenios Antiguos dueños del vehículo
+     */
+    public Vehiculo(String numeroSerie, String marca, String linea, 
+            String color, Integer modelo, 
+            List<PersonaVehiculo> antiguosDuenios) {
+        this.numeroSerie = numeroSerie;
+        this.marca = marca;
+        this.linea = linea;
+        this.color = color;
+        this.modelo = modelo;
+        this.antiguosDuenios = antiguosDuenios;
+    }
+    /**
+     * Constructor que inicializa TODOS los atributos de la clase
      * @param id Identificador del vehículo
      * @param numeroSerie Número de serie del vehículo : ABC-123
      * @param marca Marca del vehículo
      * @param linea Linea del vehículo
      * @param color Color del vehículo
      * @param modelo Año/Modelo del vehículo
+     * @param antiguosDuenios Antiguos dueños del vehículo
      */
-    public Vehiculo(Long id, String numeroSerie, String marca, String linea, String color, Integer modelo) {
+    public Vehiculo(Long id, String numeroSerie, String marca, String linea, 
+            String color, Integer modelo, 
+            List<PersonaVehiculo> antiguosDuenios) {
         this.id = id;
         this.numeroSerie = numeroSerie;
         this.marca = marca;
         this.linea = linea;
         this.color = color;
         this.modelo = modelo;
+        this.antiguosDuenios = antiguosDuenios;
     }
-    
-    //GETTERS Y SETTERS
 
+    //GETTERS Y SETTERS
+    
     public Long getId() {
         return id;
     }
@@ -118,6 +148,12 @@ public class Vehiculo implements Serializable {
     }
     public void setModelo(Integer modelo) {
         this.modelo = modelo;
+    }
+    public List<PersonaVehiculo> getAntiguosDuenios() {
+        return antiguosDuenios;
+    }
+    public void setAntiguosDuenios(List<PersonaVehiculo> antiguosDuenios) {
+        this.antiguosDuenios = antiguosDuenios;
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
@@ -155,6 +191,6 @@ public class Vehiculo implements Serializable {
      */
     @Override
     public String toString() {
-        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", marca=" + marca + ", linea=" + linea + ", color=" + color + ", modelo=" + modelo + '}';
+        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", marca=" + marca + ", linea=" + linea + ", color=" + color + ", modelo=" + modelo + ", antiguosDuenios=" + antiguosDuenios + '}';
     }
 }
