@@ -23,11 +23,11 @@ public class AgenciaTransito {
         EntityManager em = emFactory.createEntityManager();
         //CREACIÓN OBJETO PERSONA
         Persona persona = new Persona(
-                "ABC 680524 P-76", 
-                "Manuel Pereira Ortiz", 
-                new GregorianCalendar(2013, 
-                        Calendar.SEPTEMBER,31), 
-                "6442356743");
+                "AEG 65224 P3-4", 
+                "Morsa Ortega Malas", 
+                new GregorianCalendar(2019, 
+                        Calendar.AUGUST, 21), 
+                "6441757943");
         //INICIO DE LA TRANSACCIÓN
         em.getTransaction().begin();
         em.persist(persona);

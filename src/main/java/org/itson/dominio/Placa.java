@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +37,8 @@ public class Placa extends Tramite implements Serializable {
     @Column(name = "costo", nullable = false)
     private Integer costo;
     
-    @Column(name = "id_vehiculo", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
     
     //CONSTRUCTORES

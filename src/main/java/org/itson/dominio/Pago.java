@@ -6,11 +6,17 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,8 +47,14 @@ public class Pago implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaPago;
     
-    @Column(name = "id_persona", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_persona", nullable = false) //LLAVE FORÁNEA
     private Persona persona;
+    
+    @OneToMany(mappedBy = "pago", cascade = {CascadeType.PERSIST,
+        CascadeType.REMOVE})
+    @JoinColumn(name = "tramites_pagados", nullable = true)
+    private List<Tramite> tramites;
     
     //CONSTRUCTORES
 
@@ -53,7 +65,7 @@ public class Pago implements Serializable {
     }
     /**
      * Constructor que inicializa los atributos de la clase exceptuando el
-     * identificador
+     * identificador y la lista de tramites
      * @param tipoPago Tipo de pago que se desea realizar
      * @param descripcion Descripción a detalle del pago realizado
      * @param costoTotal Costo total del pago a realizar
@@ -69,6 +81,24 @@ public class Pago implements Serializable {
         this.persona = persona;
     }
     /**
+     * Constructor que inicializa los atributos de la clase exceptuando el
+     * identificador
+     * @param tipoPago Tipo de pago que se desea realizar
+     * @param descripcion Descripción a detalle del pago realizado
+     * @param costoTotal Costo total del pago a realizar
+     * @param fechaPago Fecha en la que se realizó el pago
+     * @param persona Persona que realizó el pago
+     * @param tramites Lista de tramites pagados
+     */
+    public Pago(String tipoPago, String descripcion, Integer costoTotal, Calendar fechaPago, Persona persona, List<Tramite> tramites) {
+        this.tipoPago = tipoPago;
+        this.descripcion = descripcion;
+        this.costoTotal = costoTotal;
+        this.fechaPago = fechaPago;
+        this.persona = persona;
+        this.tramites = tramites;
+    }
+    /**
      * Constructor que inicializa TODOS los atributos de la clase
      * @param id Identificador de la clase
      * @param tipoPago Tipo de pago que se desea realizar
@@ -76,19 +106,19 @@ public class Pago implements Serializable {
      * @param costoTotal Costo total del pago a realizar
      * @param fechaPago Fecha en la que se realizó el pago
      * @param persona Persona que realizó el pago
+     * @param tramites Lista de tramites pagados
      */
-    public Pago(Long id, String tipoPago, String descripcion, 
-            Integer costoTotal, Calendar fechaPago, Persona persona) {
+    public Pago(Long id, String tipoPago, String descripcion, Integer costoTotal, Calendar fechaPago, Persona persona, List<Tramite> tramites) {
         this.id = id;
         this.tipoPago = tipoPago;
         this.descripcion = descripcion;
         this.costoTotal = costoTotal;
         this.fechaPago = fechaPago;
         this.persona = persona;
+        this.tramites = tramites;
     }
-    
-    //GETTERS Y SETTERS
 
+    //GETTERS Y SETTERS
     public Long getId() {
         return id;
     }
@@ -124,6 +154,12 @@ public class Pago implements Serializable {
     }
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+    public List<Tramite> getTramites() {
+        return tramites;
+    }
+    public void setTramites(List<Tramite> tramites) {
+        this.tramites = tramites;
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
@@ -161,6 +197,6 @@ public class Pago implements Serializable {
      */ 
     @Override
     public String toString() {
-        return "Pago{" + "id=" + id + ", tipoPago=" + tipoPago + ", descripcion=" + descripcion + ", costoTotal=" + costoTotal + ", fechaPago=" + fechaPago + ", persona=" + persona + '}';
-    }    
+        return "Pago{" + "id=" + id + ", tipoPago=" + tipoPago + ", descripcion=" + descripcion + ", costoTotal=" + costoTotal + ", fechaPago=" + fechaPago + ", persona=" + persona + ", tramites=" + tramites + '}';
+    }  
 }

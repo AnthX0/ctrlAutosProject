@@ -5,11 +5,15 @@
 package org.itson.dominio;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,6 +44,11 @@ public class Vehiculo implements Serializable {
     @Column(name = "modelo", nullable = false)
     private Integer modelo;
     
+    @OneToMany(mappedBy = "vehiculo", cascade = {CascadeType.PERSIST, 
+        CascadeType.REMOVE})
+    @JoinColumn(name = "placas_usadas", nullable = true)
+    private List<Placa> placas;
+    
     //CONSTRUCTORES
 
     /**
@@ -49,7 +58,7 @@ public class Vehiculo implements Serializable {
     }
     /**
      * Constructor que inicializa los atributos de la clase 
-     * sin el identificador ni los dueños antiguos
+     * sin el identificador ni las placas que ha tenido
      * @param numeroSerie Número de serie del vehículo : ABC-123
      * @param marca Marca del vehículo
      * @param linea Linea del vehículo
@@ -65,6 +74,24 @@ public class Vehiculo implements Serializable {
         this.modelo = modelo;
     }
     /**
+     * Constructor que inicializa los atributos de la clase 
+     * sin el identificador
+     * @param numeroSerie Número de serie del vehículo : ABC-123
+     * @param marca Marca del vehículo
+     * @param linea Linea del vehículo
+     * @param color Color del vehículo
+     * @param modelo Año/Modelo del vehículo
+     * @param placas Placas que ha tenido el vehículo
+     */
+    public Vehiculo(String numeroSerie, String marca, String linea, String color, Integer modelo, List<Placa> placas) {
+        this.numeroSerie = numeroSerie;
+        this.marca = marca;
+        this.linea = linea;
+        this.color = color;
+        this.modelo = modelo;
+        this.placas = placas;
+    }
+    /**
      * Constructor que inicializa TODOS los atributos de la clase
      * @param id Identificador del vehículo
      * @param numeroSerie Número de serie del vehículo : ABC-123
@@ -72,19 +99,19 @@ public class Vehiculo implements Serializable {
      * @param linea Linea del vehículo
      * @param color Color del vehículo
      * @param modelo Año/Modelo del vehículo
+     * @param placas Placas que ha tenido el vehículo
      */
-    public Vehiculo(Long id, String numeroSerie, String marca, String linea, 
-            String color, Integer modelo) {
+    public Vehiculo(Long id, String numeroSerie, String marca, String linea, String color, Integer modelo, List<Placa> placas) {
         this.id = id;
         this.numeroSerie = numeroSerie;
         this.marca = marca;
         this.linea = linea;
         this.color = color;
         this.modelo = modelo;
+        this.placas = placas;
     }
 
     //GETTERS Y SETTERS
-    
     public Long getId() {
         return id;
     }
@@ -120,6 +147,12 @@ public class Vehiculo implements Serializable {
     }
     public void setModelo(Integer modelo) {
         this.modelo = modelo;
+    }
+    public List<Placa> getPlacas() {
+        return placas;
+    }
+    public void setPlacas(List<Placa> placas) {
+        this.placas = placas;
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
@@ -157,6 +190,6 @@ public class Vehiculo implements Serializable {
      */
     @Override
     public String toString() {
-        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", marca=" + marca + ", linea=" + linea + ", color=" + color + ", modelo=" + modelo + '}';
+        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", marca=" + marca + ", linea=" + linea + ", color=" + color + ", modelo=" + modelo + ", placas=" + placas + '}';
     }
 }

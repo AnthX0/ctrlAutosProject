@@ -6,11 +6,15 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,6 +47,16 @@ public class Persona implements Serializable {
     
     @Column(name = "telefono", nullable = false)
     private String telefono;
+    
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, 
+        CascadeType.REMOVE})
+    @JoinColumn(name = "pagos_realizados", nullable = true)
+    private List<Pago> pagos;
+    
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, 
+        CascadeType.REMOVE})
+    @JoinColumn(name = "tramites_realizados", nullable = true)
+    private List<Tramite> tramites;
     
     //CONSTRUCTORES
     
@@ -86,27 +100,49 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
     /**
-     * Constructor que inicializa TODOS los atributos de la clase
-     * @param id Identificador de la persona
+     * Consturctor que inicializa los atributos de la clase, exceptuando la id
      * @param rfc RFC de la persona
      * @param nombreCompleto Nombre completo de la persona
      * @param fechaNacimiento Fecha de nacimiento de la persona 
      * en formato dd/mm/yy
      * @param curp CURP de la persona
      * @param telefono Teléfono de la persona
+     * @param pagos Pagos realizados por la persona
+     * @param tramites Lista de tramites realizados por la persona
      */
-    public Persona(Long id, String rfc, String nombreCompleto, 
-            Calendar fechaNacimiento, String curp, String telefono) {
+    public Persona(String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, List<Pago> pagos, List<Tramite> tramites) {    
+        this.rfc = rfc;
+        this.nombreCompleto = nombreCompleto;
+        this.fechaNacimiento = fechaNacimiento;
+        this.curp = curp;
+        this.telefono = telefono;
+        this.pagos = pagos;
+        this.tramites = tramites;
+    }
+    /**
+     * Constructor que inicializa TODOS los atributos de la clase
+     * @param id Identificador de la clase
+     * @param rfc RFC de la persona
+     * @param nombreCompleto Nombre completo de la persona
+     * @param fechaNacimiento Fecha de nacimiento de la persona 
+     * en formato dd/mm/yy
+     * @param curp CURP de la persona
+     * @param telefono Teléfono de la persona
+     * @param pagos Pagos realizados por la persona
+     * @param tramites Lista de tramites realizados por la persona
+     */
+    public Persona(Long id, String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, List<Pago> pagos, List<Tramite> tramites) {
         this.id = id;
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
         this.telefono = telefono;
+        this.pagos = pagos;
+        this.tramites = tramites;
     }
 
     //GETTERS Y SETTERS
-    
     public Long getId() {
         return id;
     }
@@ -142,6 +178,18 @@ public class Persona implements Serializable {
     }
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
+    }
+    public List<Tramite> getTramites() {
+        return tramites;
+    }
+    public void setTramites(List<Tramite> tramites) {
+        this.tramites = tramites;
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
@@ -179,6 +227,6 @@ public class Persona implements Serializable {
      */
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + '}';
-    } 
+        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", pagos=" + pagos + ", tramites=" + tramites + '}';
+    }
 }
