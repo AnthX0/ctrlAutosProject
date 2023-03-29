@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,20 +17,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "licencias")
-public class Licencia implements Serializable {
+public class Licencia extends Tramite implements Serializable {
     //ATRIBUTOS
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
     
     @Column(name = "fecha_expedicion", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaExpedicion;
     
     @Column(name = "años_vigencia", nullable = false)
-    private Integer añosVigencia;
+    private Integer aniosVigencia;
     
     @Column(name = "costo", nullable = false)
     private Integer costo;
@@ -49,7 +41,7 @@ public class Licencia implements Serializable {
     public Licencia() {
     }
     /**
-     * Constructor que inicializa los atributos de la clase sin identificador
+     * Constructor que inicializa los atributos de la clase sin id
      * @param fechaExpedicion Fecha en la que se expidió el trámite
      * @param añosVigencia Años vigentes de la licencia
      * @param costo Costo equivalente a los años y el tipo de licencia
@@ -58,35 +50,51 @@ public class Licencia implements Serializable {
     public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
             Integer costo, String tipoLicencia) {
         this.fechaExpedicion = fechaExpedicion;
-        this.añosVigencia = añosVigencia;
+        this.aniosVigencia = añosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
     }
     /**
-     * Constructor que inicializa TODOS los atributos de la clase
-     * @param id
-     * @param fechaExpedicion
-     * @param añosVigencia
-     * @param costo
-     * @param tipoLicencia
+     * Constructor que inicializa los atributos de la clase, al igual que
+     * los atributos de la clase padre Tramite, exceptuando la id
+     * @param fechaExpedicion Fecha en la que se expidió el trámite
+     * @param añosVigencia Años vigentes de la licencia
+     * @param costo Costo equivalente a los años y el tipo de licencia
+     * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
+     * @param persona Persona que realizó el trámite
+     * @param pago Pago que pertenece al trámite
      */
-    public Licencia(Long id, Calendar fechaExpedicion, Integer añosVigencia, 
-            Integer costo, String tipoLicencia) {
-        this.id = id;
+    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+            Integer costo, String tipoLicencia, Persona persona, Pago pago) {
+        super(persona, pago);
         this.fechaExpedicion = fechaExpedicion;
-        this.añosVigencia = añosVigencia;
+        this.aniosVigencia = añosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
     }
-    
+    /**
+     * Constructor que inicializa TODOS los atributos de la clase, incluyendo
+     * la clase padre Tramite
+     * @param fechaExpedicion Fecha en la que se expidió el trámite
+     * @param añosVigencia Años vigentes de la licencia
+     * @param costo Costo equivalente a los años y el tipo de licencia
+     * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
+     * @param id Identificador de la clase
+     * @param persona Persona que realizó el trámite
+     * @param pago Pago que pertenece al trámite
+     */
+    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+            Integer costo, String tipoLicencia, Long id, Persona persona, 
+            Pago pago) {
+        super(id, persona, pago);
+        this.fechaExpedicion = fechaExpedicion;
+        this.aniosVigencia = añosVigencia;
+        this.costo = costo;
+        this.tipoLicencia = tipoLicencia;
+    }
+
     //GETTERS Y SETTERS
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public Calendar getFechaExpedicion() {
         return fechaExpedicion;
     }
@@ -94,10 +102,10 @@ public class Licencia implements Serializable {
         this.fechaExpedicion = fechaExpedicion;
     }
     public Integer getAñosVigencia() {
-        return añosVigencia;
+        return aniosVigencia;
     }
     public void setAñosVigencia(Integer añosVigencia) {
-        this.añosVigencia = añosVigencia;
+        this.aniosVigencia = añosVigencia;
     }
     public Integer getCosto() {
         return costo;
@@ -113,40 +121,13 @@ public class Licencia implements Serializable {
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
-
-    /**
-     * Método hashCode
-     * @return Un hash
-     */
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-    /**
-     * Método equals
-     * @param object Objeto a comparar
-     * @return True si el objeto es de tipo Licencia, false en caso contrario
-     */
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Licencia)) {
-            return false;
-        }
-        Licencia other = (Licencia) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+    
     /**
      * Método toString
-     * @return Una cadena con los atributos de la licencia
-     */ 
+     * @return Una cadena con los atributos del trámite de licencia
+     */
     @Override
     public String toString() {
-        return "Licencia{" + "id=" + id + ", fechaExpedicion=" + fechaExpedicion + ", a\u00f1osVigencia=" + añosVigencia + ", costo=" + costo + ", tipoLicencia=" + tipoLicencia + '}';
-    }
+        return "Licencia{" + "fechaExpedicion=" + fechaExpedicion + ", aniosVigencia=" + aniosVigencia + ", costo=" + costo + ", tipoLicencia=" + tipoLicencia + '}';
+    } 
 }
