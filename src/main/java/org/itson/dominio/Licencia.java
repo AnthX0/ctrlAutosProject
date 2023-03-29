@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,10 +41,6 @@ public class Licencia implements Serializable {
     @Column(name = "tipo_licencia", nullable = false)
     private String tipoLicencia;
     
-    @ManyToOne()
-    @Column(name = "id_persona", nullable = false) //LLAVE FORÄNEA
-    private Persona persona;
-    
     //CONSTRUCTORES
 
     /**
@@ -59,14 +54,13 @@ public class Licencia implements Serializable {
      * @param añosVigencia Años vigentes de la licencia
      * @param costo Costo equivalente a los años y el tipo de licencia
      * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
-     * @param persona 
      */
-    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, Integer costo, String tipoLicencia, Persona persona) {
+    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+            Integer costo, String tipoLicencia) {
         this.fechaExpedicion = fechaExpedicion;
         this.añosVigencia = añosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
-        this.persona = persona;
     }
     /**
      * Constructor que inicializa TODOS los atributos de la clase
@@ -75,15 +69,14 @@ public class Licencia implements Serializable {
      * @param añosVigencia
      * @param costo
      * @param tipoLicencia
-     * @param persona 
      */
-    public Licencia(Long id, Calendar fechaExpedicion, Integer añosVigencia, Integer costo, String tipoLicencia, Persona persona) {
+    public Licencia(Long id, Calendar fechaExpedicion, Integer añosVigencia, 
+            Integer costo, String tipoLicencia) {
         this.id = id;
         this.fechaExpedicion = fechaExpedicion;
         this.añosVigencia = añosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
-        this.persona = persona;
     }
     
     //GETTERS Y SETTERS
@@ -117,12 +110,6 @@ public class Licencia implements Serializable {
     }
     public void setTipoLicencia(String tipoLicencia) {
         this.tipoLicencia = tipoLicencia;
-    }
-    public Persona getPersona() {
-        return persona;
-    }
-    public void setPersona(Persona persona) {
-        this.persona = persona;
     }
     
     //MÉTODOS DE CONSTRUCCIÓN
@@ -160,6 +147,6 @@ public class Licencia implements Serializable {
      */ 
     @Override
     public String toString() {
-        return "Licencia{" + "id=" + id + ", fechaExpedicion=" + fechaExpedicion + ", a\u00f1osVigencia=" + añosVigencia + ", costo=" + costo + ", tipoLicencia=" + tipoLicencia + ", persona=" + persona + '}';
+        return "Licencia{" + "id=" + id + ", fechaExpedicion=" + fechaExpedicion + ", a\u00f1osVigencia=" + añosVigencia + ", costo=" + costo + ", tipoLicencia=" + tipoLicencia + '}';
     }
 }
