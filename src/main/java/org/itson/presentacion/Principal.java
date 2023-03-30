@@ -11,7 +11,7 @@ import java.awt.Toolkit;
  * @author Victor y Samuel
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     /**
      * Este método ubica la ventana en el centro de la pantalla
      */
@@ -76,10 +76,20 @@ public class Principal extends javax.swing.JFrame {
 
         licenciaTramitesMenu.setMnemonic('o');
         licenciaTramitesMenu.setText("Licencia");
+        licenciaTramitesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                licenciaTramitesMenuActionPerformed(evt);
+            }
+        });
         tramitesMenu.add(licenciaTramitesMenu);
 
         placasTramitesMenu.setMnemonic('s');
         placasTramitesMenu.setText("Placas");
+        placasTramitesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placasTramitesMenuActionPerformed(evt);
+            }
+        });
         tramitesMenu.add(placasTramitesMenu);
 
         menuBar.add(tramitesMenu);
@@ -89,6 +99,11 @@ public class Principal extends javax.swing.JFrame {
 
         licenciasConsultasMenu.setMnemonic('t');
         licenciasConsultasMenu.setText("Licencias");
+        licenciasConsultasMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                licenciasConsultasMenuActionPerformed(evt);
+            }
+        });
         consultasMenu.add(licenciasConsultasMenu);
 
         placasConsultasMenu.setMnemonic('y');
@@ -125,6 +140,21 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void licenciaTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciaTramitesMenuActionPerformed
+        Tramites tramites = new Tramites("Trámitar licencia");
+        tramites.setVisible(true);
+    }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
+
+    private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
+        Consultas consultas = new Consultas();
+        consultas.setVisible(true);
+    }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
+
+    private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
+        Tramites tramites = new Tramites("Trámitar placas");
+        tramites.setVisible(true);
+    }//GEN-LAST:event_placasTramitesMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu consultasMenu;

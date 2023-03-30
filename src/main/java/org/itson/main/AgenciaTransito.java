@@ -6,8 +6,8 @@ package org.itson.main;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import org.itson.control.ControlLicencias;
 import org.itson.dominio.Persona;
+import org.itson.presentacion.Principal;
 
 /**
  * @author Victor y Samuel
@@ -30,7 +30,9 @@ public class AgenciaTransito {
 //        em.getTransaction().begin();
 //        em.persist(persona);
 //        em.getTransaction().commit();
-        ControlLicencias ctrlLicencias = new ControlLicencias();
-        ctrlLicencias.solicitarLicencia(persona);
+//        ControlLicencias ctrlLicencias = new ControlLicencias();
+//        ctrlLicencias.solicitarLicencia(persona);
+        Principal p = new Principal();
+        p.setVisible(true);
     }
 }

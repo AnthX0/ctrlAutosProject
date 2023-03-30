@@ -9,12 +9,36 @@ package org.itson.presentacion;
  * @author atrap
  */
 public class Tramites extends javax.swing.JFrame {
+    StringBuffer SB;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites() {
+    public Tramites(String title) {
+        super(title);
         initComponents();
+    }
+
+    private void definirPrecio() {
+        if(cbxVigencia.getSelectedIndex() == 0 || cbxTipo.getSelectedIndex() == 0) {
+            txtPrecio.setText("");
+        }
+        
+        if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 1) {
+            txtPrecio.setText("$" + 600);
+        }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 1) {
+            txtPrecio.setText("$" + 900);
+        }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 1) {
+            txtPrecio.setText("$" + 1100);
+        }
+        
+        if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 2) {
+            txtPrecio.setText("$" + 200);
+        }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 2) {
+            txtPrecio.setText("$" + 500);
+        }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 2) {
+            txtPrecio.setText("$" + 700);
+        }
     }
 
     /**
@@ -40,7 +64,6 @@ public class Tramites extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Tramites");
         setResizable(false);
 
         txtPrecio.setEditable(false);
@@ -52,6 +75,11 @@ public class Tramites extends javax.swing.JFrame {
         lblVehiculo.setText("Vehiculo");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------" }));
 
@@ -60,10 +88,20 @@ public class Tramites extends javax.swing.JFrame {
         lblVigencia.setText("Vigencia");
 
         cbxVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------", "1 año", "2 años", "3 años" }));
+        cbxVigencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxVigenciaActionPerformed(evt);
+            }
+        });
 
         lblTipo.setText("Tipo de licencia");
 
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------------------", "Normal", "Discapacitados" }));
+        cbxTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTipoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Precio");
 
@@ -73,33 +111,32 @@ public class Tramites extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTramitar))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblCliente)
-                            .addGap(21, 21, 21)
-                            .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblVehiculo)
-                            .addGap(12, 12, 12)
-                            .addComponent(cbxVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblVigencia)
-                            .addGap(12, 12, 12)
-                            .addComponent(cbxVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblTipo)
-                            .addGap(6, 6, 6)
-                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCliente)
+                        .addGap(21, 21, 21)
+                        .addComponent(cbxCliente, 0, 190, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblVehiculo)
+                        .addGap(12, 12, 12)
+                        .addComponent(cbxVehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblVigencia)
+                        .addGap(12, 12, 12)
+                        .addComponent(cbxVigencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addGap(57, 57, 57)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTipo))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPrecio))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +180,22 @@ public class Tramites extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbxVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxVigenciaActionPerformed
+        if(cbxTipo.getSelectedIndex() != 0) {
+            definirPrecio();
+        }
+    }//GEN-LAST:event_cbxVigenciaActionPerformed
+
+    private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
+        if(cbxVigencia.getSelectedIndex() != 0) {
+            definirPrecio();
+        }
+    }//GEN-LAST:event_cbxTipoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
