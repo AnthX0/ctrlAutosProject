@@ -5,7 +5,6 @@
     <class>org.itson.dominio.Persona</class>
     <class>org.itson.dominio.Licencia</class>
     <class>org.itson.dominio.Vehiculo</class>
-    <class>org.itson.dominio.PersonaVehiculo</class>
     <class>org.itson.dominio.Pago</class>
     <class>org.itson.dominio.Tramite</class>
     <class>org.itson.dominio.Placa</class>

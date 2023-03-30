@@ -33,7 +33,7 @@ public class Tramite implements Serializable {
     private Persona persona;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_pago", nullable = false)
+    @JoinColumn(name = "id_pago", nullable = true)
     private Pago pago;
     
     //CONSTRUCTORES
@@ -42,6 +42,13 @@ public class Tramite implements Serializable {
      * Constructor por default
      */
     public Tramite() {
+    }
+    /**
+     * Constructor que inicializa el atributo de persona
+     * @param persona Persona que realizó el trámite
+     */
+    public Tramite(Persona persona) {
+        this.persona = persona;
     }
     /**
      * Constructor que inicializa los atributos de la clase exceptuando
