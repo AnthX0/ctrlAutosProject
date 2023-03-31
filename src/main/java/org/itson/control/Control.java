@@ -6,6 +6,7 @@ package org.itson.control;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,12 +21,11 @@ import org.itson.presentacion.Tramites;
 public class Control {
     //ATRIBUTOS
     
-    
-//    Scanner tec = new Scanner(System.in);
-//    EntityManagerFactory emFactory = 
-//        Persistence.createEntityManagerFactory
-//                ("org.itson_AgenciaTransito");
-//    EntityManager em = emFactory.createEntityManager();
+    Scanner tec = new Scanner(System.in);
+    EntityManagerFactory emFactory = 
+        Persistence.createEntityManagerFactory
+                ("org.itson_AgenciaTransito");
+    EntityManager em = emFactory.createEntityManager();
     
     //MÉTODOS
     
@@ -70,9 +70,6 @@ public class Control {
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
         DefaultComboBoxModel<String> personas = null;
-        
-        
-        
         tramites = new Tramites("Trámitar licencia", personas);
     }
     
@@ -80,7 +77,6 @@ public class Control {
         Tramites tramites;
         DefaultComboBoxModel<String> personas = null;
         DefaultComboBoxModel<String> vehiculos = null;
-        
         tramites = new Tramites("Trámitar placas", personas, vehiculos);
     }
     
@@ -88,8 +84,6 @@ public class Control {
      * Este método inserta 20 personas en una sola interacción
      */
     public void insercionMasiva() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.itson_AgenciaTransito");
-        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         Persona p1 = new Persona("GUGE751125MRGRA0PTR25", "Ethan Gutierrez Mallorca", new GregorianCalendar(1975, Calendar.NOVEMBER, 25),"GUGE751125MRGRA0", "6448476525");
         Persona p2 = new Persona("MAPM800508PTMER4MNA1P", "Magdiel Perez Martinez", new GregorianCalendar(1980, Calendar.MAY, 8), "MAPM800508PTMER4", "6444658475");
