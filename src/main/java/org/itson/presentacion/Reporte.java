@@ -5,8 +5,7 @@
 package org.itson.presentacion;
 
 /**
- *
- * @author atrap
+ * @author Victor y Samuel
  */
 public class Reporte extends javax.swing.JFrame {
 

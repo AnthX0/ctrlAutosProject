@@ -5,8 +5,7 @@
 package org.itson.presentacion;
 
 /**
- *
- * @author atrap
+ * @author Victor y Samuel
  */
 public class Tramites extends javax.swing.JFrame {
     StringBuffer SB;
@@ -172,7 +171,7 @@ public class Tramites extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTramitar)
                     .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
