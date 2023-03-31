@@ -4,18 +4,42 @@
  */
 package org.itson.presentacion;
 
+import java.awt.Dimension;
+import javax.swing.DefaultComboBoxModel;
+
+
 /**
  * @author Victor y Samuel
  */
 public class Tramites extends javax.swing.JFrame {
-    StringBuffer SB;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(String title) {
+    public Tramites(String title, DefaultComboBoxModel personas) {
         super(title);
         initComponents();
+        
+        lblVehiculo.setVisible(false);
+        cbxVehiculo.setVisible(false);
+        
+        setSize(new Dimension(260, 205));
+        setVisible(true);
+    }
+    
+    public Tramites(String title, DefaultComboBoxModel personas, DefaultComboBoxModel vehiculos) {
+        super(title);
+        initComponents();
+        
+        lblVigencia.setVisible(false);
+        cbxVigencia.setVisible(false);
+        lblTipo.setVisible(false);
+        cbxTipo.setVisible(false);
+        lblPrecio.setVisible(false);
+        txtPrecio.setVisible(false);
+        
+        setSize(new Dimension(260, 165));
+        setVisible(true);
     }
 
     private void definirPrecio() {
@@ -60,7 +84,7 @@ public class Tramites extends javax.swing.JFrame {
         cbxVigencia = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
         cbxTipo = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -102,7 +126,7 @@ public class Tramites extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Precio");
+        lblPrecio.setText("Precio");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,7 +153,7 @@ public class Tramites extends javax.swing.JFrame {
                         .addComponent(cbxVigencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(lblPrecio)
                             .addComponent(lblTipo))
                         .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +192,7 @@ public class Tramites extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
+                        .addComponent(lblPrecio))
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,8 +227,8 @@ public class Tramites extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JComboBox<String> cbxVehiculo;
     private javax.swing.JComboBox<String> cbxVigencia;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblVehiculo;
     private javax.swing.JLabel lblVigencia;
