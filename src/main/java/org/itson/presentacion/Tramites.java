@@ -12,33 +12,61 @@ import javax.swing.DefaultComboBoxModel;
  * @author Victor y Samuel
  */
 public class Tramites extends javax.swing.JFrame {
+    private DefaultComboBoxModel personas;
+    private int tipo;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(String title, DefaultComboBoxModel personas) {
+    public Tramites(String title, DefaultComboBoxModel personas, int tipo) {
         super(title);
+        this.personas = personas;
+        this.tipo = tipo;
+        
         initComponents();
         
-        lblVehiculo.setVisible(false);
-        cbxVehiculo.setVisible(false);
+        if(tipo == ConstantesGUI.LICENCIA) {
+            lblRegistro.setVisible(false);
+            lblSerie.setVisible(false);
+            txtSerie.setVisible(false);
+            lblMarca.setVisible(false);
+            txtMarca.setVisible(false);
+            lblLinea.setVisible(false);
+            txtLinea.setVisible(false);
+            lblColor.setVisible(false);
+            txtColor.setVisible(false);
+            lblModelo.setVisible(false);
+            txtModelo.setVisible(false);
+            lblCosto.setVisible(false);
+            txtCosto.setVisible(false);
+            
+            setSize(new Dimension(260, 205));
+        }
         
-        setSize(new Dimension(260, 205));
-        setVisible(true);
-    }
-    
-    public Tramites(String title, DefaultComboBoxModel personas, DefaultComboBoxModel vehiculos) {
-        super(title);
-        initComponents();
+        if(tipo == ConstantesGUI.PLACA_NUEVO) {
+            lblVigencia.setVisible(false);
+            cbxVigencia.setVisible(false);
+            lblTipo.setVisible(false);
+            cbxTipo.setVisible(false);
+            lblPrecio.setVisible(false);
+            txtPrecio.setVisible(false);
+            
+            txtCosto.setText("$1500");
+            setSize(new Dimension(260, 296));
+        }
         
-        lblVigencia.setVisible(false);
-        cbxVigencia.setVisible(false);
-        lblTipo.setVisible(false);
-        cbxTipo.setVisible(false);
-        lblPrecio.setVisible(false);
-        txtPrecio.setVisible(false);
+        if(tipo == ConstantesGUI.PLACA_USADO) {
+            lblVigencia.setVisible(false);
+            cbxVigencia.setVisible(false);
+            lblTipo.setVisible(false);
+            cbxTipo.setVisible(false);
+            lblPrecio.setVisible(false);
+            txtPrecio.setVisible(false);
+            
+            txtCosto.setText("$1000");
+            setSize(new Dimension(260, 296));
+        }
         
-        setSize(new Dimension(260, 165));
         setVisible(true);
     }
 
@@ -76,15 +104,26 @@ public class Tramites extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         btnTramitar = new javax.swing.JButton();
         lblCliente = new javax.swing.JLabel();
-        lblVehiculo = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         cbxCliente = new javax.swing.JComboBox<>();
-        cbxVehiculo = new javax.swing.JComboBox<>();
         lblVigencia = new javax.swing.JLabel();
         cbxVigencia = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
         cbxTipo = new javax.swing.JComboBox<>();
         lblPrecio = new javax.swing.JLabel();
+        lblRegistro = new javax.swing.JLabel();
+        lblSerie = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblLinea = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        lblCosto = new javax.swing.JLabel();
+        txtSerie = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
+        txtLinea = new javax.swing.JTextField();
+        txtColor = new javax.swing.JTextField();
+        txtModelo = new javax.swing.JTextField();
+        txtCosto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -95,8 +134,6 @@ public class Tramites extends javax.swing.JFrame {
 
         lblCliente.setText("Cliente");
 
-        lblVehiculo.setText("Vehiculo");
-
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,8 +142,6 @@ public class Tramites extends javax.swing.JFrame {
         });
 
         cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------" }));
-
-        cbxVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------" }));
 
         lblVigencia.setText("Vigencia");
 
@@ -128,38 +163,88 @@ public class Tramites extends javax.swing.JFrame {
 
         lblPrecio.setText("Precio");
 
+        lblRegistro.setText("Registro de Vehículo");
+
+        lblSerie.setText("N. Serie");
+
+        lblMarca.setText("Marca");
+
+        lblLinea.setText("Línea");
+
+        lblColor.setText("Color");
+
+        lblModelo.setText("Modelo");
+
+        lblCosto.setText("Costo");
+
+        txtCosto.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTramitar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCliente)
-                        .addGap(21, 21, 21)
-                        .addComponent(cbxCliente, 0, 190, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblVehiculo)
-                        .addGap(12, 12, 12)
-                        .addComponent(cbxVehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblVigencia)
-                        .addGap(12, 12, 12)
-                        .addComponent(cbxVigencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPrecio)
-                            .addComponent(lblTipo))
-                        .addGap(8, 8, 8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTramitar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCliente)
+                                .addGap(21, 21, 21)
+                                .addComponent(cbxCliente, 0, 190, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblVigencia)
+                                .addGap(12, 12, 12)
+                                .addComponent(cbxVigencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPrecio)
+                                    .addComponent(lblTipo))
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPrecio)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(lblRegistro)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblSerie)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSerie))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrecio))))
+                            .addComponent(lblMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMarca)
+                            .addComponent(txtLinea)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblModelo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(txtColor))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCosto)
+                                    .addComponent(txtModelo))))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,13 +255,7 @@ public class Tramites extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addComponent(lblCliente))
                     .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(lblVehiculo))
-                    .addComponent(cbxVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -195,10 +274,36 @@ public class Tramites extends javax.swing.JFrame {
                         .addComponent(lblPrecio))
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblRegistro)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSerie)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMarca)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLinea)
+                    .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblColor)
+                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblModelo)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCosto)
+                    .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTramitar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -225,13 +330,24 @@ public class Tramites extends javax.swing.JFrame {
     private javax.swing.JButton btnTramitar;
     private javax.swing.JComboBox<String> cbxCliente;
     private javax.swing.JComboBox<String> cbxTipo;
-    private javax.swing.JComboBox<String> cbxVehiculo;
     private javax.swing.JComboBox<String> cbxVigencia;
     private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblColor;
+    private javax.swing.JLabel lblCosto;
+    private javax.swing.JLabel lblLinea;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblRegistro;
+    private javax.swing.JLabel lblSerie;
     private javax.swing.JLabel lblTipo;
-    private javax.swing.JLabel lblVehiculo;
     private javax.swing.JLabel lblVigencia;
+    private javax.swing.JTextField txtColor;
+    private javax.swing.JTextField txtCosto;
+    private javax.swing.JTextField txtLinea;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables
 }

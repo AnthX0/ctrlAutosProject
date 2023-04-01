@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import org.itson.dominio.Persona;
+import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
 /**
@@ -70,14 +71,13 @@ public class Control {
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
         DefaultComboBoxModel<String> personas = null;
-        tramites = new Tramites("Trámitar licencia", personas);
+        tramites = new Tramites("Trámitar licencia", personas, ConstantesGUI.LICENCIA);
     }
     
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
         DefaultComboBoxModel<String> personas = null;
-        DefaultComboBoxModel<String> vehiculos = null;
-        tramites = new Tramites("Trámitar placas", personas, vehiculos);
+        tramites = new Tramites("Trámitar placas", personas, ConstantesGUI.PLACA_NUEVO);
     }
     
     /**
