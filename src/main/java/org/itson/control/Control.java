@@ -27,8 +27,7 @@ import org.itson.presentacion.Tramites;
 public class Control {
     //ATRIBUTOS
     
-    Scanner tec = new Scanner(System.in);
-    Conversiones c;
+    Conversiones c = new Conversiones();
     EntityManagerFactory emFactory = 
         Persistence.createEntityManagerFactory
                 ("org.itson_AgenciaTransito");
