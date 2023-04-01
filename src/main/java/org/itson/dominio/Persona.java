@@ -191,7 +191,7 @@ public class Persona implements Serializable {
     public void setTramites(List<Tramite> tramites) {
         this.tramites = tramites;
     }
-    
+
     //MÉTODOS DE CONSTRUCCIÓN
 
     /**
@@ -227,6 +227,6 @@ public class Persona implements Serializable {
      */
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", pagos=" + pagos + ", tramites=" + tramites + '}';
+        return nombreCompleto;
     }
 }

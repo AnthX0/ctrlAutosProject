@@ -9,6 +9,7 @@ package org.itson.presentacion;
  */
 public class ConstantesGUI {
     public static int LICENCIA = 0;
-    public static int PLACA_NUEVO = 1;
-    public static int PLACA_USADO = 2;
+    public static int PLACA = 1;
+    public static int PLACA_NUEVO = 2;
+    public static int PLACA_USADO = 3;
 }

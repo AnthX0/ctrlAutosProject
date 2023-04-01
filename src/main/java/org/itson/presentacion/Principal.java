@@ -6,19 +6,23 @@ package org.itson.presentacion;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.itson.control.Control;
-import org.itson.dominio.Persona;
 
 /**
  * @author Victor y Samuel
  */
 public class Principal extends javax.swing.JFrame {
+    private javax.swing.JTable tabla;
     Control control = new Control();
+
+
+    /**
+     * Creates new form Principal
+     */
+    public Principal() {
+        initComponents();
+        centraVentana();
+    }
 
     /**
      * Este método ubica la ventana en el centro de la pantalla
@@ -37,14 +41,6 @@ public class Principal extends javax.swing.JFrame {
         }
         
         setLocation((screenSize.height - frameSize.height)/2, (screenSize.width - frameSize.width)/2);
-    }
-
-    /**
-     * Creates new form Principal
-     */
-    public Principal() {
-        initComponents();
-        centraVentana();
     }
 
     /**
