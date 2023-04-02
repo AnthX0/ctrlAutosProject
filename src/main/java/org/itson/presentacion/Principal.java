@@ -47,7 +47,7 @@ public class Principal extends javax.swing.JFrame {
     public void despliegaTabla(Tabla t) {
         tabla = new javax.swing.JTable(t.getModeloTabla());
         
-        tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         tabla.setAutoscrolls(false);
         
         jScrollPane1.setViewportView(tabla);

@@ -4,6 +4,7 @@
  */
 package org.itson.control;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,7 @@ public class Conversiones {
     private String nombresColumTablasPersonas[] = {"Id", "Nombre Completo", "Fecha de Nacimiento", "CURP", "RFC", "Teléfono"};
     
     public DefaultTableModel personasTableModel(List<Persona> personas) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
         Object tabla[][];
         
         if(personas != null) {
@@ -24,7 +26,7 @@ public class Conversiones {
                 Persona p = personas.get(i);
                 tabla[i][0] = p.getId();
                 tabla[i][1] = p.getNombreCompleto();
-                tabla[i][2] = p.getFechaNacimiento();
+                tabla[i][2] = sdf.format(p.getFechaNacimiento().getTime());
                 tabla[i][3] = p.getCurp();
                 tabla[i][4] = p.getRfc();
                 tabla[i][5] = p.getTelefono();
