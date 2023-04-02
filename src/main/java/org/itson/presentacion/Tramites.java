@@ -34,23 +34,21 @@ public class Tramites extends javax.swing.JFrame {
         
         initComponents();
         
-        if(tipo == ConstantesGUI.LICENCIA) {
-            lblRegistro.setVisible(false);
-            lblSerie.setVisible(false);
-            txtSerie.setVisible(false);
-            lblMarca.setVisible(false);
-            txtMarca.setVisible(false);
-            lblLinea.setVisible(false);
-            txtLinea.setVisible(false);
-            lblColor.setVisible(false);
-            txtColor.setVisible(false);
-            lblModelo.setVisible(false);
-            txtModelo.setVisible(false);
-            lblCosto.setVisible(false);
-            txtCosto.setVisible(false);
+        lblRegistro.setVisible(false);
+        lblSerie.setVisible(false);
+        txtSerie.setVisible(false);
+        lblMarca.setVisible(false);
+        txtMarca.setVisible(false);
+        lblLinea.setVisible(false);
+        txtLinea.setVisible(false);
+        lblColor.setVisible(false);
+        txtColor.setVisible(false);
+        lblModelo.setVisible(false);
+        txtModelo.setVisible(false);
+        lblCosto.setVisible(false);
+        txtCosto.setVisible(false);
             
-            setSize(new Dimension(300, 205));
-        }
+        setSize(new Dimension(300, 205));
         
         centrarVentana(frame);
         setVisible(true);
@@ -61,18 +59,18 @@ public class Tramites extends javax.swing.JFrame {
         this.personas = personas;
         this.placa = placa;
         
-        if(tipo == ConstantesGUI.PLACA) {
-            lblVigencia.setVisible(false);
-            cbxVigencia.setVisible(false);
-            lblTipo.setVisible(false);
-            cbxTipo.setVisible(false);
-            lblPrecio.setVisible(false);
-            txtPrecio.setVisible(false);
-            
-            btnTramitar.setText("Buscar");
-            
-            setSize(new Dimension(300, 296));
-        }
+        initComponents();
+        
+        lblVigencia.setVisible(false);
+        cbxVigencia.setVisible(false);
+        lblTipo.setVisible(false);
+        cbxTipo.setVisible(false);
+        lblPrecio.setVisible(false);
+        txtPrecio.setVisible(false);
+        
+        btnTramitar.setText("Buscar");
+        
+        setSize(new Dimension(300, 296));
         
         centrarVentana(frame);
         setVisible(true);
@@ -125,6 +123,10 @@ public class Tramites extends javax.swing.JFrame {
         Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
         
         return new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+    }
+    
+    private Placa obtenerDatosPlaca() {
+        return new Placa();
     }
 
     private void setTipo(int tipo) {

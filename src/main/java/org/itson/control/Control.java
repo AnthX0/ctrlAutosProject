@@ -85,8 +85,11 @@ public class Control {
         
         tramites = new Tramites(frame, "Trámitar licencia", personas, licencia);
         
-        em.getTransaction().begin();
-        em.getTransaction().commit();
+        if(licencia != null) {
+            em.getTransaction().begin();
+            em.persist(licencia);
+            em.getTransaction().commit();
+        }
     }
     
     public void solicitarPlacas(JFrame frame) {
