@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Placa;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
@@ -92,10 +93,10 @@ public class Control {
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
         StringBuffer respuesta = new StringBuffer("");
-        Licencia licencia = null;
+        Placa placa = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
-        tramites = new Tramites(frame, "Trámitar placas", personas, licencia, ConstantesGUI.PLACA, respuesta);
+        tramites = new Tramites(frame, "Trámitar placas", personas, placa, ConstantesGUI.PLACA, respuesta);
     }
     
     /**

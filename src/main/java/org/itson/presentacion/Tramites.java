@@ -55,6 +55,17 @@ public class Tramites extends javax.swing.JFrame {
             setSize(new Dimension(300, 205));
         }
         
+        centrarVentana(frame);
+        setVisible(true);
+    }
+
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa, int tipo, StringBuffer respuesta) {
+        super(title);
+        this.personas = personas;
+        this.placa = placa;
+        this.respuesta = respuesta;
+        this.tipo = tipo;
+        
         if(tipo == ConstantesGUI.PLACA) {
             lblVigencia.setVisible(false);
             cbxVigencia.setVisible(false);
@@ -70,13 +81,6 @@ public class Tramites extends javax.swing.JFrame {
         
         centrarVentana(frame);
         setVisible(true);
-    }
-    
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa, int tipo) {
-        super(title);
-        this.personas = personas;
-        this.placa = placa;
-        this.tipo = tipo;
     }
 
     private void definirPrecio() {
@@ -392,6 +396,8 @@ public class Tramites extends javax.swing.JFrame {
         if(tipo == ConstantesGUI.PLACA && !txtSerie.getText().equals("")) {
             
         }
+        
+        dispose();
     }//GEN-LAST:event_btnTramitarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
