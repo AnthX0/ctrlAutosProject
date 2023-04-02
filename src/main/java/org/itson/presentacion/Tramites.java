@@ -20,7 +20,6 @@ import org.itson.dominio.Placa;
  */
 public class Tramites extends javax.swing.JFrame {
     private DefaultComboBoxModel personas;
-    private StringBuffer respuesta;
     private Licencia licencia;
     private Placa placa;
     private int tipo;
@@ -28,12 +27,10 @@ public class Tramites extends javax.swing.JFrame {
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia, int tipo, StringBuffer respuesta) {
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia) {
         super(title);
         this.personas = personas;
-        this.respuesta = respuesta;
         this.licencia = licencia;
-        this.tipo = tipo;
         
         initComponents();
         
@@ -59,12 +56,10 @@ public class Tramites extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa, int tipo, StringBuffer respuesta) {
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa) {
         super(title);
         this.personas = personas;
         this.placa = placa;
-        this.respuesta = respuesta;
-        this.tipo = tipo;
         
         if(tipo == ConstantesGUI.PLACA) {
             lblVigencia.setVisible(false);
