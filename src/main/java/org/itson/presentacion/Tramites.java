@@ -10,7 +10,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultComboBoxModel;
 import org.itson.dominio.Licencia;
+import org.itson.dominio.Pago;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Placa;
 
 
 /**
@@ -18,14 +20,17 @@ import org.itson.dominio.Persona;
  */
 public class Tramites extends javax.swing.JFrame {
     private DefaultComboBoxModel personas;
+    private Licencia licencia;
+    private Placa placa;
     private int tipo;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, int tipo) {
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia, int tipo) {
         super(title);
         this.personas = personas;
+        this.licencia = licencia;
         this.tipo = tipo;
         
         initComponents();
@@ -63,6 +68,13 @@ public class Tramites extends javax.swing.JFrame {
         
         centrarVentana(frame);
         setVisible(true);
+    }
+    
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa, int tipo) {
+        super(title);
+        this.personas = personas;
+        this.placa = placa;
+        this.tipo = tipo;
     }
 
     private void definirPrecio() {
@@ -102,7 +114,7 @@ public class Tramites extends javax.swing.JFrame {
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
-    
+
     private void setTipo(int tipo) {
         this.tipo = tipo;
     }
@@ -362,7 +374,9 @@ public class Tramites extends javax.swing.JFrame {
             Integer costo = Integer.parseInt(txtPrecio.getText());
             String tipoLicencia = (String) cbxTipo.getSelectedItem();
             Persona persona = (Persona) cbxCliente.getSelectedItem();
-            Integer pago = Integer.parseInt(txtPrecio.getText());
+            Pago pago = new Pago("Efectivo", "Compra de una licencia", costo, fechaExpedicion, persona);
+            
+            licencia = new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
         }
         
         if(tipo == ConstantesGUI.PLACA) {

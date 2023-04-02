@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
@@ -78,20 +79,22 @@ public class Control {
      */
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
+        Licencia licencia = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
-        tramites = new Tramites(frame, "Trámitar licencia", personas, ConstantesGUI.LICENCIA);
+        tramites = new Tramites(frame, "Trámitar licencia", personas, licencia, ConstantesGUI.LICENCIA);
         
         em.getTransaction().begin();
-        
+        em.persist(licencia);
         em.getTransaction().commit();
     }
     
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
+        Licencia licencia = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
-        tramites = new Tramites(frame, "Trámitar placas", personas, ConstantesGUI.PLACA);
+        tramites = new Tramites(frame, "Trámitar placas", personas, licencia, ConstantesGUI.PLACA);
     }
     
     /**
