@@ -6,7 +6,11 @@ package org.itson.presentacion;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.DefaultComboBoxModel;
+import org.itson.dominio.Licencia;
+import org.itson.dominio.Persona;
 
 
 /**
@@ -67,25 +71,25 @@ public class Tramites extends javax.swing.JFrame {
         }
         
         if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 1) {
-            txtPrecio.setText("$" + 600);
+            txtPrecio.setText("600");
         }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 1) {
-            txtPrecio.setText("$" + 900);
+            txtPrecio.setText("900");
         }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 1) {
-            txtPrecio.setText("$" + 1100);
+            txtPrecio.setText("1100");
         }
         
         if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 2) {
-            txtPrecio.setText("$" + 200);
+            txtPrecio.setText("200");
         }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 2) {
-            txtPrecio.setText("$" + 500);
+            txtPrecio.setText("500");
         }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 2) {
-            txtPrecio.setText("$" + 700);
+            txtPrecio.setText("700");
         }
         
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
-            txtCosto.setText("$1500");
+            txtCosto.setText("1500");
         }else if(tipo == ConstantesGUI.PLACA_USADO) {
-            txtCosto.setText("$1000");
+            txtCosto.setText("1000");
         }
     }
 
@@ -163,7 +167,7 @@ public class Tramites extends javax.swing.JFrame {
 
         lblVigencia.setText("Vigencia");
 
-        cbxVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------", "1 año", "2 años", "3 años" }));
+        cbxVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         cbxVigencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxVigenciaActionPerformed(evt);
@@ -172,7 +176,7 @@ public class Tramites extends javax.swing.JFrame {
 
         lblTipo.setText("Tipo de licencia");
 
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------------------", "Normal", "Discapacitados" }));
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Discapacitados" }));
         cbxTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTipoActionPerformed(evt);
@@ -353,7 +357,12 @@ public class Tramites extends javax.swing.JFrame {
 
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
         if(tipo == ConstantesGUI.LICENCIA) {
-            
+            Calendar fechaExpedicion = new GregorianCalendar();
+            Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
+            Integer costo = Integer.parseInt(txtPrecio.getText());
+            String tipoLicencia = (String) cbxTipo.getSelectedItem();
+            Persona persona = (Persona) cbxCliente.getSelectedItem();
+            Integer pago = Integer.parseInt(txtPrecio.getText());
         }
         
         if(tipo == ConstantesGUI.PLACA) {

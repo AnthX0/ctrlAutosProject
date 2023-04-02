@@ -43,14 +43,14 @@ public class Licencia extends Tramite implements Serializable {
     /**
      * Constructor que inicializa los atributos de la clase sin id
      * @param fechaExpedicion Fecha en la que se expidió el trámite
-     * @param añosVigencia Años vigentes de la licencia
+     * @param aniosVigencia Años vigentes de la licencia
      * @param costo Costo equivalente a los años y el tipo de licencia
      * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
      */
-    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+    public Licencia(Calendar fechaExpedicion, Integer aniosVigencia, 
             Integer costo, String tipoLicencia) {
         this.fechaExpedicion = fechaExpedicion;
-        this.aniosVigencia = añosVigencia;
+        this.aniosVigencia = aniosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
     }
@@ -58,17 +58,17 @@ public class Licencia extends Tramite implements Serializable {
      * Constructor que inicializa los atributos de la clase, al igual que
      * los atributos de la clase padre Tramite, exceptuando la id
      * @param fechaExpedicion Fecha en la que se expidió el trámite
-     * @param añosVigencia Años vigentes de la licencia
+     * @param aniosVigencia Años vigentes de la licencia
      * @param costo Costo equivalente a los años y el tipo de licencia
      * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
      * @param persona Persona que realizó el trámite
      * @param pago Pago que pertenece al trámite
      */
-    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+    public Licencia(Calendar fechaExpedicion, Integer aniosVigencia, 
             Integer costo, String tipoLicencia, Persona persona, Pago pago) {
         super(persona, pago);
         this.fechaExpedicion = fechaExpedicion;
-        this.aniosVigencia = añosVigencia;
+        this.aniosVigencia = aniosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
     }
@@ -76,19 +76,19 @@ public class Licencia extends Tramite implements Serializable {
      * Constructor que inicializa TODOS los atributos de la clase, incluyendo
      * la clase padre Tramite
      * @param fechaExpedicion Fecha en la que se expidió el trámite
-     * @param añosVigencia Años vigentes de la licencia
+     * @param aniosVigencia Años vigentes de la licencia
      * @param costo Costo equivalente a los años y el tipo de licencia
      * @param tipoLicencia Tipo de licencia, sea normal o para discapacitados
      * @param id Identificador de la clase
      * @param persona Persona que realizó el trámite
      * @param pago Pago que pertenece al trámite
      */
-    public Licencia(Calendar fechaExpedicion, Integer añosVigencia, 
+    public Licencia(Calendar fechaExpedicion, Integer aniosVigencia, 
             Integer costo, String tipoLicencia, Long id, Persona persona, 
             Pago pago) {
         super(id, persona, pago);
         this.fechaExpedicion = fechaExpedicion;
-        this.aniosVigencia = añosVigencia;
+        this.aniosVigencia = aniosVigencia;
         this.costo = costo;
         this.tipoLicencia = tipoLicencia;
     }
@@ -104,8 +104,8 @@ public class Licencia extends Tramite implements Serializable {
     public Integer getAñosVigencia() {
         return aniosVigencia;
     }
-    public void setAñosVigencia(Integer añosVigencia) {
-        this.aniosVigencia = añosVigencia;
+    public void setAñosVigencia(Integer aniosVigencia) {
+        this.aniosVigencia = aniosVigencia;
     }
     public Integer getCosto() {
         return costo;
