@@ -20,6 +20,7 @@ import org.itson.dominio.Placa;
  */
 public class Tramites extends javax.swing.JFrame {
     private DefaultComboBoxModel personas;
+    private StringBuffer respuesta;
     private Licencia licencia;
     private Placa placa;
     private int tipo;
@@ -27,9 +28,10 @@ public class Tramites extends javax.swing.JFrame {
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia, int tipo) {
+    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia, int tipo, StringBuffer respuesta) {
         super(title);
         this.personas = personas;
+        this.respuesta = respuesta;
         this.licencia = licencia;
         this.tipo = tipo;
         
@@ -115,6 +117,17 @@ public class Tramites extends javax.swing.JFrame {
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
 
+    private Licencia obtenerDatosLicencia() {
+        Calendar fechaExpedicion = new GregorianCalendar();
+        Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
+        Integer costo = Integer.parseInt(txtPrecio.getText());
+        String tipoLicencia = (String) cbxTipo.getSelectedItem();
+        Persona persona = (Persona) cbxCliente.getSelectedItem();
+        Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
+        
+        return new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+    }
+
     private void setTipo(int tipo) {
         this.tipo = tipo;
     }
@@ -179,7 +192,7 @@ public class Tramites extends javax.swing.JFrame {
 
         lblVigencia.setText("Vigencia");
 
-        cbxVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        cbxVigencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------------------------", "1", "2", "3" }));
         cbxVigencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxVigenciaActionPerformed(evt);
@@ -188,7 +201,7 @@ public class Tramites extends javax.swing.JFrame {
 
         lblTipo.setText("Tipo de licencia");
 
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Discapacitados" }));
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------------------------", "Normal", "Discapacitados" }));
         cbxTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTipoActionPerformed(evt);
@@ -369,14 +382,7 @@ public class Tramites extends javax.swing.JFrame {
 
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
         if(tipo == ConstantesGUI.LICENCIA) {
-            Calendar fechaExpedicion = new GregorianCalendar();
-            Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
-            Integer costo = Integer.parseInt(txtPrecio.getText());
-            String tipoLicencia = (String) cbxTipo.getSelectedItem();
-            Persona persona = (Persona) cbxCliente.getSelectedItem();
-            Pago pago = new Pago("Efectivo", "Compra de una licencia", costo, fechaExpedicion, persona);
-            
-            licencia = new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+            licencia = obtenerDatosLicencia();
         }
         
         if(tipo == ConstantesGUI.PLACA) {

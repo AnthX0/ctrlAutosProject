@@ -79,22 +79,23 @@ public class Control {
      */
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
+        StringBuffer respuesta = new StringBuffer("");
         Licencia licencia = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
-        tramites = new Tramites(frame, "Trámitar licencia", personas, licencia, ConstantesGUI.LICENCIA);
+        tramites = new Tramites(frame, "Trámitar licencia", personas, licencia, ConstantesGUI.LICENCIA, respuesta);
         
         em.getTransaction().begin();
-        em.persist(licencia);
         em.getTransaction().commit();
     }
     
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
+        StringBuffer respuesta = new StringBuffer("");
         Licencia licencia = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
-        tramites = new Tramites(frame, "Trámitar placas", personas, licencia, ConstantesGUI.PLACA);
+        tramites = new Tramites(frame, "Trámitar placas", personas, licencia, ConstantesGUI.PLACA, respuesta);
     }
     
     /**
