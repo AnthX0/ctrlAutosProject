@@ -371,7 +371,12 @@ public class Tramites extends javax.swing.JFrame {
         }
         
         if(tipo == ConstantesGUI.PLACA) {
-            
+            txtSerie.setText("");
+            txtMarca.setText("");
+            txtLinea.setText("");
+            txtColor.setText("");
+            txtModelo.setText("");
+            txtCosto.setText("");
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
 

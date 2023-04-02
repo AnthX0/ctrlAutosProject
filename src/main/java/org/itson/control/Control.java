@@ -4,10 +4,10 @@
  */
 package org.itson.control;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -75,7 +75,7 @@ public class Control {
     
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
-        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(getPersonas());
+        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(personas());
         
         tramites = new Tramites(frame, "Trámitar licencia", personas, ConstantesGUI.LICENCIA);
         
@@ -86,7 +86,7 @@ public class Control {
     
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
-        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(getPersonas());
+        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(personas());
         tramites = new Tramites(frame, "Trámitar placas", personas, ConstantesGUI.PLACA);
     }
     
@@ -94,19 +94,19 @@ public class Control {
      * Este método inserta 20 personas en una sola interacción
      */
     public void insercionMasiva() {
-        List<String> personas = getPersonas();
+        List<String> personas = personas();
         
-        if(personas.isEmpty()) {
+        if(personas == null) {
             em.getTransaction().begin();
-            Persona p1 = new Persona("GUGE751125MRGRA0PTR25", "Ethan Gutierrez Mallorca", new GregorianCalendar(1975, Calendar.NOVEMBER, 25),"GUGE751125MRGRA0", "6448476525");
-            Persona p2 = new Persona("MAPM800508PTMER4MNA1P", "Magdiel Perez Martinez", new GregorianCalendar(1980, Calendar.MAY, 8), "MAPM800508PTMER4", "6444658475");
-            Persona p3 = new Persona("ROGP010215JTAE25DAMP3", "Pedro Gonzales Rosales", new GregorianCalendar(2001, Calendar.FEBRUARY, 15), "ROGP010215JTAE25", "6441584798");
-            Persona p4 = new Persona("NOQM981020MPEOT15A3DC", "Miguel Angel Quintero Nodal", new GregorianCalendar(1998, Calendar.OCTOBER, 20), "NOQM981020MPEO", "6444896478");
-            Persona p5 = new Persona("PAVL701028PMEI04TR51A", "Levi Vega Padilla", new GregorianCalendar(1970, Calendar.OCTOBER, 28), "PAVL701028PMEI04", "6449887441");
-            Persona p6 = new Persona("QUSM000105PRTA3TRP11M", "Magda Sevilla Quintanilla", new GregorianCalendar(2000, Calendar.JANUARY, 5), "QUSM000105PRTA3T", "6442547564");
-            Persona p7 = new Persona("FIGK020430KITA54MARP2", "Kimberly García Fierro", new GregorianCalendar(2002, Calendar.APRIL, 30), "FIGK020430KITA54", "6446548794");
-            Persona p8 = new Persona("LUFM850819MARJA84RPTA", "Manuel Figueroa Luna", new GregorianCalendar(1985, Calendar.AUGUST, 19), "LUFM850819MARJA8", "6444547865");
-            Persona p9 = new Persona("ROFB900610LPAR45CPREA", "Brenda Fuentes Rojas", new GregorianCalendar(1990, Calendar.JUNE, 10), "ROFB900610LPAR45", "6442658745");
+            Persona p1 = new Persona("GUGE751125MRGRA0PTR2", "Ethan Gutierrez Mallorca", new GregorianCalendar(1975, Calendar.NOVEMBER, 25),"GUGE751125MRGRA0", "6448476525");
+            Persona p2 = new Persona("MAPM800508PTMER4MNA1", "Magdiel Perez Martinez", new GregorianCalendar(1980, Calendar.MAY, 8), "MAPM800508PTMER4", "6444658475");
+            Persona p3 = new Persona("ROGP010215JTAE25DAMP", "Pedro Gonzales Rosales", new GregorianCalendar(2001, Calendar.FEBRUARY, 15), "ROGP010215JTAE25", "6441584798");
+            Persona p4 = new Persona("NOQM981020MPEOT15A3D", "Miguel Angel Quintero Nodal", new GregorianCalendar(1998, Calendar.OCTOBER, 20), "NOQM981020MPEO", "6444896478");
+            Persona p5 = new Persona("PAVL701028PMEI04TR51", "Levi Vega Padilla", new GregorianCalendar(1970, Calendar.OCTOBER, 28), "PAVL701028PMEI04", "6449887441");
+            Persona p6 = new Persona("QUSM000105PRTA3TRP11", "Magda Sevilla Quintanilla", new GregorianCalendar(2000, Calendar.JANUARY, 5), "QUSM000105PRTA3T", "6442547564");
+            Persona p7 = new Persona("FIGK020430KITA54MARP", "Kimberly García Fierro", new GregorianCalendar(2002, Calendar.APRIL, 30), "FIGK020430KITA54", "6446548794");
+            Persona p8 = new Persona("LUFM850819MARJA84RPT", "Manuel Figueroa Luna", new GregorianCalendar(1985, Calendar.AUGUST, 19), "LUFM850819MARJA8", "6444547865");
+            Persona p9 = new Persona("ROFB900610LPAR45CPRE", "Brenda Fuentes Rojas", new GregorianCalendar(1990, Calendar.JUNE, 10), "ROFB900610LPAR45", "6442658745");
             Persona p10 = new Persona("VIHJ030330PMANU15PRM", "Judith Hernández Villegas", new GregorianCalendar(2003, Calendar.MARCH, 30), "VIHJ030330PMANU1", "6444587611");
             Persona p11 = new Persona("MOML000404LMNERA4578", "Laura María Montes Morales", new GregorianCalendar(2000, Calendar.APRIL, 4), "MOML000404LMNERA", "6442354798");
             Persona p12 = new Persona("MOVA040316PRGA78PO54", "Arturo Vega Morales", new GregorianCalendar(2004, Calendar.MARCH, 16), "MOVA040316PRGA78", "6442354798");
@@ -142,7 +142,11 @@ public class Control {
         }
     }
     
-    private List<String> getPersonas() {
+    /**
+     * Este método regresa una lista de personas
+     * @return Regresa una lista de personas
+     */
+    private List<String> personas() {
         em.getTransaction().begin();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
@@ -152,15 +156,35 @@ public class Control {
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
         
-        List<String> lista = null;
+        List<String> lista = new ArrayList<>();
         
         for(Persona p: personas) {
-            for(int i = 0; i < personas.size(); i++) {
-                lista.set(i, p.getNombreCompleto());
+            for(int i = 1; i < personas.size(); i++) {
+                lista.add(p.getNombreCompleto());
             }
         }
         em.getTransaction().commit();
         
         return lista;
+    }
+
+    public List<Persona> getPersonas() {
+        em.getTransaction().begin();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
+        Root<Persona> r = cq.from(Persona.class);
+        cq.select(r);
+        
+        TypedQuery<Persona> query = em.createQuery(cq);
+        List<Persona> personas = query.getResultList();
+        em.getTransaction().commit();
+        
+        return personas;
+    }
+
+    public Tabla getTablaPersonas(JFrame frame) {
+        List<Persona> personas = getPersonas();
+        
+        return new Tabla(c.personasTableModel(personas));
     }
 }

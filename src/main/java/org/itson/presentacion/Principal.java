@@ -7,6 +7,7 @@ package org.itson.presentacion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import org.itson.control.Control;
+import org.itson.control.Tabla;
 
 /**
  * @author Victor y Samuel
@@ -41,6 +42,15 @@ public class Principal extends javax.swing.JFrame {
         }
         
         setLocation((screenSize.height - frameSize.height)/2, (screenSize.width - frameSize.width)/2);
+    }
+
+    public void despliegaTabla(Tabla t) {
+        tabla = new javax.swing.JTable(t.getModeloTabla());
+        
+        tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabla.setAutoscrolls(false);
+        
+        jScrollPane1.setViewportView(tabla);
     }
 
     /**
@@ -230,6 +240,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnInsercionMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsercionMasivaActionPerformed
         control.insercionMasiva();
+        Tabla tablaPersonas = control.getTablaPersonas(this);
+        despliegaTabla(tablaPersonas);
         btnInsercionMasiva.setVisible(false);
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
