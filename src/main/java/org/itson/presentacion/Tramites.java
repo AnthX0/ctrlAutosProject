@@ -158,7 +158,8 @@ public class Tramites extends javax.swing.JFrame {
             }
         });
 
-        cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-------------------------" }));
+        cbxCliente.setMaximumRowCount(20);
+        cbxCliente.setModel(personas);
 
         lblVigencia.setText("Vigencia");
 
@@ -366,6 +367,7 @@ public class Tramites extends javax.swing.JFrame {
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         if(tipo == ConstantesGUI.LICENCIA) {
+            cbxCliente.setSelectedIndex(0);
             cbxVigencia.setSelectedIndex(0);
             cbxTipo.setSelectedIndex(0);
         }

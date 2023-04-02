@@ -72,10 +72,14 @@ public class Control {
 //            em.getTransaction().commit();
 //        }
 //    }
-    
+
+    /**
+     * Este método solicita una licencia
+     * @param frame Ventana
+     */
     public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
-        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(personas());
+        DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         
         tramites = new Tramites(frame, "Trámitar licencia", personas, ConstantesGUI.LICENCIA);
         
@@ -86,7 +90,8 @@ public class Control {
     
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
-        DefaultComboBoxModel<String> personas = c.ComboBoxPersonas(personas());
+        DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
+        
         tramites = new Tramites(frame, "Trámitar placas", personas, ConstantesGUI.PLACA);
     }
     
@@ -94,7 +99,7 @@ public class Control {
      * Este método inserta 20 personas en una sola interacción
      */
     public void insercionMasiva() {
-        List<String> personas = personas();
+        List<Persona> personas = getPersonas();
         
         if(personas == null) {
             em.getTransaction().begin();
@@ -141,33 +146,11 @@ public class Control {
             em.getTransaction().commit();
         }
     }
-    
+
     /**
      * Este método regresa una lista de personas
      * @return Regresa una lista de personas
      */
-    private List<String> personas() {
-        em.getTransaction().begin();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
-        Root<Persona> r = cq.from(Persona.class);
-        cq.select(r);
-        
-        TypedQuery<Persona> query = em.createQuery(cq);
-        List<Persona> personas = query.getResultList();
-        
-        List<String> lista = new ArrayList<>();
-        
-        for(Persona p: personas) {
-            for(int i = 1; i < personas.size(); i++) {
-                lista.add(p.getNombreCompleto());
-            }
-        }
-        em.getTransaction().commit();
-        
-        return lista;
-    }
-
     public List<Persona> getPersonas() {
         em.getTransaction().begin();
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -182,6 +165,11 @@ public class Control {
         return personas;
     }
 
+    /**
+     * Esta página regresa la tabla de personas
+     * @param frame Ventana
+     * @return Una tabla de personas
+     */
     public Tabla getTablaPersonas(JFrame frame) {
         List<Persona> personas = getPersonas();
         

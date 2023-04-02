@@ -37,8 +37,8 @@ public class Conversiones {
         return null;
     }
     
-    public DefaultComboBoxModel<String> ComboBoxPersonas(List<String> personas) {
-        DefaultComboBoxModel<String> cbx = new DefaultComboBoxModel<>();
+    public DefaultComboBoxModel<Persona> ComboBoxPersonas(List<Persona> personas) {
+        DefaultComboBoxModel<Persona> cbx = new DefaultComboBoxModel<>();
         
         if(personas != null) {
             for(int i=0; i < personas.size(); i++) {
