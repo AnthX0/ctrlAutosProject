@@ -19,7 +19,6 @@ import javax.swing.JFrame;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
-import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
 /**
@@ -35,44 +34,6 @@ public class Control {
     EntityManager em = emFactory.createEntityManager();
     
     //MÉTODOS
-    
-//    public void solicitarLicencia(Persona persona){
-//        Licencia licencia = new Licencia();
-//        licencia.setId(1L);
-//        String op;
-//        System.out.println("¿Desea tramitar una licencia? y/n");
-//        op = tec.nextLine();
-//        while (op.equals("y")){
-//            System.out.println("Indique el tipo de licencia");
-//            String tipo = tec.nextLine();
-//            if (tipo.equals("normal")){
-//                licencia.setTipoLicencia(tipo);
-//                licencia.setFechaExpedicion(new GregorianCalendar());
-//                System.out.println("Indique la vigencia");
-//                int vigN = tec.nextInt();
-//                licencia.setAñosVigencia(vigN);
-//                switch(vigN){
-//                    case 1 : licencia.setCosto(600);
-//                    case 2 : licencia.setCosto(900);
-//                    case 3 : licencia.setCosto(1100);
-//                }
-//            } else if (tipo.equals("discapacitado")){
-//                licencia.setTipoLicencia(tipo);
-//                licencia.setFechaExpedicion(new GregorianCalendar());
-//                System.out.println("Indique la vigencia");
-//                int vigD = tec.nextInt();
-//                licencia.setAñosVigencia(vigD);
-//                switch(vigD){
-//                    case 1 : licencia.setCosto(200);
-//                    case 2 : licencia.setCosto(500);
-//                    case 3 : licencia.setCosto(700);
-//                }
-//            }
-//            em.getTransaction().begin();
-//            em.persist(licencia);
-//            em.getTransaction().commit();
-//        }
-//    }
 
     /**
      * Este método solicita una licencia
@@ -82,9 +43,7 @@ public class Control {
         Tramites tramites;
         Licencia licencia = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        
         tramites = new Tramites(frame, "Trámitar licencia", personas, licencia);
-        
         if(licencia != null) {
             em.getTransaction().begin();
             em.persist(licencia);
@@ -92,11 +51,14 @@ public class Control {
         }
     }
     
+    /**
+     * Este método solicita una placa
+     * @param frame Ventana
+     */
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
         Placa placa = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        
         tramites = new Tramites(frame, "Trámitar placas", personas, placa);
     }
     
@@ -105,7 +67,6 @@ public class Control {
      */
     public void insercionMasiva() {
         List<Persona> personas = getPersonas();
-        
         if(personas == null) {
             em.getTransaction().begin();
             Persona p1 = new Persona("GUGE751125MRGRA0PTR2", "Ethan Gutierrez Mallorca", new GregorianCalendar(1975, Calendar.NOVEMBER, 25),"GUGE751125MRGRA0", "6448476525");
@@ -162,11 +123,9 @@ public class Control {
         CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
         Root<Persona> r = cq.from(Persona.class);
         cq.select(r);
-        
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
         em.getTransaction().commit();
-        
         return personas;
     }
 
@@ -177,7 +136,6 @@ public class Control {
      */
     public Tabla getTablaPersonas(JFrame frame) {
         List<Persona> personas = getPersonas();
-        
         return new Tabla(c.personasTableModel(personas));
     }
 }

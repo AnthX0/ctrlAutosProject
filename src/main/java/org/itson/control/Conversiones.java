@@ -14,12 +14,21 @@ import org.itson.dominio.Persona;
  * @author Victor y Samuel
  */
 public class Conversiones {
-    private String nombresColumTablasPersonas[] = {"Id", "Nombre Completo", "Fecha de Nacimiento", "CURP", "RFC", "Teléfono"};
+    //ATRIBUTOS
     
+    private String nombresColumTablasPersonas[] = {"Id", "Nombre Completo", 
+        "Fecha de Nacimiento", "CURP", "RFC", "Teléfono"};
+    
+    //MÉTODOS
+    
+    /**
+     * Método que le da formato a la tabla con la lista de personas
+     * @param personas
+     * @return Una tabla con formato
+     */
     public DefaultTableModel personasTableModel(List<Persona> personas) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
         Object tabla[][];
-        
         if(personas != null) {
             tabla = new Object[personas.size()][6];
             for(int i=0; i < personas.size(); i++) {
@@ -33,20 +42,22 @@ public class Conversiones {
             }
             return new DefaultTableModel(tabla, nombresColumTablasPersonas);
         }
-        
         return null;
     }
     
+    /**
+     * Método que le da formato al combobox de Cliente
+     * @param personas Lista de personas a escoger
+     * @return Un combobox con la lista de personas
+     */
     public DefaultComboBoxModel<Persona> ComboBoxPersonas(List<Persona> personas) {
         DefaultComboBoxModel<Persona> cbx = new DefaultComboBoxModel<>();
-        
         if(personas != null) {
             for(int i=0; i < personas.size(); i++) {
                 cbx.addElement(personas.get(i));
             }
             return cbx;
         }
-        
         return null;
     }
 }
