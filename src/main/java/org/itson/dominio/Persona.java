@@ -48,13 +48,11 @@ public class Persona implements Serializable {
     @Column(name = "telefono", nullable = false)
     private String telefono;
     
-    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, 
-        CascadeType.REMOVE})
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pagos_realizados", nullable = true)
     private List<Pago> pagos;
     
-    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST, 
-        CascadeType.REMOVE})
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tramites_realizados", nullable = true)
     private List<Tramite> tramites;
     
