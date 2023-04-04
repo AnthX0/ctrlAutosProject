@@ -174,6 +174,11 @@ public class Principal extends javax.swing.JFrame {
 
         placasConsultasMenu.setMnemonic('y');
         placasConsultasMenu.setText("Placas");
+        placasConsultasMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placasConsultasMenuActionPerformed(evt);
+            }
+        });
         consultasMenu.add(placasConsultasMenu);
 
         menuBar.add(consultasMenu);
@@ -244,6 +249,11 @@ public class Principal extends javax.swing.JFrame {
         despliegaTabla(tablaPersonas);
         btnInsercionMasiva.setVisible(false);
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
+
+    private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
+        Consultas consultas = new Consultas();
+        consultas.setVisible(true);
+    }//GEN-LAST:event_placasConsultasMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInsercionMasiva;

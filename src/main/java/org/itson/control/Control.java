@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
+import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
 /**
@@ -39,16 +40,21 @@ public class Control {
      * Este método solicita una licencia
      * @param frame Ventana
      */
-    public void solicitarLicencia(JFrame frame) {
+    public boolean solicitarLicencia(JFrame frame) {
+        StringBuffer respuesta = new StringBuffer("");
         Tramites tramites;
-        Licencia licencia = null;
+        Licencia licencia = new Licencia();
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar licencia", personas, licencia);
-        if(licencia != null) {
-            em.getTransaction().begin();
-            em.persist(licencia);
-            em.getTransaction().commit();
+        tramites = new Tramites(frame, "Trámitar licencia", true, personas, licencia, respuesta);
+        if(respuesta.substring(0).equals(ConstantesGUI.CANCELAR)) {
+            return false;
         }
+        em.getTransaction().begin();
+        em.persist(licencia);
+        em.persist(licencia.getPersona());
+        em.persist(licencia.getPago());
+        em.getTransaction().commit();
+        return true;
     }
     
     /**
@@ -59,7 +65,7 @@ public class Control {
         Tramites tramites;
         Placa placa = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar placas", personas, placa);
+        tramites = new Tramites(frame, "Trámitar placas", true, personas, placa);
     }
     
     /**
@@ -118,14 +124,12 @@ public class Control {
      * @return Regresa una lista de personas
      */
     public List<Persona> getPersonas() {
-        em.getTransaction().begin();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
         Root<Persona> r = cq.from(Persona.class);
         cq.select(r);
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
-        em.getTransaction().commit();
         return personas;
     }
 

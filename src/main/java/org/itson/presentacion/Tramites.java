@@ -18,17 +18,20 @@ import org.itson.dominio.Placa;
 /**
  * @author Victor y Samuel
  */
-public class Tramites extends javax.swing.JFrame {
+public class Tramites extends javax.swing.JDialog {
     private DefaultComboBoxModel personas;
     private Licencia licencia;
     private Placa placa;
     private int tipo;
+    private StringBuffer respuesta;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Licencia licencia) {
-        super(title);
+    public Tramites(java.awt.Frame frame, String title, boolean modal, DefaultComboBoxModel personas, Licencia licencia, StringBuffer respuesta) {
+        super(frame, title, modal);
+        this.tipo = ConstantesGUI.LICENCIA;
+        this.respuesta = respuesta;
         this.personas = personas;
         this.licencia = licencia;
         
@@ -50,12 +53,14 @@ public class Tramites extends javax.swing.JFrame {
             
         setSize(new Dimension(300, 205));
         
+        respuesta.append(ConstantesGUI.CANCELAR);
         centrarVentana(frame);
         setVisible(true);
     }
 
-    public Tramites(java.awt.Frame frame, String title, DefaultComboBoxModel personas, Placa placa) {
-        super(title);
+    public Tramites(java.awt.Frame frame, String title, boolean modal, DefaultComboBoxModel personas, Placa placa) {
+        super(frame, title, modal);
+        this.tipo = ConstantesGUI.PLACA;
         this.personas = personas;
         this.placa = placa;
         
@@ -72,6 +77,7 @@ public class Tramites extends javax.swing.JFrame {
         
         setSize(new Dimension(300, 296));
         
+        respuesta.append(ConstantesGUI.CANCELAR);
         centrarVentana(frame);
         setVisible(true);
     }
@@ -114,16 +120,16 @@ public class Tramites extends javax.swing.JFrame {
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
 
-    private Licencia obtenerDatosLicencia() {
-        Calendar fechaExpedicion = new GregorianCalendar();
-        Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
-        Integer costo = Integer.parseInt(txtPrecio.getText());
-        String tipoLicencia = (String) cbxTipo.getSelectedItem();
-        Persona persona = (Persona) cbxCliente.getSelectedItem();
-        Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
-        
-        return new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
-    }
+//    private Licencia obtenerDatosLicencia() {
+//        Calendar fechaExpedicion = new GregorianCalendar();
+//        Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
+//        Integer costo = Integer.parseInt(txtPrecio.getText());
+//        String tipoLicencia = (String) cbxTipo.getSelectedItem();
+//        Persona persona = (Persona) cbxCliente.getSelectedItem();
+//        Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
+//        
+//        return new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+//    }
     
     private Placa obtenerDatosPlaca() {
         return new Placa();
@@ -188,7 +194,7 @@ public class Tramites extends javax.swing.JFrame {
             }
         });
 
-        cbxCliente.setMaximumRowCount(20);
+        cbxCliente.setMaximumRowCount(personas.getSize());
         cbxCliente.setModel(personas);
 
         lblVigencia.setText("Vigencia");
@@ -383,7 +389,17 @@ public class Tramites extends javax.swing.JFrame {
 
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
         if(tipo == ConstantesGUI.LICENCIA) {
-            licencia = obtenerDatosLicencia();
+            Calendar fechaExpedicion = new GregorianCalendar();
+            Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
+            Integer costo = Integer.parseInt(txtPrecio.getText());
+            String tipoLicencia = (String) cbxTipo.getSelectedItem();
+            Persona persona = (Persona) cbxCliente.getSelectedItem();
+            Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
+            
+            licencia = new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+            
+            respuesta.delete(0, respuesta.length());
+            respuesta.append(ConstantesGUI.ACEPTAR);
         }
         
         if(tipo == ConstantesGUI.PLACA) {
