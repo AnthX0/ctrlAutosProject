@@ -44,8 +44,7 @@ public class Vehiculo implements Serializable {
     @Column(name = "modelo", nullable = false)
     private Integer modelo;
     
-    @OneToMany(mappedBy = "vehiculo", cascade = {CascadeType.PERSIST, 
-        CascadeType.REMOVE})
+    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.PERSIST)
     @JoinColumn(name = "placas_usadas", nullable = true)
     private List<Placa> placas;
     
