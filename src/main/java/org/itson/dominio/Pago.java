@@ -51,8 +51,7 @@ public class Pago implements Serializable {
     @JoinColumn(name = "id_persona", nullable = false) //LLAVE FORÁNEA
     private Persona persona;
     
-    @OneToMany(mappedBy = "pago", cascade = {CascadeType.PERSIST,
-        CascadeType.REMOVE})
+    @OneToMany(mappedBy = "pago", cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "tramites_pagados", nullable = true)
     private List<Tramite> tramites;
     

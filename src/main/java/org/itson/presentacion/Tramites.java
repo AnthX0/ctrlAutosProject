@@ -8,17 +8,25 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Pago;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
+import org.itson.dominio.Tramite;
 
 
 /**
  * @author Victor y Samuel
  */
 public class Tramites extends javax.swing.JDialog {
+    EntityManagerFactory emFactory = 
+        Persistence.createEntityManagerFactory
+                ("org.itson_AgenciaTransito");
+    EntityManager em = emFactory.createEntityManager();
     private DefaultComboBoxModel personas;
     private Licencia licencia;
     private Placa placa;
@@ -28,56 +36,44 @@ public class Tramites extends javax.swing.JDialog {
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, boolean modal, DefaultComboBoxModel personas, Licencia licencia, StringBuffer respuesta) {
+    public Tramites(java.awt.Frame frame, String title, boolean modal, int tipo, DefaultComboBoxModel personas) {
         super(frame, title, modal);
-        this.tipo = ConstantesGUI.LICENCIA;
-        this.respuesta = respuesta;
+        this.tipo = tipo;
         this.personas = personas;
-        this.licencia = licencia;
         
         initComponents();
         
-        lblRegistro.setVisible(false);
-        lblSerie.setVisible(false);
-        txtSerie.setVisible(false);
-        lblMarca.setVisible(false);
-        txtMarca.setVisible(false);
-        lblLinea.setVisible(false);
-        txtLinea.setVisible(false);
-        lblColor.setVisible(false);
-        txtColor.setVisible(false);
-        lblModelo.setVisible(false);
-        txtModelo.setVisible(false);
-        lblCosto.setVisible(false);
-        txtCosto.setVisible(false);
+        if(tipo == ConstantesGUI.LICENCIA) {
+            lblRegistro.setVisible(false);
+            lblSerie.setVisible(false);
+            txtSerie.setVisible(false);
+            lblMarca.setVisible(false);
+            txtMarca.setVisible(false);
+            lblLinea.setVisible(false);
+            txtLinea.setVisible(false);
+            lblColor.setVisible(false);
+            txtColor.setVisible(false);
+            lblModelo.setVisible(false);
+            txtModelo.setVisible(false);
+            lblCosto.setVisible(false);
+            txtCosto.setVisible(false);
             
-        setSize(new Dimension(300, 205));
+            setSize(new Dimension(300, 205));
+        }
         
-        respuesta.append(ConstantesGUI.CANCELAR);
-        centrarVentana(frame);
-        setVisible(true);
-    }
-
-    public Tramites(java.awt.Frame frame, String title, boolean modal, DefaultComboBoxModel personas, Placa placa) {
-        super(frame, title, modal);
-        this.tipo = ConstantesGUI.PLACA;
-        this.personas = personas;
-        this.placa = placa;
+        if(tipo == ConstantesGUI.PLACA) {
+            lblVigencia.setVisible(false);
+            cbxVigencia.setVisible(false);
+            lblTipo.setVisible(false);
+            cbxTipo.setVisible(false);
+            lblPrecio.setVisible(false);
+            txtPrecio.setVisible(false);
+            
+            btnTramitar.setText("Buscar");
+            
+            setSize(new Dimension(300, 296));
+        }
         
-        initComponents();
-        
-        lblVigencia.setVisible(false);
-        cbxVigencia.setVisible(false);
-        lblTipo.setVisible(false);
-        cbxTipo.setVisible(false);
-        lblPrecio.setVisible(false);
-        txtPrecio.setVisible(false);
-        
-        btnTramitar.setText("Buscar");
-        
-        setSize(new Dimension(300, 296));
-        
-        respuesta.append(ConstantesGUI.CANCELAR);
         centrarVentana(frame);
         setVisible(true);
     }
@@ -119,17 +115,6 @@ public class Tramites extends javax.swing.JDialog {
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
-
-//    private Licencia obtenerDatosLicencia() {
-//        Calendar fechaExpedicion = new GregorianCalendar();
-//        Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
-//        Integer costo = Integer.parseInt(txtPrecio.getText());
-//        String tipoLicencia = (String) cbxTipo.getSelectedItem();
-//        Persona persona = (Persona) cbxCliente.getSelectedItem();
-//        Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
-//        
-//        return new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
-//    }
     
     private Placa obtenerDatosPlaca() {
         return new Placa();
@@ -396,10 +381,12 @@ public class Tramites extends javax.swing.JDialog {
             Persona persona = (Persona) cbxCliente.getSelectedItem();
             Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
             
-            licencia = new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago);
+            em.getTransaction().begin();
+            em.persist(pago);
+            em.persist(new Tramite(persona, pago));
+            em.getTransaction().commit();
             
-            respuesta.delete(0, respuesta.length());
-            respuesta.append(ConstantesGUI.ACEPTAR);
+            dispose();
         }
         
         if(tipo == ConstantesGUI.PLACA) {
@@ -409,8 +396,6 @@ public class Tramites extends javax.swing.JDialog {
         if(tipo == ConstantesGUI.PLACA && !txtSerie.getText().equals("")) {
             
         }
-        
-        dispose();
     }//GEN-LAST:event_btnTramitarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed

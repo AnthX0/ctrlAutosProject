@@ -16,9 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
-import org.itson.dominio.Placa;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
@@ -40,21 +38,10 @@ public class Control {
      * Este método solicita una licencia
      * @param frame Ventana
      */
-    public boolean solicitarLicencia(JFrame frame) {
-        StringBuffer respuesta = new StringBuffer("");
+    public void solicitarLicencia(JFrame frame) {
         Tramites tramites;
-        Licencia licencia = new Licencia();
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar licencia", true, personas, licencia, respuesta);
-        if(respuesta.substring(0).equals(ConstantesGUI.CANCELAR)) {
-            return false;
-        }
-        em.getTransaction().begin();
-        em.persist(licencia);
-        em.persist(licencia.getPersona());
-        em.persist(licencia.getPago());
-        em.getTransaction().commit();
-        return true;
+        tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas);
     }
     
     /**
@@ -63,9 +50,8 @@ public class Control {
      */
     public void solicitarPlacas(JFrame frame) {
         Tramites tramites;
-        Placa placa = null;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar placas", true, personas, placa);
+        tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas);
     }
     
     /**
@@ -73,7 +59,7 @@ public class Control {
      */
     public void insercionMasiva() {
         List<Persona> personas = getPersonas();
-        if(personas == null) {
+        if(personas.isEmpty()) {
             em.getTransaction().begin();
             Persona p1 = new Persona("GUGE751125MRGRA0PTR2", "Ethan Gutierrez Mallorca", new GregorianCalendar(1975, Calendar.NOVEMBER, 25),"GUGE751125MRGRA0", "6448476525");
             Persona p2 = new Persona("MAPM800508PTMER4MNA1", "Magdiel Perez Martinez", new GregorianCalendar(1980, Calendar.MAY, 8), "MAPM800508PTMER4", "6444658475");
