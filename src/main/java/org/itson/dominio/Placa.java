@@ -23,14 +23,14 @@ import javax.persistence.TemporalType;
 public class Placa extends Tramite implements Serializable {
     //ATRIBUTOS
     
-    @Column(name = "identificador", nullable = false)
+    @Column(name = "identificador", nullable = true)
     private String identificador;
     
-    @Column(name = "fecha_emision", nullable = false)
+    @Column(name = "fecha_emision", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaEmision;
     
-    @Column(name = "fecha_recepcion", nullable = false)
+    @Column(name = "fecha_recepcion", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaRecepcion;
     
@@ -38,7 +38,7 @@ public class Placa extends Tramite implements Serializable {
     private Integer costo;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_vehiculo", nullable = false)
+    @JoinColumn(name = "id_vehiculo", nullable = true)
     private Vehiculo vehiculo;
     
     //CONSTRUCTORES

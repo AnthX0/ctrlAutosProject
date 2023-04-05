@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.itson.dominio.Persona;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
@@ -39,9 +40,10 @@ public class Control {
      * @param frame Ventana
      */
     public void solicitarLicencia(JFrame frame) {
-        Tramites tramites;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas);
+        Tramites tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas);
+        
+        JOptionPane.showMessageDialog(frame, "Ya se le ha otorgado la licencia", "Trámite exitoso!!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     /**
@@ -49,15 +51,17 @@ public class Control {
      * @param frame Ventana
      */
     public void solicitarPlacas(JFrame frame) {
-        Tramites tramites;
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas);
+        Tramites tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas);
+        
+        JOptionPane.showMessageDialog(frame, "Ya se le ha otorgado las placas", "Trámite exitoso!!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     /**
      * Este método inserta 20 personas en una sola interacción
+     * @return True si ya se insertarón las personas, false si ya había personas
      */
-    public void insercionMasiva() {
+    public boolean insercionMasiva() {
         List<Persona> personas = getPersonas();
         if(personas.isEmpty()) {
             em.getTransaction().begin();
@@ -102,7 +106,11 @@ public class Control {
             em.persist(p19);
             em.persist(p20);
             em.getTransaction().commit();
+        }else{
+            return false;
         }
+        
+        return true;
     }
 
     /**
@@ -117,6 +125,10 @@ public class Control {
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
         return personas;
+    }
+    
+    public boolean buscarVehiculo() {
+        return false;
     }
 
     /**

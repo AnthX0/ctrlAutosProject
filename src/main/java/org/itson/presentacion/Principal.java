@@ -23,6 +23,12 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         centraVentana();
+        
+        if(control.insercionMasiva() == false) {
+            Tabla tablaPersonas = control.getTablaPersonas(this);
+            despliegaTabla(tablaPersonas);
+            btnInsercionMasiva.setVisible(false);
+        }
     }
 
     /**

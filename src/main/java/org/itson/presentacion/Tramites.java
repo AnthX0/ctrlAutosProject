@@ -15,8 +15,6 @@ import javax.swing.DefaultComboBoxModel;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Pago;
 import org.itson.dominio.Persona;
-import org.itson.dominio.Placa;
-import org.itson.dominio.Tramite;
 
 
 /**
@@ -28,10 +26,7 @@ public class Tramites extends javax.swing.JDialog {
                 ("org.itson_AgenciaTransito");
     EntityManager em = emFactory.createEntityManager();
     private DefaultComboBoxModel personas;
-    private Licencia licencia;
-    private Placa placa;
     private int tipo;
-    private StringBuffer respuesta;
 
     /**
      * Creates new form Tramite
@@ -114,10 +109,6 @@ public class Tramites extends javax.swing.JDialog {
         
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
-    }
-    
-    private Placa obtenerDatosPlaca() {
-        return new Placa();
     }
 
     private void setTipo(int tipo) {
@@ -383,18 +374,14 @@ public class Tramites extends javax.swing.JDialog {
             
             em.getTransaction().begin();
             em.persist(pago);
-            em.persist(new Tramite(persona, pago));
+            em.persist(new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago));
             em.getTransaction().commit();
             
             dispose();
         }
         
         if(tipo == ConstantesGUI.PLACA) {
-            
-        }
-        
-        if(tipo == ConstantesGUI.PLACA && !txtSerie.getText().equals("")) {
-            
+            String serie = txtSerie.getText();
         }
     }//GEN-LAST:event_btnTramitarActionPerformed
 
@@ -412,6 +399,13 @@ public class Tramites extends javax.swing.JDialog {
             txtColor.setText("");
             txtModelo.setText("");
             txtCosto.setText("");
+        }
+        
+        if(tipo == ConstantesGUI.PLACA_NUEVO) {
+            txtMarca.setText("");
+            txtLinea.setText("");
+            txtColor.setText("");
+            txtModelo.setText("");
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
 

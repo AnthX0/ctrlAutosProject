@@ -15,4 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "vehiculos_usados")
 public class Vehiculo_Usado extends Vehiculo implements Serializable {   
+
+    public Vehiculo_Usado() {}
+
+    public Vehiculo_Usado(String numeroSerie, String marca, String linea, String color, Integer modelo) {
+        super(numeroSerie, marca, linea, color, modelo);
+    }
+
 }
