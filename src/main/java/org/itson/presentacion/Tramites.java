@@ -6,6 +6,8 @@ package org.itson.presentacion;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -217,6 +219,12 @@ public class Tramites extends javax.swing.JDialog {
         lblModelo.setText("Modelo");
 
         lblCosto.setText("Costo");
+
+        txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSerieKeyPressed(evt);
+            }
+        });
 
         txtMarca.setEditable(false);
 
@@ -542,6 +550,13 @@ public class Tramites extends javax.swing.JDialog {
             txtModelo.setText("");
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
+
+    private void txtSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ActionEvent av = null;
+            btnTramitarActionPerformed(av);
+        }
+    }//GEN-LAST:event_txtSerieKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
