@@ -434,7 +434,7 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
-            String identificador = "";
+            String identificador = c.generarIdentificadorPlaca();
             Calendar fechaEmision = new GregorianCalendar();
             String numeroSerie = txtSerie.getText().toUpperCase();
             String marca = txtMarca.getText();
@@ -458,7 +458,7 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA_USADO) {
-            String identificador = "";
+            String identificador = c.generarIdentificadorPlaca();
             Calendar fechaEmision = new GregorianCalendar();
             Calendar fechaRecepcion = new GregorianCalendar();
             String numeroSerie = txtSerie.getText().toUpperCase();

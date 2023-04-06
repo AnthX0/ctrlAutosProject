@@ -7,6 +7,7 @@ package org.itson.control;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -264,6 +265,41 @@ public class Control {
     }
 
     /**
+     * Genera un identificador para las placas de un auto "AAA-111"
+     * @return Un identificador para las placas de un auto
+     */
+    public String generarIdentificadorPlaca() {
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String numeros = "1234567890";
+        
+        String identificador = "";
+        
+        for(int i = 0; i < 3; i++) {
+            int randomIndex = alAzar(0, letras.length() - 1);
+            char randomChar = letras.charAt(randomIndex);
+            identificador+=randomChar;
+        }
+        identificador+="-";
+        for(int i = 0; i < 3; i++) {
+            int randomIndex = alAzar(0, numeros.length() - 1);
+            char randomChar = numeros.charAt(randomIndex);
+            identificador+=randomChar;
+        }
+        
+        return identificador;
+    }
+
+    /**
+     * Saca un número al azar
+     * @param minimo El número más pequeño que se puede sacar
+     * @param maximo El número más grande que se puede sacar
+     * @return Número al azar
+     */
+    private int alAzar(int minimo, int maximo) {
+        return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
+    }
+
+    /**
      * Esta página regresa la tabla de personas
      * @param frame Ventana
      * @return Una tabla de personas
@@ -271,5 +307,5 @@ public class Control {
     public Tabla getTablaPersonas(JFrame frame) {
         List<Persona> personas = getPersonas();
         return new Tabla(c.personasTableModel(personas));
-    }
+    }   
 }
