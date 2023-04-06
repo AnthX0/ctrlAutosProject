@@ -431,23 +431,28 @@ public class Tramites extends javax.swing.JDialog {
         if(tipo == ConstantesGUI.PLACA) {
             serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
-                vehiculos = c.buscarVehiculo(serie);
-                if(vehiculos.isEmpty()){
-                    setTipo(ConstantesGUI.PLACA_NUEVO);
-                    txtSerie.setText(serie);
-                    txtMarca.setEditable(true);
-                    txtLinea.setEditable(true);
-                    txtColor.setEditable(true);
-                    txtModelo.setEditable(true);
-                    txtSerie.setEditable(false);
-                    definirPrecio();
+                vehiculos = c.buscarVehiculo(serie, (Persona) cbxCliente.getSelectedItem());
+                if(vehiculos == null) {
+                    
                 }else{
-                    setTipo(ConstantesGUI.PLACA_USADO);
-                    txtSerie.setText(serie);
-                    txtSerie.setEditable(false);
-                    definirPrecio();
+                    if(vehiculos.isEmpty()){
+                        setTipo(ConstantesGUI.PLACA_NUEVO);
+                        txtSerie.setText(serie);
+                        txtMarca.setEditable(true);
+                        txtLinea.setEditable(true);
+                        txtColor.setEditable(true);
+                        txtModelo.setEditable(true);
+                        txtSerie.setEditable(false);
+                        definirPrecio();
+                    }else{
+                        setTipo(ConstantesGUI.PLACA_USADO);
+                        txtSerie.setText(serie);
+                        txtSerie.setEditable(false);
+                        definirPrecio();
+                    }
+                    btnTramitar.setText("Trámitar");
                 }
-                btnTramitar.setText("Trámitar");
+                
             }
         }
         

@@ -13,11 +13,15 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Placa;
+import org.itson.dominio.Tramite;
 import org.itson.dominio.Vehiculo;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
@@ -136,8 +140,8 @@ public class Control {
      */
     public List<Persona> getPersonas() {
         CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
-        Root<Persona> r = cq.from(Persona.class);
-        cq.select(r);
+        Root<Persona> p = cq.from(Persona.class);
+        cq.select(p);
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
         return personas;
@@ -146,32 +150,72 @@ public class Control {
     /**
      * Busca un vehiculo dentro de la base de datos
      * @param NSerie Numero de serie del vehiculo a buscar
+     * @param persona Dueño del vehiculo
      * @return Un vehiculo con el número de serie a buscar
      */
-    public List<Vehiculo> buscarVehiculo(String NSerie) {
+    public List<Vehiculo> buscarVehiculo(String NSerie, Persona persona) {
+        if(verificarLicenciaPersona(persona)) {
+            JOptionPane.showMessageDialog(frame, "Usted no cuenta con una licencia vigente", "Sin licencia!!", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        
         CriteriaQuery<Vehiculo> cq = cb.createQuery(Vehiculo.class);
-        Root<Vehiculo> r = cq.from(Vehiculo.class);
-        cq.select(r).where(
-            cb.like(r.get("numeroSerie"), "%"+NSerie+"%")
+        Root<Vehiculo> v = cq.from(Vehiculo.class);
+        cq.select(v).where(
+            cb.like(v.get("numeroSerie"), "%"+NSerie+"%")
         );
         TypedQuery<Vehiculo> query = em.createQuery(cq);
         List<Vehiculo> vehiculos = query.getResultList();
         
-        if(!vehiculos.isEmpty() && !verificarPertencenciaAuto()) {
-            JOptionPane.showMessageDialog(frame, "Este auto no es suyo", "", JOptionPane.ERROR_MESSAGE);
-        }
-        
         if(vehiculos.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "No se encuentra ese vehiculo, registrelo", "Vehiculo no encontrado!!", JOptionPane.INFORMATION_MESSAGE);
         }else {
+            if(verificarPertenenciaAuto(NSerie, persona)) {
+                JOptionPane.showMessageDialog(frame, "Este auto no es suyo", "", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
             JOptionPane.showMessageDialog(frame, "Vehiculo encontrado: " + vehiculos.get(0), "Vehiculo encontrado!!", JOptionPane.INFORMATION_MESSAGE);
         }
         
         return vehiculos;
     }
     
-    private static boolean verificarPertencenciaAuto() {
-        return false;
+    /**
+     * Verifica que un vehiculo le pertenezca a la persona
+     * @param NSerie Numero de serie del vehiculo a verificar
+     * @param persona Persona que dice ser el dueño
+     * @return False si no es el dueño, True si es el dueño
+     */
+    private boolean verificarPertenenciaAuto(String NSerie, Persona persona) {
+        CriteriaQuery<Placa> cq = cb.createQuery(Placa.class);
+        Root<Placa> p = cq.from(Placa.class);
+        Join<Placa, Persona> pe = p.join("persona", JoinType.INNER);
+        Join<Placa, Vehiculo> v = p.join("vehiculo", JoinType.INNER);
+        cq.where(
+            cb.like(v.get("numeroSerie"), "%"+NSerie+"%"),
+            cb.equal(pe.get("id"), persona.getId())
+        );
+        TypedQuery<Placa> query = em.createQuery(cq);
+        List<Placa> tramites = query.getResultList();
+        
+        return tramites.isEmpty();
+    }
+    
+    /**
+     * Verifica si la persona tiene una licencia *vigente*
+     * @param persona Persona que debe tener la licencia
+     * @return False si no tiene licencia, True si tiene licencia
+     */
+    private boolean verificarLicenciaPersona(Persona persona) {
+        CriteriaQuery<Tramite> cq = cb.createQuery(Tramite.class);
+        Root<Tramite> t = cq.from(Tramite.class);
+        cq.select(t).where(
+            cb.equal(t.get("persona").get("id"), persona.getId())
+        );
+        TypedQuery<Tramite> query = em.createQuery(cq);
+        List<Tramite> tramites = query.getResultList();
+        
+        return tramites.isEmpty();
     }
 
     /**

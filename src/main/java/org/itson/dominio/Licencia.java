@@ -101,10 +101,10 @@ public class Licencia extends Tramite implements Serializable {
     public void setFechaExpedicion(Calendar fechaExpedicion) {
         this.fechaExpedicion = fechaExpedicion;
     }
-    public Integer getAñosVigencia() {
+    public Integer getAniosVigencia() {
         return aniosVigencia;
     }
-    public void setAñosVigencia(Integer aniosVigencia) {
+    public void setAniosVigencia(Integer aniosVigencia) {
         this.aniosVigencia = aniosVigencia;
     }
     public Integer getCosto() {
