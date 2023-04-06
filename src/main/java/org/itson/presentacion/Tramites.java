@@ -34,6 +34,7 @@ public class Tramites extends javax.swing.JDialog {
     private Control c = new Control();
     private StringBuffer respuesta;
     private String serie;
+    private List<Vehiculo> vehiculos;
 
     /**
      * Creates new form Tramite
@@ -216,6 +217,14 @@ public class Tramites extends javax.swing.JDialog {
 
         lblCosto.setText("Costo");
 
+        txtMarca.setEditable(false);
+
+        txtLinea.setEditable(false);
+
+        txtColor.setEditable(false);
+
+        txtModelo.setEditable(false);
+
         txtCosto.setEditable(false);
 
         btnRestaurar.setText("Restaurar");
@@ -394,8 +403,7 @@ public class Tramites extends javax.swing.JDialog {
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
             String identificador = "";
             Calendar fechaEmision = new GregorianCalendar();
-            Calendar fechaRecepcion = new GregorianCalendar();
-            String numeroSerie = txtSerie.getText();
+            String numeroSerie = txtSerie.getText().toUpperCase();
             String marca = txtMarca.getText();
             String linea = txtLinea.getText();
             String color = txtColor.getText();
@@ -421,14 +429,21 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA) {
-            serie = txtSerie.getText();
+            serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
-                if(c.buscarVehiculo(serie).isEmpty()){
+                vehiculos = c.buscarVehiculo(serie);
+                if(vehiculos.isEmpty()){
                     setTipo(ConstantesGUI.PLACA_NUEVO);
+                    txtSerie.setText(serie);
+                    txtMarca.setEditable(true);
+                    txtLinea.setEditable(true);
+                    txtColor.setEditable(true);
+                    txtModelo.setEditable(true);
                     txtSerie.setEditable(false);
                     definirPrecio();
                 }else{
                     setTipo(ConstantesGUI.PLACA_USADO);
+                    txtSerie.setText(serie);
                     txtSerie.setEditable(false);
                     definirPrecio();
                 }
@@ -437,7 +452,6 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA_USADO) {
-            List<Vehiculo> vehiculos = c.buscarVehiculo(serie);
             Vehiculo v = vehiculos.get(0);
             txtMarca.setText(v.getMarca());
             txtMarca.setEditable(false);

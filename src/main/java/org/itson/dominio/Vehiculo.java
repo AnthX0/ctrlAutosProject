@@ -189,6 +189,6 @@ public class Vehiculo implements Serializable {
      */
     @Override
     public String toString() {
-        return "Vehiculo{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", marca=" + marca + ", linea=" + linea + ", color=" + color + ", modelo=" + modelo + ", placas=" + placas + '}';
+        return marca + ", " + linea + ", " + color;
     }
 }

@@ -34,6 +34,7 @@ public class Control {
                 ("org.itson_AgenciaTransito");
     EntityManager em = emFactory.createEntityManager();
     CriteriaBuilder cb = em.getCriteriaBuilder();
+    JFrame frame;
     
     //MÉTODOS
 
@@ -43,6 +44,7 @@ public class Control {
      * @return 
      */
     public boolean solicitarLicencia(JFrame frame) {
+        this.frame = frame;
         StringBuffer respuesta = new StringBuffer("");
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         Tramites tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas, respuesta);
@@ -60,6 +62,7 @@ public class Control {
      * @return 
      */
     public boolean solicitarPlacas(JFrame frame) {
+        this.frame = frame;
         StringBuffer respuesta = new StringBuffer("");
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
         Tramites tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas, respuesta);
@@ -154,7 +157,21 @@ public class Control {
         TypedQuery<Vehiculo> query = em.createQuery(cq);
         List<Vehiculo> vehiculos = query.getResultList();
         
+        if(!vehiculos.isEmpty() && !verificarPertencenciaAuto()) {
+            JOptionPane.showMessageDialog(frame, "Este auto no es suyo", "", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if(vehiculos.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No se encuentra ese vehiculo, registrelo", "Vehiculo no encontrado!!", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            JOptionPane.showMessageDialog(frame, "Vehiculo encontrado: " + vehiculos.get(0), "Vehiculo encontrado!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         return vehiculos;
+    }
+    
+    private static boolean verificarPertencenciaAuto() {
+        return false;
     }
 
     /**
