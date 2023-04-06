@@ -88,7 +88,7 @@ public class Placa extends Tramite implements Serializable {
     }
     /**
      * Constructor que inicializa TODOS los atributos de la clase, incluyendo
-     * la clase padre Tramite
+     * la clase padre Tramite, para vehiculos usados
      * @param identificador Cadena que identifica al vehículo : AAA-111
      * @param fechaEmision Fecha en la que se emitió el trámite. 
      * Generada automáticamente al realizarse
@@ -107,7 +107,25 @@ public class Placa extends Tramite implements Serializable {
         this.costo = costo;
         this.vehiculo = vehiculo;
     }
-    
+    /**
+     * Constructor que inicializa TODOS los atributos de la clase, incluyendo
+     * la clase padre Tramite, para vehiculos nuevos
+     * @param identificador Cadena que identifica al vehículo : AAA-111
+     * @param fechaEmision Fecha en la que se emitió el trámite. 
+     * Generada automáticamente al realizarse
+     * @param costo Costo del trámite
+     * @param vehiculo Vehículo al cual se le pondrán las placas
+     * @param persona Persona que realizó el trámite
+     * @param pago Pago que pertenece al trámite
+     */
+    public Placa(String identificador, Calendar fechaEmision, Integer costo, Vehiculo vehiculo, Persona persona, Pago pago) {
+        super(persona, pago);
+        this.identificador = identificador;
+        this.fechaEmision = fechaEmision;
+        this.costo = costo;
+        this.vehiculo = vehiculo;
+    }
+
     
     //GETTERS Y SETTERS
 

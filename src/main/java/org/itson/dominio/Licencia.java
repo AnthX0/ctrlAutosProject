@@ -20,17 +20,17 @@ import javax.persistence.TemporalType;
 public class Licencia extends Tramite implements Serializable {
     //ATRIBUTOS
     
-    @Column(name = "fecha_expedicion", nullable = false)
+    @Column(name = "fecha_expedicion", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaExpedicion;
     
-    @Column(name = "años_vigencia", nullable = false)
+    @Column(name = "años_vigencia", nullable = true)
     private Integer aniosVigencia;
     
     @Column(name = "costo", nullable = false)
     private Integer costo;
     
-    @Column(name = "tipo_licencia", nullable = false)
+    @Column(name = "tipo_licencia", nullable = true)
     private String tipoLicencia;
     
     //CONSTRUCTORES

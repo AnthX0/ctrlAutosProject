@@ -8,13 +8,17 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
+import org.itson.control.Control;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Pago;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Placa;
+import org.itson.dominio.Vehiculo;
 
 
 /**
@@ -27,14 +31,18 @@ public class Tramites extends javax.swing.JDialog {
     EntityManager em = emFactory.createEntityManager();
     private DefaultComboBoxModel personas;
     private int tipo;
+    private Control c = new Control();
+    private StringBuffer respuesta;
+    private String serie;
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, boolean modal, int tipo, DefaultComboBoxModel personas) {
+    public Tramites(java.awt.Frame frame, String title, boolean modal, int tipo, DefaultComboBoxModel personas, StringBuffer respuesta) {
         super(frame, title, modal);
         this.tipo = tipo;
         this.personas = personas;
+        this.respuesta = respuesta;
         
         initComponents();
         
@@ -69,6 +77,7 @@ public class Tramites extends javax.swing.JDialog {
             setSize(new Dimension(300, 296));
         }
         
+        respuesta.append(ConstantesGUI.CANCELAR);
         centrarVentana(frame);
         setVisible(true);
     }
@@ -377,11 +386,68 @@ public class Tramites extends javax.swing.JDialog {
             em.persist(new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago));
             em.getTransaction().commit();
             
+            respuesta.delete(0, respuesta.length());
+            respuesta.append(ConstantesGUI.ACEPTAR);
             dispose();
         }
         
+        if(tipo == ConstantesGUI.PLACA_NUEVO) {
+            String identificador = "";
+            Calendar fechaEmision = new GregorianCalendar();
+            Calendar fechaRecepcion = new GregorianCalendar();
+            String numeroSerie = txtSerie.getText();
+            String marca = txtMarca.getText();
+            String linea = txtLinea.getText();
+            String color = txtColor.getText();
+            Integer modelo = Integer.parseInt(txtModelo.getText());
+            Integer costo = Integer.parseInt(txtCosto.getText());
+            Persona persona = (Persona) cbxCliente.getSelectedItem();
+            Vehiculo vehiculo = new Vehiculo(numeroSerie, marca, linea, color, modelo);
+            Pago pago = new Pago("Tarjeta", "Compra de una placa", costo, new GregorianCalendar(), persona);
+            
+            em.getTransaction().begin();
+            em.persist(vehiculo);
+            em.persist(pago);
+            em.persist(new Placa(identificador, fechaEmision, costo, vehiculo, persona, pago));
+            em.getTransaction().commit();
+            
+            respuesta.delete(0, respuesta.length());
+            respuesta.append(ConstantesGUI.ACEPTAR);
+            dispose();
+        }
+        
+        if(tipo == ConstantesGUI.PLACA_USADO) {
+            
+        }
+        
         if(tipo == ConstantesGUI.PLACA) {
-            String serie = txtSerie.getText();
+            serie = txtSerie.getText();
+            if(!"".equals(serie)) {
+                if(c.buscarVehiculo(serie).isEmpty()){
+                    setTipo(ConstantesGUI.PLACA_NUEVO);
+                    txtSerie.setEditable(false);
+                    definirPrecio();
+                }else{
+                    setTipo(ConstantesGUI.PLACA_USADO);
+                    txtSerie.setEditable(false);
+                    definirPrecio();
+                }
+                btnTramitar.setText("Trámitar");
+            }
+        }
+        
+        if(tipo == ConstantesGUI.PLACA_USADO) {
+            List<Vehiculo> vehiculos = c.buscarVehiculo(serie);
+            Vehiculo v = vehiculos.get(0);
+            txtMarca.setText(v.getMarca());
+            txtMarca.setEditable(false);
+            txtLinea.setText(v.getLinea());
+            txtLinea.setEditable(false);
+            txtColor.setText(v.getColor());
+            txtColor.setEditable(false);
+            txtModelo.setText(String.valueOf(v.getModelo()));
+            txtModelo.setEditable(false);
+            btnRestaurar.setVisible(false);
         }
     }//GEN-LAST:event_btnTramitarActionPerformed
 
@@ -393,6 +459,7 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA) {
+            cbxCliente.setSelectedIndex(0);
             txtSerie.setText("");
             txtMarca.setText("");
             txtLinea.setText("");

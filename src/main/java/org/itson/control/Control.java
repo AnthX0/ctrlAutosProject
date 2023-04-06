@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Vehiculo;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
 
@@ -32,29 +33,42 @@ public class Control {
         Persistence.createEntityManagerFactory
                 ("org.itson_AgenciaTransito");
     EntityManager em = emFactory.createEntityManager();
+    CriteriaBuilder cb = em.getCriteriaBuilder();
     
     //MÉTODOS
 
     /**
      * Este método solicita una licencia
      * @param frame Ventana
+     * @return 
      */
-    public void solicitarLicencia(JFrame frame) {
+    public boolean solicitarLicencia(JFrame frame) {
+        StringBuffer respuesta = new StringBuffer("");
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        Tramites tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas);
+        Tramites tramites = new Tramites(frame, "Trámitar licencia", true, ConstantesGUI.LICENCIA, personas, respuesta);
+        
+        if(respuesta.substring(0).equals(ConstantesGUI.CANCELAR)) 
+            return false;
         
         JOptionPane.showMessageDialog(frame, "Ya se le ha otorgado la licencia", "Trámite exitoso!!", JOptionPane.INFORMATION_MESSAGE);
+        return true;
     }
     
     /**
      * Este método solicita una placa
      * @param frame Ventana
+     * @return 
      */
-    public void solicitarPlacas(JFrame frame) {
+    public boolean solicitarPlacas(JFrame frame) {
+        StringBuffer respuesta = new StringBuffer("");
         DefaultComboBoxModel<Persona> personas = c.ComboBoxPersonas(getPersonas());
-        Tramites tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas);
+        Tramites tramites = new Tramites(frame, "Trámitar placas", true, ConstantesGUI.PLACA, personas, respuesta);
+        
+        if(respuesta.substring(0).equals(ConstantesGUI.CANCELAR)) 
+            return false;
         
         JOptionPane.showMessageDialog(frame, "Ya se le ha otorgado las placas", "Trámite exitoso!!", JOptionPane.INFORMATION_MESSAGE);
+        return true;
     }
     
     /**
@@ -118,7 +132,6 @@ public class Control {
      * @return Regresa una lista de personas
      */
     public List<Persona> getPersonas() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
         Root<Persona> r = cq.from(Persona.class);
         cq.select(r);
@@ -127,8 +140,21 @@ public class Control {
         return personas;
     }
     
-    public boolean buscarVehiculo() {
-        return false;
+    /**
+     * Busca un vehiculo dentro de la base de datos
+     * @param NSerie Numero de serie del vehiculo a buscar
+     * @return Un vehiculo con el número de serie a buscar
+     */
+    public List<Vehiculo> buscarVehiculo(String NSerie) {
+        CriteriaQuery<Vehiculo> cq = cb.createQuery(Vehiculo.class);
+        Root<Vehiculo> r = cq.from(Vehiculo.class);
+        cq.select(r).where(
+            cb.like(r.get("numeroSerie"), "%"+NSerie+"%")
+        );
+        TypedQuery<Vehiculo> query = em.createQuery(cq);
+        List<Vehiculo> vehiculos = query.getResultList();
+        
+        return vehiculos;
     }
 
     /**
