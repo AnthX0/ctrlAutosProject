@@ -19,9 +19,9 @@ import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
-import org.itson.dominio.Tramite;
 import org.itson.dominio.Vehiculo;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
@@ -154,7 +154,12 @@ public class Control {
      * @return Un vehiculo con el número de serie a buscar
      */
     public List<Vehiculo> buscarVehiculo(String NSerie, Persona persona) {
-        if(verificarLicenciaPersona(persona)) {
+        if(verificarLicencia(persona)) {
+            JOptionPane.showMessageDialog(frame, "Usted no cuenta con una licencia vigente", "Sin licencia!!", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        
+        if(verificarVigencia(persona)) {
             JOptionPane.showMessageDialog(frame, "Usted no cuenta con una licencia vigente", "Sin licencia!!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -202,20 +207,60 @@ public class Control {
     }
     
     /**
-     * Verifica si la persona tiene una licencia *vigente*
+     * Verifica si la persona tiene una licencia vigente
      * @param persona Persona que debe tener la licencia
      * @return False si no tiene licencia, True si tiene licencia
      */
-    private boolean verificarLicenciaPersona(Persona persona) {
-        CriteriaQuery<Tramite> cq = cb.createQuery(Tramite.class);
-        Root<Tramite> t = cq.from(Tramite.class);
-        cq.select(t).where(
-            cb.equal(t.get("persona").get("id"), persona.getId())
+    private boolean verificarLicencia(Persona persona) {
+        Calendar vigencia = new GregorianCalendar();
+        CriteriaQuery<Licencia> cq = cb.createQuery(Licencia.class);
+        Root<Licencia> l = cq.from(Licencia.class);
+        cq.select(l).where(
+            cb.equal(l.get("persona").get("id"), persona.getId())
         );
-        TypedQuery<Tramite> query = em.createQuery(cq);
-        List<Tramite> tramites = query.getResultList();
+        TypedQuery<Licencia> query = em.createQuery(cq);
+        List<Licencia> licencias = query.getResultList();
         
-        return tramites.isEmpty();
+        return licencias.isEmpty();
+    }
+    
+    /**
+     * Verifica la vigencia de la licencia de cierta persona
+     * @param persona Persona de la cual verificar licencia
+     * @return False si su licencia expiro, True si su licencia sigue vigente
+     */
+    private boolean verificarVigencia(Persona persona) {
+        Calendar vigencia = new GregorianCalendar();
+        CriteriaQuery<Licencia> cq = cb.createQuery(Licencia.class);
+        Root<Licencia> l = cq.from(Licencia.class);
+        cq.select(l).where(
+            cb.equal(l.get("persona").get("id"), persona.getId())
+        );
+        TypedQuery<Licencia> query = em.createQuery(cq);
+        List<Licencia> licencias = query.getResultList();
+        
+        if(!licencias.isEmpty()) {
+            vigencia = licencias.get(licencias.size()-1).getFechaExpedicion();
+            vigencia.add(Calendar.YEAR, licencias.get(licencias.size()-1).getAniosVigencia());
+        }
+        
+        return vigencia.before(new GregorianCalendar());
+    }
+    
+    /**
+     * Verifica que una persona tenga una licencia, en caso de tenerla no podrá solicitar otra
+     * @param persona Persona que quiere solicitar licencia
+     * @return False si tiene una licencia, True si no la tiene
+     */
+    public boolean verificarLicenciaPersona(Persona persona) {
+        if(verificarLicencia(persona)) {
+            return true;
+        }else if(verificarVigencia(persona)) {
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(frame, "Usted ya cuenta con una licencia vigente", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     /**

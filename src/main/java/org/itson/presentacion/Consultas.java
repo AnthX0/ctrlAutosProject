@@ -4,6 +4,9 @@
  */
 package org.itson.presentacion;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 /**
  * @author Victor y Samuel
  */
@@ -14,6 +17,18 @@ public class Consultas extends javax.swing.JFrame {
      */
     public Consultas() {
         initComponents();
+        centrarVentana(this);
+        setVisible(true);
+    }
+    
+    private void centrarVentana(java.awt.Frame frame) {
+        Dimension frameSize = frame.getSize();
+        Point loc = frame.getLocation();
+        
+        Dimension dlgSize = getPreferredSize();
+        
+        setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
+                    (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
 
     /**

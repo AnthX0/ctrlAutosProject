@@ -47,7 +47,7 @@ public class Principal extends javax.swing.JFrame {
             frameSize.width = screenSize.width;
         }
         
-        setLocation((screenSize.height - frameSize.height)/2, (screenSize.width - frameSize.width)/2);
+        setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
     }
 
     public void despliegaTabla(Tabla t) {
@@ -98,6 +98,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agencia de Transito");
+        setResizable(false);
 
         btnInsercionMasiva.setText("Inserción Masiva");
         btnInsercionMasiva.addActionListener(new java.awt.event.ActionListener() {
@@ -242,7 +243,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
         Consultas consultas = new Consultas();
-        consultas.setVisible(true);
     }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
@@ -258,7 +258,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
         Consultas consultas = new Consultas();
-        consultas.setVisible(true);
     }//GEN-LAST:event_placasConsultasMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

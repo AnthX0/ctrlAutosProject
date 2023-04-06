@@ -18,6 +18,10 @@ public class Vehiculo_Usado extends Vehiculo implements Serializable {
 
     public Vehiculo_Usado() {}
 
+    public Vehiculo_Usado(String numeroSerie, String marca, String linea, String color, Integer modelo) {
+        super(numeroSerie, marca, linea, color, modelo);
+    }
+
     public Vehiculo_Usado(Vehiculo vehiculo) {
         super(vehiculo.getNumeroSerie(), vehiculo.getMarca(), vehiculo.getLinea(), vehiculo.getColor(), vehiculo.getModelo());
     }

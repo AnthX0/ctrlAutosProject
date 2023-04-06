@@ -4,6 +4,9 @@
  */
 package org.itson.presentacion;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 /**
  * @author Victor y Samuel
  */
@@ -14,8 +17,20 @@ public class Reporte extends javax.swing.JFrame {
      */
     public Reporte() {
         initComponents();
+        centrarVentana(this);
+        setVisible(true);
     }
 
+    private void centrarVentana(java.awt.Frame frame) {
+        Dimension frameSize = frame.getSize();
+        Point loc = frame.getLocation();
+        
+        Dimension dlgSize = getPreferredSize();
+        
+        setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
+                    (frameSize.height - dlgSize.height) / 2 + loc.y);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,10 +125,11 @@ public class Reporte extends javax.swing.JFrame {
                     .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPeriodo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbla)
-                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPeriodo)
+                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
