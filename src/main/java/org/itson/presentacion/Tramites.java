@@ -28,6 +28,7 @@ import org.itson.dominio.Vehiculo_Usado;
  * @author Victor y Samuel
  */
 public class Tramites extends javax.swing.JDialog {
+    // ATRIBUTOS
     EntityManagerFactory emFactory = 
         Persistence.createEntityManagerFactory
                 ("org.itson_AgenciaTransito");
@@ -38,18 +39,19 @@ public class Tramites extends javax.swing.JDialog {
     private StringBuffer respuesta;
     private String serie;
     private List<Vehiculo> vehiculos;
+    
+    // CONSTRUCTORES
 
     /**
      * Creates new form Tramite
      */
-    public Tramites(java.awt.Frame frame, String title, boolean modal, int tipo, DefaultComboBoxModel personas, StringBuffer respuesta) {
+    public Tramites(java.awt.Frame frame, String title, boolean modal, 
+            int tipo, DefaultComboBoxModel personas, StringBuffer respuesta) {
         super(frame, title, modal);
         this.tipo = tipo;
         this.personas = personas;
         this.respuesta = respuesta;
-        
         initComponents();
-        
         if(tipo == ConstantesGUI.LICENCIA) {
             lblRegistro.setVisible(false);
             lblSerie.setVisible(false);
@@ -64,10 +66,8 @@ public class Tramites extends javax.swing.JDialog {
             txtModelo.setVisible(false);
             lblCosto.setVisible(false);
             txtCosto.setVisible(false);
-            
             setSize(new Dimension(300, 205));
         }
-        
         if(tipo == ConstantesGUI.PLACA) {
             lblVigencia.setVisible(false);
             cbxVigencia.setVisible(false);
@@ -75,55 +75,76 @@ public class Tramites extends javax.swing.JDialog {
             cbxTipo.setVisible(false);
             lblPrecio.setVisible(false);
             txtPrecio.setVisible(false);
-            
             btnTramitar.setText("Buscar");
-            
             setSize(new Dimension(300, 296));
         }
-        
         respuesta.append(ConstantesGUI.CANCELAR);
         centrarVentana(frame);
         setVisible(true);
     }
+    
+    // MÉTODOS
 
+    /**
+     * Método para definir el precio de las Licencias y las Placas
+     */
     private void definirPrecio() {
-        if(cbxVigencia.getSelectedIndex() == 0 || cbxTipo.getSelectedIndex() == 0) {
+        // LICENCIA NADA SELECCIONADO
+        if(cbxVigencia.getSelectedIndex() == 0 || 
+                cbxTipo.getSelectedIndex() == 0) {
             txtPrecio.setText("");
         }
-        
-        if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 1) {
+        // LICENCIA NORMAL 1 AÑO
+        if(cbxVigencia.getSelectedIndex() == 1  && 
+                cbxTipo.getSelectedIndex() == 1) {
             txtPrecio.setText("600");
-        }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 1) {
+        // LICENCIA NORMAL 2 AÑOS
+        }else if(cbxVigencia.getSelectedIndex() == 2 && 
+                cbxTipo.getSelectedIndex() == 1) {
             txtPrecio.setText("900");
-        }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 1) {
+        // LICENCIA NORMAL 3 AÑOS
+        }else if(cbxVigencia.getSelectedIndex() == 3 && 
+                cbxTipo.getSelectedIndex() == 1) {
             txtPrecio.setText("1100");
         }
-        
-        if(cbxVigencia.getSelectedIndex() == 1  && cbxTipo.getSelectedIndex() == 2) {
+        // LICENCIA DISCAPACITADOS 1 AÑO
+        if(cbxVigencia.getSelectedIndex() == 1  && 
+                cbxTipo.getSelectedIndex() == 2) {
             txtPrecio.setText("200");
-        }else if(cbxVigencia.getSelectedIndex() == 2 && cbxTipo.getSelectedIndex() == 2) {
+        // LICENCIA DISCAPACITADOS 2 AÑOS
+        }else if(cbxVigencia.getSelectedIndex() == 2 && 
+                cbxTipo.getSelectedIndex() == 2) {
             txtPrecio.setText("500");
-        }else if(cbxVigencia.getSelectedIndex() == 3 && cbxTipo.getSelectedIndex() == 2) {
+        // LICENCIA DISCAPACITADOS 3 AÑOS
+        }else if(cbxVigencia.getSelectedIndex() == 3 && 
+                cbxTipo.getSelectedIndex() == 2) {
             txtPrecio.setText("700");
         }
-        
+        // PLACA AUTO NUEVO
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
             txtCosto.setText("1500");
+        // PLACA AUTO USADO
         }else if(tipo == ConstantesGUI.PLACA_USADO) {
             txtCosto.setText("1000");
         }
     }
 
+    /**
+     * Método para centrar la ventana en el frame
+     * @param frame 
+     */
     private void centrarVentana(java.awt.Frame frame) {
         Dimension frameSize = frame.getSize();
         Point loc = frame.getLocation();
-        
         Dimension dlgSize = getPreferredSize();
-        
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
 
+    /**
+     * Método para setear el tipo de Trámite a realizar
+     * @param tipo 
+     */
     private void setTipo(int tipo) {
         this.tipo = tipo;
     }
@@ -410,29 +431,30 @@ public class Tramites extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxTipoActionPerformed
 
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
-        if(tipo == ConstantesGUI.LICENCIA && !(cbxVigencia.getSelectedIndex() == 0 && cbxTipo.getSelectedIndex() == 0)){
+        // TRAMITAR LICENCIAS
+        if(tipo == ConstantesGUI.LICENCIA && !(cbxVigencia.getSelectedIndex() 
+                == 0 && cbxTipo.getSelectedIndex() == 0)){
             Persona persona = (Persona) cbxCliente.getSelectedItem();
-            
             if(c.verificarLicenciaPersona(persona)) {
                 Calendar fechaExpedicion = new GregorianCalendar();
-                Integer aniosVigencia = (Integer) cbxVigencia.getSelectedIndex();
+                Integer aniosVigencia = 
+                        (Integer) cbxVigencia.getSelectedIndex();
                 Integer costo = Integer.parseInt(txtPrecio.getText());
                 String tipoLicencia = (String) cbxTipo.getSelectedItem();
-                Pago pago = new Pago("Tarjeta", "Compra de una licencia", costo, fechaExpedicion, persona);
-                
+                Pago pago = new Pago("Tarjeta", 
+                        "Compra de una licencia", costo, 
+                        fechaExpedicion, persona);
                 em.getTransaction().begin();
                 em.persist(pago);
-                em.persist(new Licencia(fechaExpedicion, aniosVigencia, costo, tipoLicencia, persona, pago));
+                em.persist(new Licencia(fechaExpedicion, aniosVigencia, costo, 
+                        tipoLicencia, persona, pago));
                 em.getTransaction().commit();
-                
                 respuesta.delete(0, respuesta.length());
                 respuesta.append(ConstantesGUI.ACEPTAR);
                 dispose(); 
-            }else{
-                
-            }
+            }else{}
         }
-        
+        // TRAMITAR PLACAS PARA AUTOS NUEVOS
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
             String identificador = c.generarIdentificadorPlaca();
             Calendar fechaEmision = new GregorianCalendar();
@@ -443,20 +465,22 @@ public class Tramites extends javax.swing.JDialog {
             Integer modelo = Integer.parseInt(txtModelo.getText());
             Integer costo = Integer.parseInt(txtCosto.getText());
             Persona persona = (Persona) cbxCliente.getSelectedItem();
-            Vehiculo vehiculo = new Vehiculo(numeroSerie, marca, linea, color, modelo);
-            Pago pago = new Pago("Tarjeta", "Compra de una placa para auto nuevo", costo, new GregorianCalendar(), persona);
-            
+            Vehiculo vehiculo = new Vehiculo(numeroSerie, marca, linea, color, 
+                    modelo);
+            Pago pago = new Pago("Tarjeta", 
+                    "Compra de una placa para auto nuevo", 
+                    costo, new GregorianCalendar(), persona);
             em.getTransaction().begin();
             em.persist(vehiculo);
             em.persist(pago);
-            em.persist(new Placa(identificador, fechaEmision, costo, vehiculo, persona, pago));
+            em.persist(new Placa(identificador, fechaEmision, costo, vehiculo, 
+                    persona, pago));
             em.getTransaction().commit();
-            
             respuesta.delete(0, respuesta.length());
             respuesta.append(ConstantesGUI.ACEPTAR);
             dispose();
         }
-        
+        // TRAMITAR PLACAS PARA AUTOS USADOS
         if(tipo == ConstantesGUI.PLACA_USADO) {
             String identificador = c.generarIdentificadorPlaca();
             Calendar fechaEmision = new GregorianCalendar();
@@ -468,26 +492,26 @@ public class Tramites extends javax.swing.JDialog {
             Integer modelo = Integer.parseInt(txtModelo.getText());
             Integer costo = Integer.parseInt(txtCosto.getText());
             Persona persona = (Persona) cbxCliente.getSelectedItem();
-            Vehiculo_Usado vehiculo = new Vehiculo_Usado(numeroSerie, marca, linea, color, modelo);
-            Pago pago = new Pago("Tarjeta", "Compra de una nueva placa para auto usado", costo, new GregorianCalendar(), persona);
-            
+            Vehiculo_Usado vehiculo = new Vehiculo_Usado(numeroSerie, marca, 
+                    linea, color, modelo);
+            Pago pago = new Pago("Tarjeta", 
+                    "Compra de una nueva placa para auto usado", 
+                    costo, new GregorianCalendar(), persona);
             em.getTransaction().begin();
             em.persist(vehiculo);
             em.persist(pago);
-            em.persist(new Placa(identificador, fechaEmision, fechaRecepcion, costo, vehiculo, persona, pago));
+            em.persist(new Placa(identificador, fechaEmision, fechaRecepcion, 
+                    costo, vehiculo, persona, pago));
             em.getTransaction().commit();
-            
             respuesta.delete(0, respuesta.length());
             respuesta.append(ConstantesGUI.ACEPTAR);
             dispose();
         }
-        
         if(tipo == ConstantesGUI.PLACA) {
             serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
                 vehiculos = c.buscarVehiculo(serie, (Persona) cbxCliente.getSelectedItem());
-                if(vehiculos == null) {
-                    
+                if(vehiculos == null) { 
                 }else{
                     if(vehiculos.isEmpty()){
                         setTipo(ConstantesGUI.PLACA_NUEVO);
@@ -508,10 +532,9 @@ public class Tramites extends javax.swing.JDialog {
                     }
                     btnTramitar.setText("Trámitar");
                 }
-                
             }
         }
-        
+        // ELIMINAR VEHICULO CON PLACA EN USO
         if(tipo == ConstantesGUI.PLACA_USADO) {
             Vehiculo v = vehiculos.get(vehiculos.size()-1);
             txtMarca.setText(v.getMarca());
@@ -532,7 +555,6 @@ public class Tramites extends javax.swing.JDialog {
             cbxVigencia.setSelectedIndex(0);
             cbxTipo.setSelectedIndex(0);
         }
-        
         if(tipo == ConstantesGUI.PLACA) {
             cbxCliente.setSelectedIndex(0);
             txtSerie.setText("");
@@ -542,7 +564,6 @@ public class Tramites extends javax.swing.JDialog {
             txtModelo.setText("");
             txtCosto.setText("");
         }
-        
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
             txtMarca.setText("");
             txtLinea.setText("");

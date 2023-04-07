@@ -13,49 +13,48 @@ import org.itson.control.Tabla;
  * @author Victor y Samuel
  */
 public class Principal extends javax.swing.JFrame {
+    // ATRIBUTOS
     private javax.swing.JTable tabla;
     Control control = new Control();
 
-
+    // CONSTRUCTORES
+    
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
         centraVentana();
-        
         if(control.insercionMasiva() == false) {
             Tabla tablaPersonas = control.getTablaPersonas(this);
             despliegaTabla(tablaPersonas);
             btnInsercionMasiva.setVisible(false);
         }
     }
+    
+    // MÉTODOS
 
     /**
      * Este método ubica la ventana en el centro de la pantalla
      */
     private void centraVentana() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
         Dimension frameSize = getSize();
-        
         if(frameSize.height > screenSize.height) {
             frameSize.height = screenSize.height;
         }
-        
         if(frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        
-        setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
+        setLocation((screenSize.width - frameSize.width)/2, 
+                (screenSize.height - frameSize.height)/2);
     }
 
     public void despliegaTabla(Tabla t) {
         tabla = new javax.swing.JTable(t.getModeloTabla());
-        
-        tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        tabla.setAutoResizeMode
+        (javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         tabla.setAutoscrolls(false);
-        
         jScrollPane1.setViewportView(tabla);
     }
 
@@ -242,7 +241,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
     private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
-        Consultas consultas = new Consultas();
+        
     }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
@@ -257,7 +256,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
     private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
-        Consultas consultas = new Consultas();
+        
     }//GEN-LAST:event_placasConsultasMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

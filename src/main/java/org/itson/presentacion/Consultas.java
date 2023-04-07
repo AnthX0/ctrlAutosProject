@@ -10,27 +10,33 @@ import java.awt.Point;
 /**
  * @author Victor y Samuel
  */
-public class Consultas extends javax.swing.JFrame {
+public class Consultas extends javax.swing.JDialog {
 
+    // CONSTRUCTORES
+    
     /**
      * Creates new form Consultas
      */
-    public Consultas() {
+    public Consultas(java.awt.Frame frame) {
         initComponents();
-        centrarVentana(this);
+        centrarVentana(frame);
         setVisible(true);
     }
     
+    // MÉTODOS
+    
+    /**
+     * Método para centrar la ventana en la pantalla
+     * @param frame 
+     */
     private void centrarVentana(java.awt.Frame frame) {
         Dimension frameSize = frame.getSize();
         Point loc = frame.getLocation();
-        
         Dimension dlgSize = getPreferredSize();
-        
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

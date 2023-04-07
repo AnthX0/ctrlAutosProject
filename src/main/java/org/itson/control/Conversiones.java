@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
+import org.itson.dominio.Placa;
 
 /**
  * @author Victor y Samuel
@@ -18,6 +20,14 @@ public class Conversiones {
     
     private String nombresColumTablasPersonas[] = {"Id", "Nombre Completo", 
         "Fecha de Nacimiento", "CURP", "RFC", "Teléfono"};
+    
+    private String nombresColumTablasLicencias[] = {"Id", "Nombre Completo", 
+        "Tipo de Licencia", "Fecha de Expedición", 
+        "Años de Vigencia", "Costo"};
+    
+    private String nombresColumTablasPlacas[] = {"Id", "Nombre Completo", 
+        "Id del Vehículo", "Identificador", "Fecha de Emisión", 
+        "Fecha de Recepción", "Costo"};
     
     //MÉTODOS
     
@@ -40,7 +50,8 @@ public class Conversiones {
                 tabla[i][4] = p.getRfc();
                 tabla[i][5] = p.getTelefono();
             }
-            return new DefaultTableModel(tabla, nombresColumTablasPersonas);
+            return new DefaultTableModel(tabla, 
+                    nombresColumTablasPersonas);
         }
         return null;
     }
@@ -50,13 +61,63 @@ public class Conversiones {
      * @param personas Lista de personas a escoger
      * @return Un combobox con la lista de personas
      */
-    public DefaultComboBoxModel<Persona> ComboBoxPersonas(List<Persona> personas) {
+    public DefaultComboBoxModel<Persona> 
+        ComboBoxPersonas(List<Persona> personas) {
         DefaultComboBoxModel<Persona> cbx = new DefaultComboBoxModel<>();
         if(personas != null) {
             for(int i=0; i < personas.size(); i++) {
                 cbx.addElement(personas.get(i));
             }
             return cbx;
+        }
+        return null;
+    }
+    
+    /**
+     * Método que le da formato a una tabla de Licencias
+     * @param licencias La lista de las licencias a formatear
+     * @return Una tabla con columnas correspondientes a los datos de la cadena
+     */
+    public DefaultTableModel licenciasTableModel(List<Licencia> licencias) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        Object tabla[][];
+        if(licencias != null) {
+            tabla = new Object[licencias.size()][5];
+            for(int i=0; i < licencias.size(); i++) {
+                Licencia l = licencias.get(i);
+                tabla[i][0] = l.getPersona().getNombreCompleto();
+                tabla[i][1] = l.getTipoLicencia();
+                tabla[i][2] = sdf.format(l.getFechaExpedicion().getTime());
+                tabla[i][3] = l.getAniosVigencia();
+                tabla[i][4] = l.getCosto();
+            }
+            return new DefaultTableModel(tabla, 
+                    nombresColumTablasLicencias);
+        }
+        return null;
+    }
+    
+    /**
+     * Método que le da formato a una tabla de Placas
+     * @param placas La lista de lñas placas a formatear
+     * @return Una tabla con columnas correspondientes a los datos de la cadena
+     */
+    public DefaultTableModel placasTableModel(List<Placa> placas) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        Object tabla[][];
+        if(placas != null) {
+            tabla = new Object[placas.size()][6];
+            for(int i=0; i < placas.size(); i++) {
+                Placa p = placas.get(i);
+                tabla[i][0] = p.getPersona().getNombreCompleto();
+                tabla[i][1] = p.getVehiculo().toString();
+                tabla[i][2] = p.getIdentificador();
+                tabla[i][3] = sdf.format(p.getFechaEmision().getTime());
+                tabla[i][4] = sdf.format(p.getFechaRecepcion().getTime());
+                tabla[i][5] = p.getCosto();
+            }
+            return new DefaultTableModel(tabla, 
+                    nombresColumTablasPlacas);
         }
         return null;
     }
