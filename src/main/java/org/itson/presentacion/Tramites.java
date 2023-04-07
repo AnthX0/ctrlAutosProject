@@ -458,8 +458,9 @@ public class Tramites extends javax.swing.JDialog {
         }
         
         if(tipo == ConstantesGUI.PLACA_USADO) {
+            List<Placa> placas = vehiculos.get(0).getPlacas();            
             String identificador = c.generarIdentificadorPlaca();
-            Calendar fechaEmision = new GregorianCalendar();
+            Calendar fechaEmision = placas.get(0).getFechaEmision();
             Calendar fechaRecepcion = new GregorianCalendar();
             String numeroSerie = txtSerie.getText().toUpperCase();
             String marca = txtMarca.getText();
