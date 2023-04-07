@@ -85,11 +85,12 @@ public class Conversiones {
             tabla = new Object[licencias.size()][5];
             for(int i=0; i < licencias.size(); i++) {
                 Licencia l = licencias.get(i);
-                tabla[i][0] = l.getPersona().getNombreCompleto();
-                tabla[i][1] = l.getTipoLicencia();
-                tabla[i][2] = sdf.format(l.getFechaExpedicion().getTime());
-                tabla[i][3] = l.getAniosVigencia();
-                tabla[i][4] = l.getCosto();
+                tabla[i][0] = l.getPersona().getId();
+                tabla[i][1] = l.getPersona().getNombreCompleto();
+                tabla[i][2] = l.getTipoLicencia();
+                tabla[i][3] = sdf.format(l.getFechaExpedicion().getTime());
+                tabla[i][4] = l.getAniosVigencia();
+                tabla[i][5] = l.getCosto();
             }
             return new DefaultTableModel(tabla, 
                     nombresColumTablasLicencias);
@@ -109,12 +110,17 @@ public class Conversiones {
             tabla = new Object[placas.size()][6];
             for(int i=0; i < placas.size(); i++) {
                 Placa p = placas.get(i);
-                tabla[i][0] = p.getPersona().getNombreCompleto();
-                tabla[i][1] = p.getVehiculo().toString();
-                tabla[i][2] = p.getIdentificador();
-                tabla[i][3] = sdf.format(p.getFechaEmision().getTime());
-                tabla[i][4] = sdf.format(p.getFechaRecepcion().getTime());
-                tabla[i][5] = p.getCosto();
+                tabla[i][0] = p.getPersona().getId();
+                tabla[i][1] = p.getPersona().getNombreCompleto();
+                tabla[i][2] = p.getVehiculo().toString();
+                tabla[i][3] = p.getIdentificador();
+                tabla[i][4] = sdf.format(p.getFechaEmision().getTime());
+                if(p.getFechaRecepcion() != null) {
+                    tabla[i][5] = sdf.format(p.getFechaRecepcion().getTime());
+                }else{
+                    tabla[i][5] = "";
+                }
+                tabla[i][6] = p.getCosto();
             }
             return new DefaultTableModel(tabla, 
                     nombresColumTablasPlacas);

@@ -561,7 +561,8 @@ public class Tramites extends javax.swing.JDialog {
                 }
             }
         }
-        // DESHABILITAR LOS CAMPOS PARA NO PODER MODIFICAR LOS DATOS DEL AUTO USADO
+        // DESHABILITAR LOS CAMPOS PARA NO PODER 
+        // MODIFICAR LOS DATOS DEL AUTO USADO
         if(tipo == ConstantesGUI.PLACA_USADO) {
             Vehiculo v = vehiculos.get(vehiculos.size()-1);
             txtMarca.setText(v.getMarca());

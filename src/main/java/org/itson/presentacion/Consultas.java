@@ -32,12 +32,17 @@ public class Consultas extends javax.swing.JDialog {
     
     /**
      * Creates new form Consultas
+     * @param frame
+     * @param title
+     * @param modal
+     * @param tipo
+     * @param respuesta
      */
     public Consultas(java.awt.Frame frame, String title, boolean modal, 
-            int tipo, StringBuffer respuesta) {
+            int tipo) {
         super(frame, title, modal);
         this.tipo = tipo;
-        this.respuesta = respuesta;
+        initComponents();
         // SI ES LICENCIA
         if(tipo == ConstantesGUI.LICENCIA){
             Tabla tablaLicencias = c.getTablaLicencias((JFrame) frame);
@@ -48,8 +53,6 @@ public class Consultas extends javax.swing.JDialog {
             Tabla tablaPlacas = c.getTablaPlacas((JFrame) frame);
             despliegaTabla(tablaPlacas);
         }
-        respuesta.append(ConstantesGUI.CANCELAR);
-        initComponents();
         centrarVentana(frame);
         setVisible(true);
     }

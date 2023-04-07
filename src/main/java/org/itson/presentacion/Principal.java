@@ -246,7 +246,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
     private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
-        control.getTablaLicencias(this);
+        Consultas cLic = new Consultas(this, "Consultar licencias", 
+                true, ConstantesGUI.LICENCIA);
     }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
@@ -261,7 +262,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
     private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
-        control.getTablaPlacas(this);
+        Consultas cPlaca = new Consultas(this, "Consultar placas", 
+                true, ConstantesGUI.PLACA);
     }//GEN-LAST:event_placasConsultasMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
