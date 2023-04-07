@@ -88,16 +88,6 @@ public class Control {
         return true;
     }
     
-    public Tabla getTablaLicencias(JFrame frame){
-        List<Licencia> licencias = getLicencias();
-        return new Tabla(c.licenciasTableModel(licencias));
-    }
-    
-    public Tabla getTablaPlacas(JFrame frame){
-        List<Placa> placas = getPlacas();
-        return new Tabla(c.placasTableModel(placas));
-    }
-    
     /**
      * Este método inserta 20 personas en una sola interacción
      * @return True si ya se insertarón las personas, false si ya había personas
@@ -443,5 +433,25 @@ public class Control {
     public Tabla getTablaPersonas(JFrame frame) {
         List<Persona> personas = getPersonas();
         return new Tabla(c.personasTableModel(personas));
-    }   
+    }
+    
+    /**
+     * Método que obtiene la tabla de licencias
+     * @param frame Ventana
+     * @return Una tabla con la lista de licencias
+     */
+    public Tabla getTablaLicencias(JFrame frame){
+        List<Licencia> licencias = getLicencias();
+        return new Tabla(c.licenciasTableModel(licencias));
+    }
+    
+    /**
+     * Método que obtiene la tabla de placas
+     * @param frame Ventana
+     * @return Una tabla con la lista de placas
+     */
+    public Tabla getTablaPlacas(JFrame frame){
+        List<Placa> placas = getPlacas();
+        return new Tabla(c.placasTableModel(placas));
+    }
 }

@@ -14,6 +14,7 @@ import org.itson.control.Tabla;
  */
 public class Principal extends javax.swing.JFrame {
     // ATRIBUTOS
+    
     private javax.swing.JTable tabla;
     Control control = new Control();
 
@@ -50,6 +51,10 @@ public class Principal extends javax.swing.JFrame {
                 (screenSize.height - frameSize.height)/2);
     }
 
+    /**
+     * Método para desplegar las tablas en el frame
+     * @param t Tabla a desplegar
+     */
     public void despliegaTabla(Tabla t) {
         tabla = new javax.swing.JTable(t.getModeloTabla());
         tabla.setAutoResizeMode
@@ -241,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
     private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
-        
+        control.getTablaLicencias(this);
     }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
@@ -256,7 +261,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
     private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
-        
+        control.getTablaPlacas(this);
     }//GEN-LAST:event_placasConsultasMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

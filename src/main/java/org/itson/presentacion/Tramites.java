@@ -29,6 +29,7 @@ import org.itson.dominio.Vehiculo_Usado;
  */
 public class Tramites extends javax.swing.JDialog {
     // ATRIBUTOS
+    
     EntityManagerFactory emFactory = 
         Persistence.createEntityManagerFactory
                 ("org.itson_AgenciaTransito");
@@ -511,7 +512,8 @@ public class Tramites extends javax.swing.JDialog {
         if(tipo == ConstantesGUI.PLACA) {
             serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
-                vehiculos = c.buscarVehiculo(serie, (Persona) cbxCliente.getSelectedItem());
+                vehiculos = c.buscarVehiculo(serie, 
+                        (Persona) cbxCliente.getSelectedItem());
                 if(vehiculos == null) { 
                 }else{
                     if(vehiculos.isEmpty()){
