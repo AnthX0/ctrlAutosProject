@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import org.itson.control.Control;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Pago;
@@ -433,27 +434,44 @@ public class Tramites extends javax.swing.JDialog {
 
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
         // TRAMITAR LICENCIAS
-        if(tipo == ConstantesGUI.LICENCIA && !(cbxVigencia.getSelectedIndex() 
-                == 0 && cbxTipo.getSelectedIndex() == 0)){
-            Persona persona = (Persona) cbxCliente.getSelectedItem();
-            if(c.verificarLicenciaPersona(persona)) {
-                Calendar fechaExpedicion = new GregorianCalendar();
-                Integer aniosVigencia = 
-                        (Integer) cbxVigencia.getSelectedIndex();
-                Integer costo = Integer.parseInt(txtPrecio.getText());
-                String tipoLicencia = (String) cbxTipo.getSelectedItem();
-                Pago pago = new Pago("Tarjeta", 
-                        "Compra de una licencia", costo, 
-                        fechaExpedicion, persona);
-                em.getTransaction().begin();
-                em.persist(pago);
-                em.persist(new Licencia(fechaExpedicion, aniosVigencia, costo, 
-                        tipoLicencia, persona, pago));
-                em.getTransaction().commit();
-                respuesta.delete(0, respuesta.length());
-                respuesta.append(ConstantesGUI.ACEPTAR);
-                dispose(); 
-            }else{}
+        if(tipo == ConstantesGUI.LICENCIA){
+            if(!(cbxVigencia.getSelectedIndex() == 0 &&    
+                    cbxTipo.getSelectedIndex() == 0)) {
+                Persona persona = (Persona) cbxCliente.getSelectedItem();
+                int cof = JOptionPane.showConfirmDialog(null, 
+                        "¿Es usted "+persona.getNombreCompleto()+"?", 
+                        "Verificar identidad!!", 
+                        JOptionPane.YES_NO_OPTION);
+                if(cof == 0) {
+                    if(c.verificarLicenciaPersona(persona)) {
+                        Calendar fechaExpedicion = new GregorianCalendar();
+                        Integer aniosVigencia = 
+                                (Integer) cbxVigencia.getSelectedIndex();
+                        Integer costo = Integer.parseInt(txtPrecio.getText());
+                        String tipoLicencia = 
+                                (String) cbxTipo.getSelectedItem();
+                        Pago pago = new Pago("Tarjeta", 
+                                "Compra de una licencia", 
+                                costo, 
+                                fechaExpedicion, persona);
+                        em.getTransaction().begin();
+                        em.persist(pago);
+                        em.persist(new Licencia(fechaExpedicion, aniosVigencia, 
+                                costo, 
+                                tipoLicencia, persona, pago));
+                        em.getTransaction().commit();
+                        respuesta.delete(0, respuesta.length());
+                        respuesta.append(ConstantesGUI.ACEPTAR);
+                        dispose(); 
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, 
+                        "Debe seleccionar los años de vigencia y "
+                                + "tipo de licencia!!", 
+                        "Error: Datos no seleccionados!!", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
         // TRAMITAR PLACAS PARA AUTOS NUEVOS
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
@@ -512,32 +530,38 @@ public class Tramites extends javax.swing.JDialog {
         if(tipo == ConstantesGUI.PLACA) {
             serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
-                vehiculos = c.buscarVehiculo(serie, 
-                        (Persona) cbxCliente.getSelectedItem());
-                if(vehiculos == null) { 
-                }else{
-                    if(vehiculos.isEmpty()){
-                        setTipo(ConstantesGUI.PLACA_NUEVO);
-                        txtSerie.setText(serie);
-                        txtMarca.setEditable(true);
-                        txtLinea.setEditable(true);
-                        txtColor.setEditable(true);
-                        txtModelo.setEditable(true);
-                        txtSerie.setEditable(false);
-                        btnCancelar.setText("Volver");
-                        definirPrecio();
+                Persona persona = (Persona) cbxCliente.getSelectedItem();
+                int cof = JOptionPane.showConfirmDialog(null, 
+                        "¿Es usted "+persona.getNombreCompleto()+"?", 
+                        "Verificar identidad!!", 
+                        JOptionPane.YES_NO_OPTION);
+                if(cof == 0) {
+                    vehiculos = c.buscarVehiculo(serie, persona);
+                    if(vehiculos == null) { 
                     }else{
-                        setTipo(ConstantesGUI.PLACA_USADO);
-                        txtSerie.setText(serie);
-                        txtSerie.setEditable(false);
-                        btnCancelar.setText("Volver");
-                        definirPrecio();
+                        if(vehiculos.isEmpty()){
+                            setTipo(ConstantesGUI.PLACA_NUEVO);
+                            txtSerie.setText(serie);
+                            txtMarca.setEditable(true);
+                            txtLinea.setEditable(true);
+                            txtColor.setEditable(true);
+                            txtModelo.setEditable(true);
+                            txtSerie.setEditable(false);
+                            btnCancelar.setText("Volver");
+                            definirPrecio();
+                        }else{
+                            setTipo(ConstantesGUI.PLACA_USADO);
+                            txtSerie.setText(serie);
+                            txtSerie.setEditable(false);
+                            btnCancelar.setText("Volver");
+                            definirPrecio();
+                        }
+                        btnTramitar.setText("Trámitar");
                     }
-                    btnTramitar.setText("Trámitar");
                 }
             }
         }
-        // ELIMINAR VEHICULO CON PLACA EN USO
+        // DESHABILITAR LOS CAMPOS PARA NO PODER MODIFICAR LOS DATOS DEL AUTO USADO
         if(tipo == ConstantesGUI.PLACA_USADO) {
             Vehiculo v = vehiculos.get(vehiculos.size()-1);
             txtMarca.setText(v.getMarca());
