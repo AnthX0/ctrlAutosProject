@@ -11,12 +11,14 @@ import org.itson.presentacion.Principal;
 public class AgenciaTransito {
     public static void main(String[] args) {
         //ENTITY MANAGER
+        
         EntityManagerFactory emFactory = 
                 Persistence.createEntityManagerFactory
                     ("org.itson_AgenciaTransito");
         EntityManager em = emFactory.createEntityManager();
         
         //PANTALLA PRINCIPAL
+        
         Principal p = new Principal();
         p.setVisible(true);
     }

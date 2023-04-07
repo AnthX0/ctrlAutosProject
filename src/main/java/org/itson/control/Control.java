@@ -88,6 +88,16 @@ public class Control {
         return true;
     }
     
+    public Tabla getTablaLicencias(JFrame frame){
+        List<Licencia> licencias = getLicencias();
+        return new Tabla(c.licenciasTableModel(licencias));
+    }
+    
+    public Tabla getTablaPlacas(JFrame frame){
+        List<Placa> placas = getPlacas();
+        return new Tabla(c.placasTableModel(placas));
+    }
+    
     /**
      * Este método inserta 20 personas en una sola interacción
      * @return True si ya se insertarón las personas, false si ya había personas
@@ -234,6 +244,32 @@ public class Control {
         TypedQuery<Persona> query = em.createQuery(cq);
         List<Persona> personas = query.getResultList();
         return personas;
+    }
+    
+    /**
+     * Este método regresa una lista de licencias
+     * @return Regresa una lista de licencias
+     */
+    private List<Licencia> getLicencias(){
+        CriteriaQuery<Licencia> cql = cb.createQuery(Licencia.class);
+        Root<Licencia> l = cql.from(Licencia.class);
+        cql.select(l);
+        TypedQuery<Licencia> query = em.createQuery(cql);
+        List<Licencia> licencias = query.getResultList();
+        return licencias;
+    }
+    
+    /**
+     * Este método regresa una lista de personas
+     * @return Regresa una lista de personas
+     */
+    private List<Placa> getPlacas(){
+        CriteriaQuery<Placa> cqpl = cb.createQuery(Placa.class);
+        Root<Placa> pl = cqpl.from(Placa.class);
+        cqpl.select(pl);
+        TypedQuery<Placa> query = em.createQuery(cqpl);
+        List<Placa> placas = query.getResultList();
+        return placas;
     }
     
     /**
