@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package org.itson.main;
 
 import javax.persistence.EntityManager;
@@ -14,13 +10,13 @@ import org.itson.presentacion.Principal;
  */
 public class AgenciaTransito {
     public static void main(String[] args) {
-        // ENTITY MANAGER
+        //ENTITY MANAGER
         EntityManagerFactory emFactory = 
                 Persistence.createEntityManagerFactory
                     ("org.itson_AgenciaTransito");
         EntityManager em = emFactory.createEntityManager();
         
-        // PANTALLA PRINCIPAL
+        //PANTALLA PRINCIPAL
         Principal p = new Principal();
         p.setVisible(true);
     }
