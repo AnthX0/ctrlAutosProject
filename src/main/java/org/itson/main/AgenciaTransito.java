@@ -7,7 +7,7 @@ package org.itson.main;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.itson.presentacion.Principal;
+import org.itson.presentacion.Consultas;
 
 /**
  * @author Victor y Samuel
@@ -21,7 +21,7 @@ public class AgenciaTransito {
         EntityManager em = emFactory.createEntityManager();
         
         //PANTALLA PRINCIPAL
-        Principal p = new Principal();
+        Consultas p = new Consultas();
         p.setVisible(true);
     }
 }
