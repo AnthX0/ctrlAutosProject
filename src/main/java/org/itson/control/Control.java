@@ -89,6 +89,24 @@ public class Control {
     }
     
     /**
+     * Método para verificar los filtros del panel de Consultas
+     * @param curp Curp que se desea consultar
+     * @param nombre Nombre que se desea consultar
+     * @param fecha Fecha de nacimiento que se desea consultar
+     * @param persona Persona que se desea buscar
+     * @param tipo Tipo de consulta a realizar
+     */
+    public void filtroConsultas(String curp, String nombre, 
+            Calendar fecha, Persona persona, int tipo){
+        if(tipo == ConstantesGUI.LICENCIA){
+            getLicencias();
+        }
+        if(tipo == ConstantesGUI.PLACA){
+            getPlacas();
+        }
+    }
+    
+    /**
      * Este método inserta 20 personas en una sola interacción
      * @return True si ya se insertarón las personas, false si ya había personas
      */
