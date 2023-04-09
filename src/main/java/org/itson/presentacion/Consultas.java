@@ -6,6 +6,9 @@ package org.itson.presentacion;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -38,7 +41,7 @@ public class Consultas extends javax.swing.JDialog {
         super(frame, title, modal);
         initComponents();
         
-        Tabla tabla = c.getTablaTramitesPersonas((JFrame) frame);
+        Tabla tabla = c.getTablaTramitesPersonas((JFrame) frame, "", "", "");
         despliegaTabla(tabla);
         
         centrarVentana(frame);
@@ -88,9 +91,11 @@ public class Consultas extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnAceptar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
+        datePicker = new com.github.lgooddatepicker.components.DatePicker();
+        btnFiltrar = new javax.swing.JButton();
+        btnRestaurar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultas");
@@ -107,7 +112,7 @@ public class Consultas extends javax.swing.JDialog {
 
             },
             new String [] {
-
+                "Id", "Nombre Completo", "Fecha de Nacimiento", "CURP", "RFC", "Teléfono"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -125,10 +130,10 @@ public class Consultas extends javax.swing.JDialog {
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnConsultarActionPerformed(evt);
             }
         });
 
@@ -136,6 +141,20 @@ public class Consultas extends javax.swing.JDialog {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
+
+        btnRestaurar.setText("Restaurar");
+        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurarActionPerformed(evt);
             }
         });
 
@@ -149,7 +168,7 @@ public class Consultas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblFechaNacimiento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(datePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre)
@@ -162,8 +181,12 @@ public class Consultas extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCancelar)
-                                .addGap(187, 187, 187)
-                                .addComponent(btnAceptar))
+                                .addGap(13, 13, 13)
+                                .addComponent(btnRestaurar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnFiltrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnConsultar))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -182,13 +205,15 @@ public class Consultas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaNacimiento)
-                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnConsultar)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnFiltrar)
+                    .addComponent(btnRestaurar))
                 .addContainerGap())
         );
 
@@ -199,14 +224,36 @@ public class Consultas extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        tabla.getSelectedRow();
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        int row = tabla.getSelectedRow();
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        String curp = txtCurp.getText();
+        String nombre = txtNombre.getText();
+        LocalDate date = datePicker.getDate();
+        
+        System.out.println(date.toString());
+        String fecha = date.toString();
+        Tabla tabla = c.getTablaTramitesPersonas(null, curp, nombre, fecha);
+        despliegaTabla(tabla);
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        txtCurp.setText("");
+        txtNombre.setText("");
+        datePicker.clear();
+        
+        Tabla tabla = c.getTablaTramitesPersonas(null, "", "", "");
+        despliegaTabla(tabla);
+    }//GEN-LAST:event_btnRestaurarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnRestaurar;
+    private com.github.lgooddatepicker.components.DatePicker datePicker;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
