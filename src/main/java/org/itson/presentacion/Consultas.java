@@ -7,8 +7,6 @@ package org.itson.presentacion;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -232,11 +230,14 @@ public class Consultas extends javax.swing.JDialog {
         String curp = txtCurp.getText();
         String nombre = txtNombre.getText();
         LocalDate date = datePicker.getDate();
-        
-        System.out.println(date.toString());
-        String fecha = date.toString();
-        Tabla tabla = c.getTablaTramitesPersonas(null, curp, nombre, fecha);
-        despliegaTabla(tabla);
+        String fecha;
+        if(date != null) {
+            fecha = date.toString();
+        }else{
+            fecha = "";
+        }
+        Tabla tabla2 = c.getTablaTramitesPersonas(null, curp, nombre, fecha);
+        despliegaTabla(tabla2);
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
@@ -244,8 +245,8 @@ public class Consultas extends javax.swing.JDialog {
         txtNombre.setText("");
         datePicker.clear();
         
-        Tabla tabla = c.getTablaTramitesPersonas(null, "", "", "");
-        despliegaTabla(tabla);
+        Tabla tabla2 = c.getTablaTramitesPersonas(null, "", "", "");
+        despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

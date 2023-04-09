@@ -17,7 +17,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -268,23 +267,24 @@ public class Control {
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
         cq.groupBy(p);
         cq.multiselect(p, cb.count(p.get("id")));
-        if(!"".equals(curp)) {
-            cq.where(cb.like(p.get("curp"), "%"+curp+"%"));
-        }
-        if(!"".equals(nombre)) {
-            cq.where(cb.like(p.get("nombreCompleto"), "%"+nombre+"%"));
-        }
         if(!"".equals(fecha)) {
-            cq.where(cb.greaterThanOrEqualTo(p.get("fechaNacimiento"), fecha));
-//            System.out.println(fecha);
+            cq.where(
+                cb.and(
+                    cb.and(
+                        cb.like(p.get("curp"), "%"+curp+"%"),
+                        cb.like(p.get("nombreCompleto"), "%"+nombre+"%")
+                    ),
+                    cb.greaterThanOrEqualTo(p.get("fechaNacimiento"), fecha)
+                )
+            );
+        }else{
+            cq.where(
+                cb.and(
+                    cb.like(p.get("curp"), "%"+curp+"%"),
+                    cb.like(p.get("nombreCompleto"), "%"+nombre+"%")
+                )
+            );
         }
-//        cq.where(
-//            cb.and(
-//                   cb.like(p.get("curp"), "%"+curp+"%"),
-//                   cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-//                   cb.equal(p.get("fechaNacimiento"), fecha)
-//            )
-//        );
         TypedQuery<Object[]> query = em.createQuery(cq);
         List<Object[]> tramites = query.getResultList();
         tramites.forEach(o -> personas.add((Persona) o[0]));
