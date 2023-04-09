@@ -26,6 +26,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         centraVentana();
+        
         if(control.insercionMasiva() == false) {
             Tabla tablaPersonas = control.getTablaPersonas(this);
             despliegaTabla(tablaPersonas);
@@ -86,11 +87,8 @@ public class Principal extends javax.swing.JFrame {
         licenciaTramitesMenu = new javax.swing.JMenuItem();
         placasTramitesMenu = new javax.swing.JMenuItem();
         consultasMenu = new javax.swing.JMenu();
-        licenciasConsultasMenu = new javax.swing.JMenuItem();
-        placasConsultasMenu = new javax.swing.JMenuItem();
-        reporteMenu = new javax.swing.JMenu();
-        reporteGeneralReporteMenu = new javax.swing.JMenuItem();
-        reporteBusquedaReporteMenu = new javax.swing.JMenuItem();
+        consultarHistorialMenu = new javax.swing.JMenuItem();
+        generarReporteMenu = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -172,40 +170,27 @@ public class Principal extends javax.swing.JFrame {
         menuBar.add(tramitesMenu);
 
         consultasMenu.setMnemonic('e');
-        consultasMenu.setText("Consultas");
+        consultasMenu.setText("Información");
 
-        licenciasConsultasMenu.setMnemonic('t');
-        licenciasConsultasMenu.setText("Licencias");
-        licenciasConsultasMenu.addActionListener(new java.awt.event.ActionListener() {
+        consultarHistorialMenu.setMnemonic('t');
+        consultarHistorialMenu.setText("Consultar historial");
+        consultarHistorialMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                licenciasConsultasMenuActionPerformed(evt);
+                consultarHistorialMenuActionPerformed(evt);
             }
         });
-        consultasMenu.add(licenciasConsultasMenu);
+        consultasMenu.add(consultarHistorialMenu);
 
-        placasConsultasMenu.setMnemonic('y');
-        placasConsultasMenu.setText("Placas");
-        placasConsultasMenu.addActionListener(new java.awt.event.ActionListener() {
+        generarReporteMenu.setMnemonic('y');
+        generarReporteMenu.setText("Generar reporte");
+        generarReporteMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                placasConsultasMenuActionPerformed(evt);
+                generarReporteMenuActionPerformed(evt);
             }
         });
-        consultasMenu.add(placasConsultasMenu);
+        consultasMenu.add(generarReporteMenu);
 
         menuBar.add(consultasMenu);
-
-        reporteMenu.setMnemonic('h');
-        reporteMenu.setText("Reporte");
-
-        reporteGeneralReporteMenu.setMnemonic('c');
-        reporteGeneralReporteMenu.setText("Reporte de Trámites Realizados");
-        reporteMenu.add(reporteGeneralReporteMenu);
-
-        reporteBusquedaReporteMenu.setMnemonic('a');
-        reporteBusquedaReporteMenu.setText("Reporte por busqueda");
-        reporteMenu.add(reporteBusquedaReporteMenu);
-
-        menuBar.add(reporteMenu);
 
         setJMenuBar(menuBar);
 
@@ -245,10 +230,9 @@ public class Principal extends javax.swing.JFrame {
         control.solicitarLicencia(this);
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
-    private void licenciasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenciasConsultasMenuActionPerformed
-        Consultas cLic = new Consultas(this, "Consultar licencias", 
-                true, ConstantesGUI.LICENCIA);
-    }//GEN-LAST:event_licenciasConsultasMenuActionPerformed
+    private void consultarHistorialMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarHistorialMenuActionPerformed
+        Consultas cLic = new Consultas(this, "Consultar licencias", true);
+    }//GEN-LAST:event_consultarHistorialMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
         control.solicitarPlacas(this);
@@ -261,14 +245,15 @@ public class Principal extends javax.swing.JFrame {
         btnInsercionMasiva.setVisible(false);
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
-    private void placasConsultasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasConsultasMenuActionPerformed
-        Consultas cPlaca = new Consultas(this, "Consultar placas", 
-                true, ConstantesGUI.PLACA);
-    }//GEN-LAST:event_placasConsultasMenuActionPerformed
+    private void generarReporteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarReporteMenuActionPerformed
+        
+    }//GEN-LAST:event_generarReporteMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInsercionMasiva;
+    private javax.swing.JMenuItem consultarHistorialMenu;
     private javax.swing.JMenu consultasMenu;
+    private javax.swing.JMenuItem generarReporteMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -277,13 +262,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblPersonas;
     private javax.swing.JMenuItem licenciaTramitesMenu;
-    private javax.swing.JMenuItem licenciasConsultasMenu;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem placasConsultasMenu;
     private javax.swing.JMenuItem placasTramitesMenu;
-    private javax.swing.JMenuItem reporteBusquedaReporteMenu;
-    private javax.swing.JMenuItem reporteGeneralReporteMenu;
-    private javax.swing.JMenu reporteMenu;
     private javax.swing.JTable tblPersonas;
     private javax.swing.JMenu tramitesMenu;
     // End of variables declaration//GEN-END:variables

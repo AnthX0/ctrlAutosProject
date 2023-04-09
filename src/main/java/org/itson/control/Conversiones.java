@@ -37,7 +37,7 @@ public class Conversiones {
      * @return Una tabla con formato
      */
     public DefaultTableModel personasTableModel(List<Persona> personas) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Object tabla[][];
         if(personas != null) {
             tabla = new Object[personas.size()][6];
@@ -79,7 +79,7 @@ public class Conversiones {
      * @return Una tabla con columnas correspondientes a los datos de la cadena
      */
     public DefaultTableModel licenciasTableModel(List<Licencia> licencias) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Object tabla[][];
         if(licencias != null) {
             tabla = new Object[licencias.size()][5];
@@ -104,7 +104,7 @@ public class Conversiones {
      * @return Una tabla con columnas correspondientes a los datos de la cadena
      */
     public DefaultTableModel placasTableModel(List<Placa> placas) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Object tabla[][];
         if(placas != null) {
             tabla = new Object[placas.size()][6];

@@ -4,6 +4,7 @@
  */
 package org.itson.control;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
+import org.itson.dominio.Tramite;
 import org.itson.dominio.Vehiculo;
 import org.itson.presentacion.ConstantesGUI;
 import org.itson.presentacion.Tramites;
@@ -255,6 +257,23 @@ public class Control {
     }
     
     /**
+     * Esté metodo regresa una lista de personas que han hecho tramites
+     * @return 
+     */
+    public List<Persona> getTramitesPersonas() {
+        List<Persona> personas = new ArrayList<>();
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+        Root<Tramite> t = cq.from(Tramite.class);
+        Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
+        cq.groupBy(p);
+        cq.multiselect(p, cb.count(p.get("id")));
+        TypedQuery<Object[]> query = em.createQuery(cq);
+        List<Object[]> tramites = query.getResultList();
+        tramites.forEach(o -> personas.add((Persona) o[0]));
+        return personas;
+    }
+    
+    /**
      * Este método regresa una lista de licencias
      * @return Regresa una lista de licencias
      */
@@ -357,7 +376,6 @@ public class Control {
      * @return False si no tiene licencia, True si tiene licencia
      */
     private boolean verificarLicencia(Persona persona) {
-        Calendar vigencia = new GregorianCalendar();
         CriteriaQuery<Licencia> cq = cb.createQuery(Licencia.class);
         Root<Licencia> l = cq.from(Licencia.class);
         cq.select(l).where(
@@ -450,6 +468,11 @@ public class Control {
      */
     public Tabla getTablaPersonas(JFrame frame) {
         List<Persona> personas = getPersonas();
+        return new Tabla(c.personasTableModel(personas));
+    }
+    
+    public Tabla getTablaTramitesPersonas(JFrame frame) {
+        List<Persona> personas = getTramitesPersonas();
         return new Tabla(c.personasTableModel(personas));
     }
     
