@@ -475,29 +475,37 @@ public class Tramites extends javax.swing.JDialog {
         }
         // TRAMITAR PLACAS PARA AUTOS NUEVOS
         if(tipo == ConstantesGUI.PLACA_NUEVO) {
-            String identificador = c.generarIdentificadorPlaca();
-            Calendar fechaEmision = new GregorianCalendar();
-            String numeroSerie = txtSerie.getText().toUpperCase();
-            String marca = txtMarca.getText();
-            String linea = txtLinea.getText();
-            String color = txtColor.getText();
-            Integer modelo = Integer.parseInt(txtModelo.getText());
-            Integer costo = Integer.parseInt(txtCosto.getText());
-            Persona persona = (Persona) cbxCliente.getSelectedItem();
-            Vehiculo vehiculo = new Vehiculo(numeroSerie, marca, linea, color, 
-                    modelo);
-            Pago pago = new Pago("Tarjeta", 
-                    "Compra de una placa para auto nuevo", 
-                    costo, new GregorianCalendar(), persona);
-            em.getTransaction().begin();
-            em.persist(vehiculo);
-            em.persist(pago);
-            em.persist(new Placa(identificador, fechaEmision, costo, vehiculo, 
-                    persona, pago));
-            em.getTransaction().commit();
-            respuesta.delete(0, respuesta.length());
-            respuesta.append(ConstantesGUI.ACEPTAR);
-            dispose();
+            //SI FALTAN DATOS QUE LLENAR
+            if("".equals(txtMarca.getText()) || "".equals(txtLinea.getText()) || "".equals(txtColor.getText()) || "".equals(txtModelo.getText())) {
+                JOptionPane.showMessageDialog(null, 
+                    "Debe llenar todos los campos", 
+                    "Error: Datos no proporcionados!!", 
+                    JOptionPane.ERROR_MESSAGE);
+            }else{
+                String identificador = c.generarIdentificadorPlaca();
+                Calendar fechaEmision = new GregorianCalendar();
+                String numeroSerie = txtSerie.getText().toUpperCase();
+                String marca = txtMarca.getText();
+                String linea = txtLinea.getText();
+                String color = txtColor.getText();
+                Integer modelo = Integer.parseInt(txtModelo.getText());
+                Integer costo = Integer.parseInt(txtCosto.getText());
+                Persona persona = (Persona) cbxCliente.getSelectedItem();
+                Vehiculo vehiculo = new Vehiculo(numeroSerie, marca, linea, color, 
+                        modelo);
+                Pago pago = new Pago("Tarjeta", 
+                        "Compra de una placa para auto nuevo", 
+                        costo, new GregorianCalendar(), persona);
+                em.getTransaction().begin();
+                em.persist(vehiculo);
+                em.persist(pago);
+                em.persist(new Placa(identificador, fechaEmision, costo, vehiculo, 
+                        persona, pago));
+                em.getTransaction().commit();
+                respuesta.delete(0, respuesta.length());
+                respuesta.append(ConstantesGUI.ACEPTAR);
+                dispose(); 
+            }
         }
         // TRAMITAR PLACAS PARA AUTOS USADOS
         if(tipo == ConstantesGUI.PLACA_USADO) {
@@ -527,6 +535,7 @@ public class Tramites extends javax.swing.JDialog {
             respuesta.append(ConstantesGUI.ACEPTAR);
             dispose();
         }
+        //OBTENER PERSONA
         if(tipo == ConstantesGUI.PLACA) {
             serie = txtSerie.getText().toUpperCase();
             if(!"".equals(serie)) {
@@ -535,11 +544,15 @@ public class Tramites extends javax.swing.JDialog {
                         "¿Es usted "+persona.getNombreCompleto()+"?", 
                         "Verificar identidad!!", 
                         JOptionPane.YES_NO_OPTION);
+                //SI EL USUARIO AFIRMA SU IDENTIDAD
                 if(cof == 0) {
+                    //VERIFICAR SI EL VEHICULO LE PERTENECE A LA PERSONA
                     vehiculos = c.buscarVehiculo(serie, persona);
                     if(vehiculos == null) { 
                     }else{
                         if(vehiculos.isEmpty()){
+                            //CAMBIO Y LLENADO DE CAMPOS 
+                            //PARA REGISTRAR PLACA PARA AUTO NUEVO
                             setTipo(ConstantesGUI.PLACA_NUEVO);
                             txtSerie.setText(serie);
                             txtMarca.setEditable(true);
@@ -550,6 +563,8 @@ public class Tramites extends javax.swing.JDialog {
                             btnCancelar.setText("Volver");
                             definirPrecio();
                         }else{
+                            //CAMBIO Y LLENADO DE CAMPOS 
+                            //PARA REGISTRAR PLACA PARA AUTO USADO
                             setTipo(ConstantesGUI.PLACA_USADO);
                             txtSerie.setText(serie);
                             txtSerie.setEditable(false);

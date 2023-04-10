@@ -127,4 +127,24 @@ public class Conversiones {
         }
         return null;
     }
+    
+    public DefaultTableModel historialTableModel(List<Licencia> licencias, List<Placa> placas) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Object tabla[][];
+        int size;
+        if(licencias != null || placas != null) {
+            if(licencias.size() >= placas.size()) {
+                size = licencias.size();
+            }else{
+                size = placas.size();
+            }
+            tabla = new Object[size][];
+            for(int i=0; i < size; i++) {
+                Placa p = placas.get(i);
+            }
+            return new DefaultTableModel(tabla, 
+                    nombresColumTablasPlacas);
+        }
+        return null;
+    }
 }
