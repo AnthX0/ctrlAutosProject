@@ -489,6 +489,14 @@ public class Control {
         return new Tabla(c.personasTableModel(personas));
     }
     
+    /**
+     * Método que obtiene la tabla de los trámites realizados por la persona
+     * @param frame Ventana
+     * @param curp Curp de la persona
+     * @param nombre Nombre de la persona
+     * @param fecha Fecha de nacimiento de la persona
+     * @return Una tabla con la lista de trámites realizados por la persona
+     */
     public Tabla getTablaTramitesPersonas(JFrame frame, String curp, String nombre, String fecha) {
         List<Persona> personas = getTramitesPersonas(curp, nombre, fecha);
         return new Tabla(c.personasTableModel(personas));

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import org.itson.dominio.Licencia;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
+import org.itson.dominio.Tramite;
 
 /**
  * @author Victor y Samuel
@@ -28,6 +29,9 @@ public class Conversiones {
     private String nombresColumTablasPlacas[] = {"Id", "Nombre Completo", 
         "Id del Vehículo", "Identificador", "Fecha de Emisión", 
         "Fecha de Recepción", "Costo"};
+    
+    private String nombresColumTablasTramites[] = {"Id", "Id de la Persona", 
+        "Nombre Completo", "Id del Pago"};
     
     //MÉTODOS
     
@@ -100,7 +104,7 @@ public class Conversiones {
     
     /**
      * Método que le da formato a una tabla de Placas
-     * @param placas La lista de lñas placas a formatear
+     * @param placas La lista de las placas a formatear
      * @return Una tabla con columnas correspondientes a los datos de la cadena
      */
     public DefaultTableModel placasTableModel(List<Placa> placas) {
@@ -127,7 +131,7 @@ public class Conversiones {
         }
         return null;
     }
-    
+
     public DefaultTableModel historialTableModel(List<Licencia> licencias, List<Placa> placas) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Object tabla[][];
@@ -144,6 +148,29 @@ public class Conversiones {
             }
             return new DefaultTableModel(tabla, 
                     nombresColumTablasPlacas);
+        }
+        return null;
+    }
+    
+    /**
+     * Método que le da formato a una tabla de Tramites
+     * @param tramites La lista de los trámites a formatear
+     * @return Una tabla con columnas correspondientes a los datos de la cadena
+     */
+    public DefaultTableModel tramitesTableModel(List<Tramite> tramites){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Object tabla[][];
+        if(tramites != null){
+            tabla = new Object[tramites.size()][3];
+            for(int i = 0; i < tramites.size(); i++){
+                Tramite t = tramites.get(i);
+                tabla[i][0] = t.getId();
+                tabla[i][1] = t.getPersona().getId();
+                tabla[i][2] = t.getPersona().getNombreCompleto();
+                tabla[i][3] = t.getPago().getId();
+            }
+            return new DefaultTableModel(tabla, 
+                nombresColumTablasTramites);
         }
         return null;
     }
