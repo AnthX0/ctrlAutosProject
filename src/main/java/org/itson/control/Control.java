@@ -307,9 +307,6 @@ public class Control {
         );
         TypedQuery<Tramite> query = em.createQuery(cq);
         List<Tramite> tramites = query.getResultList();
-        for(Tramite t2: tramites) {
-            System.out.println(t2.toString());
-        }
         return tramites;
     }
     
