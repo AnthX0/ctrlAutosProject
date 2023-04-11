@@ -255,7 +255,7 @@ public class Control {
         List<Persona> personas = query.getResultList();
         return personas;
     }
-    
+
     /**
      * Esté metodo regresa una lista de personas que han hecho tramites
      * @return 
@@ -520,5 +520,16 @@ public class Control {
     public Tabla getTablaPlacas(JFrame frame){
         List<Placa> placas = getPlacas();
         return new Tabla(c.placasTableModel(placas));
+    }
+    
+    /**
+     * Métoodo que obtiene la tabla del historial
+     * @param frame Ventana
+     * @param persona La persona de la que se quiere saber su historial
+     * @return Una tabla con el historial de trámites de la persona
+     */
+    public Tabla getTablaHistorial(JFrame frame, Persona persona) {
+        List<Tramite> tramites = persona.getTramites();
+        return new Tabla(c.historialTableModel(tramites));
     }
 }

@@ -30,8 +30,8 @@ public class Conversiones {
         "Id del Vehículo", "Identificador", "Fecha de Emisión", 
         "Fecha de Recepción", "Costo"};
     
-    private String nombresColumTablasTramites[] = {"Id", "Id de la Persona", 
-        "Nombre Completo", "Id del Pago"};
+    private String nombresColumTablasHistorial[] = {"Id", "Nombre Completo", 
+        "Tipo de trámite", "Fecha de trámite", "Costo"};
     
     //MÉTODOS
     
@@ -132,22 +132,29 @@ public class Conversiones {
         return null;
     }
 
-    public DefaultTableModel historialTableModel(List<Licencia> licencias, List<Placa> placas) {
+    /**
+     * Método que le da formato a la tabla del historial
+     * @param tramites La lista de los trámites a formatear
+     * @return Una tabla del historial de alguna persona
+     */
+    public DefaultTableModel historialTableModel(List<Tramite> tramites) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Object tabla[][];
-        int size;
-        if(licencias != null || placas != null) {
-            if(licencias.size() >= placas.size()) {
-                size = licencias.size();
-            }else{
-                size = placas.size();
+        if(tramites != null) {
+            tabla = new Object[tramites.size()][5];
+            for(int i=0; i < tramites.size(); i++) {
+                Tramite t = tramites.get(i);
+                tabla[i][0] = t.getId();
+                tabla[i][1] = t.getPersona().getNombreCompleto();
+                if("Compra de una licencia".equals(t.getPago().getDescripcion())) {
+                    tabla[i][2] = "Licencia";
+                }else if("Compra de una placa para auto nuevo".equals(t.getPago().getDescripcion()) 
+                        || "Compra de una nueva placa para auto usado".equals(t.getPago().getDescripcion())) {
+                    tabla[i][2] = "Placa";
+                }
+                tabla[i][3] = sdf.format(t.getPago().getFechaPago());
+                tabla[i][4] = t.getPago().getCostoTotal();
             }
-            tabla = new Object[size][];
-            for(int i=0; i < size; i++) {
-                Placa p = placas.get(i);
-            }
-            return new DefaultTableModel(tabla, 
-                    nombresColumTablasPlacas);
         }
         return null;
     }
@@ -157,21 +164,20 @@ public class Conversiones {
      * @param tramites La lista de los trámites a formatear
      * @return Una tabla con columnas correspondientes a los datos de la cadena
      */
-    public DefaultTableModel tramitesTableModel(List<Tramite> tramites){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Object tabla[][];
-        if(tramites != null){
-            tabla = new Object[tramites.size()][3];
-            for(int i = 0; i < tramites.size(); i++){
-                Tramite t = tramites.get(i);
-                tabla[i][0] = t.getId();
-                tabla[i][1] = t.getPersona().getId();
-                tabla[i][2] = t.getPersona().getNombreCompleto();
-                tabla[i][3] = t.getPago().getId();
-            }
-            return new DefaultTableModel(tabla, 
-                nombresColumTablasTramites);
-        }
-        return null;
-    }
+//    public DefaultTableModel tramitesTableModel(List<Tramite> tramites){
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Object tabla[][];
+//        if(tramites != null){
+//            tabla = new Object[tramites.size()][3];
+//            for(int i = 0; i < tramites.size(); i++){
+//                Tramite t = tramites.get(i);
+//                tabla[i][0] = t.getId();
+//                tabla[i][1] = t.getPersona().getId();
+//                tabla[i][2] = t.getPersona().getNombreCompleto();
+//                tabla[i][3] = t.getPago().getId();
+//            }
+//            return new DefaultTableModel();
+//        }
+//        return null;
+//    }
 }
