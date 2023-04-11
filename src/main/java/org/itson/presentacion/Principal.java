@@ -231,7 +231,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
     private void consultarHistorialMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarHistorialMenuActionPerformed
-        Consultas cLic = new Consultas(this, "Consultar licencias", true);
+        Consultas c = new Consultas(this, false);
     }//GEN-LAST:event_consultarHistorialMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed

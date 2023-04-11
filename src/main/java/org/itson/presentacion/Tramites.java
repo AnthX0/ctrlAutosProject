@@ -45,7 +45,14 @@ public class Tramites extends javax.swing.JDialog {
     // CONSTRUCTORES
 
     /**
-     * Creates new form Tramite
+     * Creates new form Tramites
+     * @param frame Ventana padre: Principal.java
+     * @param title Titulo de la ventana
+     * @param modal Si queremos que se enfoque en esta ventana, quitando la 
+     * posibilidad de interactuar con la ventana principal
+     * @param tipo Trámite que se esta realizando
+     * @param personas ComboBox de personas registradas
+     * @param respuesta Respuesta
      */
     public Tramites(java.awt.Frame frame, String title, boolean modal, 
             int tipo, DefaultComboBoxModel personas, StringBuffer respuesta) {
@@ -133,7 +140,7 @@ public class Tramites extends javax.swing.JDialog {
 
     /**
      * Método para centrar la ventana en el frame
-     * @param frame 
+     * @param frame Ventana en la que se basa para centrarse conforme a esa ventana
      */
     private void centrarVentana(java.awt.Frame frame) {
         Dimension frameSize = frame.getSize();
@@ -141,14 +148,6 @@ public class Tramites extends javax.swing.JDialog {
         Dimension dlgSize = getPreferredSize();
         setLocation((frameSize.width - dlgSize.width) / 2 + loc.x, 
                     (frameSize.height - dlgSize.height) / 2 + loc.y);
-    }
-
-    /**
-     * Método para setear el tipo de Trámite a realizar
-     * @param tipo 
-     */
-    private void setTipo(int tipo) {
-        this.tipo = tipo;
     }
 
     /**
@@ -401,7 +400,7 @@ public class Tramites extends javax.swing.JDialog {
         if(txtSerie.isEditable()) {
             dispose();
         }else{
-            setTipo(ConstantesGUI.PLACA);
+            this.tipo = ConstantesGUI.PLACA;
             txtSerie.setEditable(true);
             txtSerie.setText("");
             txtMarca.setText("");
@@ -553,7 +552,7 @@ public class Tramites extends javax.swing.JDialog {
                         if(vehiculos.isEmpty()){
                             //CAMBIO Y LLENADO DE CAMPOS 
                             //PARA REGISTRAR PLACA PARA AUTO NUEVO
-                            setTipo(ConstantesGUI.PLACA_NUEVO);
+                            this.tipo = ConstantesGUI.PLACA_NUEVO;
                             txtSerie.setText(serie);
                             txtMarca.setEditable(true);
                             txtLinea.setEditable(true);
@@ -565,7 +564,7 @@ public class Tramites extends javax.swing.JDialog {
                         }else{
                             //CAMBIO Y LLENADO DE CAMPOS 
                             //PARA REGISTRAR PLACA PARA AUTO USADO
-                            setTipo(ConstantesGUI.PLACA_USADO);
+                            this.tipo = ConstantesGUI.PLACA_USADO;
                             txtSerie.setText(serie);
                             txtSerie.setEditable(false);
                             btnCancelar.setText("Volver");

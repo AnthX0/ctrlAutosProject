@@ -258,7 +258,10 @@ public class Control {
 
     /**
      * Esté metodo regresa una lista de personas que han hecho tramites
-     * @return 
+     * @param curp CURP de una persona
+     * @param nombre Nombre especifico de una persona
+     * @param fecha Fecha de Nacimiento en adelante
+     * @return Regresa una lista de personas filtradas por su curp, nombre o fecha
      */
     public List<Persona> getTramitesPersonas(String curp, String nombre, String fecha) {
         List<Persona> personas = new ArrayList<>();

@@ -5,25 +5,22 @@
 package org.itson.presentacion;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Point;
 import java.time.LocalDate;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.List;
+import java.util.Objects;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.itson.control.Control;
 import org.itson.control.Tabla;
+import org.itson.dominio.Persona;
 
 /**
  * @author Victor y Samuel
  */
 public class Consultas extends javax.swing.JDialog {
     // ATRIBUTOS
-    
-    EntityManagerFactory emFactory = 
-        Persistence.createEntityManagerFactory
-                ("org.itson_AgenciaTransito");
-    EntityManager em = emFactory.createEntityManager();
     private javax.swing.JTable tabla;
     private Control c = new Control();
 
@@ -31,12 +28,12 @@ public class Consultas extends javax.swing.JDialog {
     
     /**
      * Creates new form Consultas
-     * @param frame
-     * @param title
-     * @param modal
+     * @param frame Ventana padre: Principal.java
+     * @param modal Si queremos que se enfoque en esta ventana, quitando la 
+     * posibilidad de interactuar con la ventana principal
      */
-    public Consultas(java.awt.Frame frame, String title, boolean modal) {
-        super(frame, title, modal);
+    public Consultas(java.awt.Frame frame, boolean modal) {
+        super(frame, modal);
         initComponents();
         
         Tabla tabla = c.getTablaTramitesPersonas((JFrame) frame, "", "", "");
@@ -62,7 +59,7 @@ public class Consultas extends javax.swing.JDialog {
     
     /**
      * Método para centrar la ventana en la pantalla
-     * @param frame 
+     * @param frame Ventana en la que se basa para centrarse conforme a esa ventana
      */
     private void centrarVentana(java.awt.Frame frame) {
         Dimension frameSize = frame.getSize();
@@ -223,7 +220,24 @@ public class Consultas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        Persona persona = new Persona();
         int row = tabla.getSelectedRow();
+        if(row != -1) {
+            Long id = (Long) tabla.getValueAt(row, 0);
+            List<Persona> personas = c.getPersonas();
+            for(int i=0; i < personas.size(); i++) {
+                if(Objects.equals(personas.get(i).getId(), id)) {
+                    persona = personas.get(i);
+                }
+            }
+            Historial h = new Historial((Frame) super.getParent(), true, persona);
+        }else{
+            JOptionPane.showMessageDialog(null, 
+                    "No ha seleccionado una persona a la cual consultarle "
+                            + "el historial", 
+                    "Persona no especificada", 
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
