@@ -434,7 +434,7 @@ public class Tramites extends javax.swing.JDialog {
     private void btnTramitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTramitarActionPerformed
         // TRAMITAR LICENCIAS
         if(tipo == ConstantesGUI.LICENCIA){
-            if(!(cbxVigencia.getSelectedIndex() == 0 &&    
+            if(!(cbxVigencia.getSelectedIndex() == 0 ||    
                     cbxTipo.getSelectedIndex() == 0)) {
                 Persona persona = (Persona) cbxCliente.getSelectedItem();
                 int cof = JOptionPane.showConfirmDialog(null, 
