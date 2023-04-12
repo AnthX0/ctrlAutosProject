@@ -293,6 +293,22 @@ public class Control {
         tramites.forEach(o -> personas.add((Persona) o[0]));
         return personas;
     }
+
+    /**
+     * Obtiene una lista de trámites realizados por la persona del parametro
+     * @param persona Persona de quien se desea obtener su historial
+     * @return Lista con los trámites que la persona ha hecho
+     */
+    private List<Tramite> getHistorialTramites(Persona persona) {
+        CriteriaQuery<Tramite> cq = cb.createQuery(Tramite.class);
+        Root<Tramite> t = cq.from(Tramite.class);
+        cq.select(t).where(
+            cb.equal(t.get("persona"), persona)
+        );
+        TypedQuery<Tramite> query = em.createQuery(cq);
+        List<Tramite> tramites = query.getResultList();
+        return tramites;
+    }
     
     /**
      * Este método regresa una lista de licencias
@@ -532,7 +548,7 @@ public class Control {
      * @return Una tabla con el historial de trámites de la persona
      */
     public Tabla getTablaHistorial(JFrame frame, Persona persona) {
-        List<Tramite> tramites = persona.getTramites();
+        List<Tramite> tramites = getHistorialTramites(persona);
         return new Tabla(c.historialTableModel(tramites));
     }
 }
