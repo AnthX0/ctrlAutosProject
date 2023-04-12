@@ -34,3 +34,13 @@ select t.id, p.nombre_completo, t.DTYPE, if(t.fecha_expedicion is null, if(t.fec
 inner join personas as p on t.id_persona = p.id
 where p.nombre_completo like '%judith%'
 order by fecha desc;
+
+#Reportes de los trámites realizados por las personas
+select 
+p.nombre_completo, 
+t.DTYPE, 
+if(t.fecha_expedicion is null, if(t.fecha_recepcion is null, t.fecha_emision, t.fecha_recepcion), t.fecha_expedicion) as fecha, 
+t.costo
+from tramites as t
+inner join personas as p on t.id_persona = p.id
+order by fecha desc;
