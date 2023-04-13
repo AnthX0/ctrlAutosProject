@@ -22,6 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.dominio.Licencia;
+import org.itson.dominio.Pago;
 import org.itson.dominio.Persona;
 import org.itson.dominio.Placa;
 import org.itson.dominio.Tramite;
@@ -295,6 +296,61 @@ public class Control {
     }
 
     /**
+     * Regresa una lista de trámites con filtros
+     * @param nombre Nombre de la persona que hizó el trámite
+     * @param tipo Tipo de trámite que hizo
+     * @param fechaInicial Fecha inicial del periodo
+     * @param fechaFinal Fecha final del periodo
+     * @return Una lista de trámites que cumplen con los filtros
+     */
+    public List<Tramite> getTramitesReportes(String nombre, String tipo, String fechaInicial, String fechaFinal) {
+        List<Tramite> tramites = new ArrayList<>();
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+        Root<Tramite> t = cq.from(Tramite.class);
+        Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
+        Join<Tramite, Pago> pa = t.join("pago", JoinType.INNER);
+        cq.groupBy(t);
+        cq.multiselect(t, p, cb.count(p.get("id")));
+        if(!"".equals(fechaInicial)) {
+            if(!"".equals(fechaFinal)) {
+                cq.where(
+                    cb.and(
+                        cb.and(
+                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
+                        ),
+                        cb.and(
+                            cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial),
+                            cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
+                        )
+                    )
+                );
+            }else {
+                cq.where(
+                    cb.and(
+                        cb.and(
+                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
+                        ),
+                        cb.greaterThanOrEqualTo(p.get("fechaPago"), fechaInicial)
+                    )
+                );
+            }
+        }else {
+            cq.where(
+                cb.and(
+                    cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                    cb.like(pa.get("descripcion"), "%"+tipo+"%")
+                )
+            );
+        }
+        TypedQuery<Object[]> query = em.createQuery(cq);
+        List<Object[]> tramites2 = query.getResultList();
+        tramites2.forEach(o -> tramites.add((Tramite) o[0]));
+        return tramites;
+    }
+
+    /**
      * Obtiene una lista de trámites realizados por la persona del parametro
      * @param persona Persona de quien se desea obtener su historial
      * @return Lista con los trámites que la persona ha hecho
@@ -520,7 +576,21 @@ public class Control {
         List<Persona> personas = getTramitesPersonas(curp, nombre, fecha);
         return new Tabla(c.personasTableModel(personas));
     }
-    
+
+    /**
+     * Método que obtiene la tabla del reporte
+     * @param frame Ventana
+     * @param nombre Nombre de la persona que hizó el trámite
+     * @param tipo Tipo de trámite que hizo
+     * @param fechaInicial Fecha inicial del periodo
+     * @param fechaFinal Fecha final del periodo
+     * @return Una tabla de trámites
+     */
+    public Tabla getTablaReporte(JFrame frame, String nombre, String tipo, String fechaInicial, String fechaFinal) {
+        List<Tramite> tramites = getTramitesReportes(nombre, tipo, fechaInicial, fechaFinal);
+        return new Tabla(c.reporteTableModel(tramites));
+    }
+
     /**
      * Método que obtiene la tabla de licencias
      * @param frame Ventana
@@ -542,7 +612,7 @@ public class Control {
     }
     
     /**
-     * Métoodo que obtiene la tabla del historial
+     * Método que obtiene la tabla del historial
      * @param frame Ventana
      * @param persona La persona de la que se quiere saber su historial
      * @return Una tabla con el historial de trámites de la persona

@@ -231,7 +231,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_licenciaTramitesMenuActionPerformed
 
     private void consultarHistorialMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarHistorialMenuActionPerformed
-        Consultas c = new Consultas(this, false);
+        Consultas c = new Consultas(this, true);
     }//GEN-LAST:event_consultarHistorialMenuActionPerformed
 
     private void placasTramitesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placasTramitesMenuActionPerformed
@@ -246,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
     private void generarReporteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarReporteMenuActionPerformed
-        
+        Reporte r = new Reporte(this, true);
     }//GEN-LAST:event_generarReporteMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

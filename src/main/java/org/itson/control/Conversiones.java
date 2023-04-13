@@ -33,6 +33,9 @@ public class Conversiones {
     private String nombresColumTablasHistorial[] = {"Id", "Tipo de trámite", 
         "Fecha de trámite", "Costo"};
     
+    private String nombresColumTablasReporte[] = {"Id", "Nombre completo", 
+        "Tipo de trámite", "Fecha de trámite", "Costo"};
+    
     //MÉTODOS
     
     /**
@@ -158,6 +161,32 @@ public class Conversiones {
             }
             return new DefaultTableModel(tabla, 
                     nombresColumTablasHistorial);
+        }
+        return null;
+    }
+    
+    public DefaultTableModel reporteTableModel(List<Tramite> tramites) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String licencia = "Licencia";
+        String placa = "Placa";
+        Object tabla[][];
+        if(tramites != null) {
+            tabla = new Object[tramites.size()][5];
+            for(int i=0; i < tramites.size(); i++) {
+                Tramite t = tramites.get(i);
+                tabla[i][0] = t.getId();
+                tabla[i][1] = t.getPersona().getNombreCompleto();
+                if("Compra de una licencia".equals(t.getPago().getDescripcion())) {
+                    tabla[i][2] = licencia;
+                }else if("Compra de una placa para auto nuevo".equals(t.getPago().getDescripcion()) 
+                        || "Compra de una nueva placa para auto usado".equals(t.getPago().getDescripcion())) {
+                    tabla[i][2] = placa;
+                }
+                tabla[i][3] = sdf.format(t.getPago().getFechaPago().getTime());
+                tabla[i][4] = t.getPago().getCostoTotal();
+            }
+            return new DefaultTableModel(tabla, 
+                    nombresColumTablasReporte);
         }
         return null;
     }
