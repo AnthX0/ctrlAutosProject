@@ -1,45 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TramitesRealizados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd7ca46d-1826-4742-8c35-9d9d255495c8">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="379"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Reporte" uuid="143f6b04-d7d9-44a9-bee8-06582641d26f">
+		<queryString language="SQL">
+			<![CDATA[select 
+    p.nombre_completo, 
+    t.DTYPE, 
+    if(t.fecha_expedicion is null, if(t.fecha_recepcion is null, t.fecha_emision, t.fecha_recepcion), t.fecha_expedicion) as fecha, 
+    t.costo
+from tramites as t
+inner join personas as p on t.id_persona = p.id
+order by fecha desc;]]>
+		</queryString>
+		<field name="nombre_completo" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="DTYPE" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fecha" class="java.time.LocalDateTime"/>
+		<field name="costo" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="nombre_completo">
+			<groupExpression><![CDATA[$F{nombre_completo}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="dataset1" uuid="efbf7654-8613-4f39-9b5e-ffb8904cd3d6"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select 
+    p.nombre_completo, 
+    t.DTYPE, 
+    if(t.fecha_expedicion is null, if(t.fecha_recepcion is null, t.fecha_emision, t.fecha_recepcion), t.fecha_expedicion) as fecha, 
+    t.costo
+from tramites as t
+inner join personas as p on t.id_persona = p.id
+order by fecha desc;]]>
 	</queryString>
+	<field name="nombre_completo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.time.LocalDateTime"/>
+	<field name="costo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="159" y="26" width="245" height="30" uuid="6a22f4cf-241b-4384-a19f-0de9c625f730"/>
+				<reportElement x="155" y="24" width="245" height="30" uuid="6a22f4cf-241b-4384-a19f-0de9c625f730"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Reportes de Trámites Realizados]]></text>
 			</staticText>
-			<image>
-				<reportElement x="31" y="10" width="60" height="57" uuid="79d28f8d-0c2f-4af6-8d2e-dc221022e340"/>
-				<imageExpression><![CDATA["C:\\Users\\Victor\\Downloads\\escudo-itson.jpg"]]></imageExpression>
-			</image>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="444" y="26" width="100" height="20" uuid="75dcb5ab-42f3-4c47-91b2-5c65ccfab0dc"/>
+				<reportElement x="455" y="0" width="100" height="20" uuid="75dcb5ab-42f3-4c47-91b2-5c65ccfab0dc"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="148" y="7" width="258" height="20" uuid="9b50a043-6aac-4f19-9d47-2eb452fe71a1"/>
+				<text><![CDATA[Tramites realizados por  persona.getNombreCompleto()]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="24">
+			<staticText>
+				<reportElement x="0" y="0" width="155" height="20" uuid="4273918e-d273-4a17-a049-39f291ed0810"/>
+				<text><![CDATA[Nombre Completo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="145" height="20" uuid="1b290d04-f509-4a6f-892f-d4242a4a952b"/>
+				<text><![CDATA[Tipo de trámite]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="155" height="20" uuid="71590584-c1e6-4c3e-9fcf-3d0569acb003"/>
+				<text><![CDATA[Fecha de trámite]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="91d6b387-f745-4fbc-837b-e3fad7efdee4"/>
+				<text><![CDATA[Costo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="110455bd-ffec-4a2a-bdee-0c3ba573537a"/>
+			</line>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="4" width="155" height="20" uuid="db1a6638-3354-4b73-9f4d-02a92ce6e595"/>
+				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="4" width="145" height="20" uuid="0f91eb19-2605-4e9b-8234-fcf789e922b8"/>
+				<textFieldExpression><![CDATA[$F{DTYPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="4" width="155" height="20" uuid="98adaabf-3d34-4d5e-add9-4c3138cf0bd7"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="4" width="100" height="20" uuid="ecc9ea5e-fde3-4129-bd2c-80d2d3b6a3dd"/>
+				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
@@ -53,7 +211,4 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
