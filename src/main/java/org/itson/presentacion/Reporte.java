@@ -104,7 +104,7 @@ public class Reporte extends javax.swing.JDialog {
 
         lbla.setText("a");
 
-        btnBuscar.setText("Buscar");
+        btnBuscar.setText("Filtrar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);

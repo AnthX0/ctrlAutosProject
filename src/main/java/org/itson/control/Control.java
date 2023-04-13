@@ -332,7 +332,32 @@ public class Control {
                             cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
                             cb.like(pa.get("descripcion"), "%"+tipo+"%")
                         ),
-                        cb.greaterThanOrEqualTo(p.get("fechaPago"), fechaInicial)
+                        cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial)
+                    )
+                );
+            }
+        }else if (!"".equals(fechaFinal)) {
+            if(!"".equals(fechaInicial)) {
+                cq.where(
+                    cb.and(
+                        cb.and(
+                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
+                        ),
+                        cb.and(
+                            cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial),
+                            cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
+                        )
+                    )
+                );
+            }else {
+                cq.where(
+                    cb.and(
+                        cb.and(
+                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
+                        ),
+                        cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
                     )
                 );
             }
