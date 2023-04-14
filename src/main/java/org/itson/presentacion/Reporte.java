@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -268,9 +270,12 @@ public class Reporte extends javax.swing.JDialog {
             JasperReport report = null;
             String path = "src\\main\\java\\org\\itson\\reporte"
                     + "\\TramitesRealizados.jasper";
+            Map parametros = new HashMap();
+            parametros.put("nombre_completo", txtNombre);
+            parametros.put("DTYPE", cbxTipo);
             report = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint jprint = JasperFillManager.fillReport(report, 
-                    null, conn);
+                    parametros, conn);
             JasperViewer view = new JasperViewer(jprint, 
                     false);
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
