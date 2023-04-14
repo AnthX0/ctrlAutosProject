@@ -327,66 +327,16 @@ public class Control {
         Root<Tramite> t = cq.from(Tramite.class);
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
         Join<Tramite, Pago> pa = t.join("pago", JoinType.INNER);
-        cq.groupBy(t);
-        cq.multiselect(t, p, cb.count(p.get("id")));
-        if(!"".equals(fechaInicial)) {
-            if(!"".equals(fechaFinal)) {
-                cq.where(
-                    cb.and(
-                        cb.and(
-                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
-                        ),
-                        cb.and(
-                            cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial),
-                            cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
-                        )
-                    )
-                );
-            }else {
-                cq.where(
-                    cb.and(
-                        cb.and(
-                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
-                        ),
-                        cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial)
-                    )
-                );
-            }
-        }else if (!"".equals(fechaFinal)) {
-            if(!"".equals(fechaInicial)) {
-                cq.where(
-                    cb.and(
-                        cb.and(
-                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
-                        ),
-                        cb.and(
-                            cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial),
-                            cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
-                        )
-                    )
-                );
-            }else {
-                cq.where(
-                    cb.and(
-                        cb.and(
-                            cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-                            cb.like(pa.get("descripcion"), "%"+tipo+"%")
-                        ),
-                        cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
-                    )
-                );
-            }
-        }else {
-            cq.where(
-                cb.and(
-                    cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
-                    cb.like(pa.get("descripcion"), "%"+tipo+"%")
-                )
-            );
-        }
+        cq.groupBy(t.get("id"));
+        cq.multiselect(t, p);
+        cq.where(
+            cb.and(
+                cb.like(p.get("nombreCompleto"), "%"+nombre+"%"),
+                cb.like(pa.get("descripcion"), "%"+tipo+"%"),
+                cb.greaterThanOrEqualTo(pa.get("fechaPago"), fechaInicial),
+                cb.lessThanOrEqualTo(pa.get("fechaPago"), fechaFinal)
+            )
+        );
         TypedQuery<Object[]> query = em.createQuery(cq);
         List<Object[]> tramites2 = query.getResultList();
         tramites2.forEach(o -> tramites.add((Tramite) o[0]));

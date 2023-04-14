@@ -43,7 +43,8 @@ public class Reporte extends javax.swing.JDialog {
     public Reporte(java.awt.Frame frame, boolean modal) {
         super(frame, modal);
         initComponents();
-        Tabla tabla = c.getTablaReporte((JFrame) frame, "", "", "", "");
+        Tabla tabla = c.getTablaReporte((JFrame) frame, "", "", "0-0-0", 
+                "9999-0-0");
         despliegaTabla(tabla);
         centrarVentana(frame);
         setVisible(true);
@@ -242,12 +243,12 @@ public class Reporte extends javax.swing.JDialog {
         if(date1 != null) {
             fechaI = date1.toString();
         }else {
-            fechaI = "";
+            fechaI = "0-0-0";
         }
         if(date2 != null) {
             fechaF = date2.toString();
         }else {
-            fechaF = "";
+            fechaF = "9999-0-0";
         }
         Tabla tabla2 = c.getTablaReporte(null, nombre, tipo, 
                 fechaI, fechaF);
@@ -260,7 +261,7 @@ public class Reporte extends javax.swing.JDialog {
         datePicker1.clear();
         datePicker2.clear();
         Tabla tabla2 = c.getTablaReporte(null, "", 
-                "", "", "");
+                "", "0-0-0", "9999-0-0");
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
@@ -276,6 +277,16 @@ public class Reporte extends javax.swing.JDialog {
                 parametros.put("DTYPE", (String) cbxTipo.getSelectedItem());
             }else {
                 parametros.put("DTYPE", "");
+            }
+            if(datePicker1.getDate() != null) {
+                parametros.put("fechaI", datePicker1.getDate().toString());
+            }else {
+                parametros.put("fechaI", "0-0-0");
+            }
+            if(datePicker2.getDate() != null) {
+                parametros.put("fechaF", datePicker2.getDate().toString());
+            }else {
+                parametros.put("fechaF", "9999-0-0");
             }
             report = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint jprint = JasperFillManager.fillReport(report, 

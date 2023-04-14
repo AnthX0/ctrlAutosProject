@@ -124,6 +124,8 @@ inner join pagos as pa on p.id = pa.id_persona
 where
      p.nombre_completo like '%$P!{nombre_completo}%'
      and t.DTYPE like '%$P!{DTYPE}%'
+     and pa.fecha_pago >= '$P!{fechaI}'
+     and pa.fecha_pago <= '$P!{fechaF}'
 group by t.id
 order by pa.fecha_pago desc;]]>
 	</queryString>
