@@ -246,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsercionMasivaActionPerformed
 
     private void generarReporteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarReporteMenuActionPerformed
-        Reporte r = new Reporte(this, true);
+        Reporte r = new Reporte(this, false);
     }//GEN-LAST:event_generarReporteMenuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
