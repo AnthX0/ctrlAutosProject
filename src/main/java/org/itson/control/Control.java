@@ -43,8 +43,26 @@ public class Control {
     EntityManager em = emFactory.createEntityManager();
     CriteriaBuilder cb = em.getCriteriaBuilder();
     JFrame frame;
+    String abc = "abcdefghijklmnopqrstuvwxyz";
     
     //MÉTODOS
+    
+    /**
+     * Método que cifra un String de texto ingresado
+     * @param letra Letra a cambiar de lugar
+     * @param texto Texto a cifrar
+     * @return El texto cifrado
+     */
+    public static String cifrar(String letra, String texto){
+        String textoCifrado = "";
+        char car;
+        for(int i=0; i<texto.length(); i++){
+            car = texto.charAt(i);
+            int pos = letra.indexOf(car);
+            textoCifrado += letra.charAt(pos+3);
+        }
+        return textoCifrado;
+    }
 
     /**
      * Este método solicita una licencia
