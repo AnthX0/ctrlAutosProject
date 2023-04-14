@@ -38,10 +38,8 @@ public class Reporte extends javax.swing.JDialog {
     public Reporte(java.awt.Frame frame, boolean modal) {
         super(frame, modal);
         initComponents();
-        
         Tabla tabla = c.getTablaReporte((JFrame) frame, "", "", "", "");
         despliegaTabla(tabla);
-        
         centrarVentana(frame);
         setVisible(true);
     }

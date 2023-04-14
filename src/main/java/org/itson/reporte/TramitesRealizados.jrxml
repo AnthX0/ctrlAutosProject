@@ -109,6 +109,15 @@ order by fecha desc;]]>
 		</group>
 	</subDataset>
 	<subDataset name="dataset1" uuid="efbf7654-8613-4f39-9b5e-ffb8904cd3d6"/>
+	<parameter name="nombre_completo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DTYPE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="net.sf.jasperreports.types.date.DateRange">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select 
     p.nombre_completo, 
@@ -117,6 +126,10 @@ order by fecha desc;]]>
     t.costo
 from tramites as t
 inner join personas as p on t.id_persona = p.id
+where p.nombre_completo like $P!{nombre_completo}
+or t.DTYPE = $P!{DTYPE}
+or t.fecha_expedicion = $P!{periodo}
+or t.fecha_recepcion = $P!{periodo}
 order by fecha desc;]]>
 	</queryString>
 	<field name="nombre_completo" class="java.lang.String">
