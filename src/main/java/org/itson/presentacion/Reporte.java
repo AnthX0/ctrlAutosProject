@@ -6,6 +6,7 @@ package org.itson.presentacion;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.itson.control.Conexion;
 import org.itson.control.Control;
 import org.itson.control.Tabla;
 
@@ -244,7 +246,8 @@ public class Reporte extends javax.swing.JDialog {
         }else {
             fechaF = "";
         }
-        Tabla tabla2 = c.getTablaReporte(null, nombre, tipo, fechaI, fechaF);
+        Tabla tabla2 = c.getTablaReporte(null, nombre, tipo, 
+                fechaI, fechaF);
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -253,21 +256,28 @@ public class Reporte extends javax.swing.JDialog {
         cbxTipo.setSelectedIndex(0);
         datePicker1.clear();
         datePicker2.clear();
-        Tabla tabla2 = c.getTablaReporte(null, "", "", "", "");
+        Tabla tabla2 = c.getTablaReporte(null, "", 
+                "", "", "");
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         try {
+            Conexion con = new Conexion();
+            Connection conn = con.getConexion();
             JasperReport report = null;
-            String path = "src\\main\\java\\org\\itson\\reporte\\TramitesRealizados.jasper";
+            String path = "src\\main\\java\\org\\itson\\reporte"
+                    + "\\TramitesRealizados.jasper";
             report = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint jprint = JasperFillManager.fillReport(report, null);
-            JasperViewer view = new JasperViewer(jprint, false);
+            JasperPrint jprint = JasperFillManager.fillReport(report, 
+                    null, conn);
+            JasperViewer view = new JasperViewer(jprint, 
+                    false);
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             view.setVisible(true);
         } catch (JRException ex) {
-            Logger.getLogger(Reporte.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Reporte.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
