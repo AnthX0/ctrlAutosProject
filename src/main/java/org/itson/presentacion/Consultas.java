@@ -242,7 +242,7 @@ public class Consultas extends javax.swing.JDialog {
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         String curp = txtCurp.getText();
-        String nombre = txtNombre.getText();
+        String nombre = c.cifrar(c.abc2, txtNombre.getText());
         LocalDate date = datePicker.getDate();
         String fecha;
         if(date != null) {

@@ -27,7 +27,10 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         centraVentana();
         
-        if(control.insercionMasiva() == false) {
+        if(control.getPersonas().isEmpty()) {
+            Tabla tablaPersonas = control.getTablaPersonas(this);
+            despliegaTabla(tablaPersonas);
+        }else {
             Tabla tablaPersonas = control.getTablaPersonas(this);
             despliegaTabla(tablaPersonas);
             btnInsercionMasiva.setVisible(false);

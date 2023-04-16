@@ -44,6 +44,8 @@ public class Control {
     CriteriaBuilder cb = em.getCriteriaBuilder();
     JFrame frame;
     String abc = "abcdefghijklmnopqrstuvwxyz";
+    public String abc2 = "abcdefghijklmnñopqrstuvwxyzabc ABCDEFGHIJKLMNOPQRSTUVWXYZABCáéíóúáéí";
+    public String abc3 = "cbazyxwvutsrqpoñnmlkjihgfedcbaCBA ZYXWVUTSRQPONMLKJIHGFEDCBAúóíéáúóí";
     
     //MÉTODOS
     
@@ -53,7 +55,7 @@ public class Control {
      * @param texto Texto a cifrar
      * @return El texto cifrado
      */
-    public static String cifrar(String letra, String texto){
+    public String cifrar(String letra, String texto){
         String textoCifrado = "";
         char car;
         for(int i=0; i<texto.length(); i++){
@@ -70,13 +72,13 @@ public class Control {
      * @param texto Texto a descifrar
      * @return El texto descifrado
      */
-    public static String descifrar(String letra, String texto){
+    public String descifrar(String letra, String texto){
         String textoDescifrado = "";
         char car;
         for(int i=0; i<texto.length(); i++){
             car = texto.charAt(i);
             int pos = letra.indexOf(car);
-            textoDescifrado += letra.charAt(pos-3);
+            textoDescifrado += letra.charAt(pos+3);
         }
         return textoDescifrado;
     }
@@ -252,6 +254,46 @@ public class Control {
                     new GregorianCalendar(1989, 
                             Calendar.NOVEMBER, 20), 
                     "MUPM891120BVHRT", "6444596120");
+            String sp1 = cifrar(abc2, p1.getNombreCompleto());
+            String sp2 = cifrar(abc2, p2.getNombreCompleto());
+            String sp3 = cifrar(abc2, p3.getNombreCompleto());
+            String sp4 = cifrar(abc2, p4.getNombreCompleto());
+            String sp5 = cifrar(abc2, p5.getNombreCompleto());
+            String sp6 = cifrar(abc2, p6.getNombreCompleto());
+            String sp7 = cifrar(abc2, p7.getNombreCompleto());
+            String sp8 = cifrar(abc2, p8.getNombreCompleto());
+            String sp9 = cifrar(abc2, p9.getNombreCompleto());
+            String sp10 = cifrar(abc2, p10.getNombreCompleto());
+            String sp11 = cifrar(abc2, p11.getNombreCompleto());
+            String sp12 = cifrar(abc2, p12.getNombreCompleto());
+            String sp13 = cifrar(abc2, p13.getNombreCompleto());
+            String sp14 = cifrar(abc2, p14.getNombreCompleto());
+            String sp15 = cifrar(abc2, p15.getNombreCompleto());
+            String sp16 = cifrar(abc2, p16.getNombreCompleto());
+            String sp17 = cifrar(abc2, p17.getNombreCompleto());
+            String sp18 = cifrar(abc2, p18.getNombreCompleto());
+            String sp19 = cifrar(abc2, p19.getNombreCompleto());
+            String sp20 = cifrar(abc2, p20.getNombreCompleto());
+            p1.setNombreCompleto(sp1);
+            p2.setNombreCompleto(sp2);
+            p3.setNombreCompleto(sp3);
+            p4.setNombreCompleto(sp4);
+            p5.setNombreCompleto(sp5);
+            p6.setNombreCompleto(sp6);
+            p7.setNombreCompleto(sp7);
+            p8.setNombreCompleto(sp8);
+            p9.setNombreCompleto(sp9);
+            p10.setNombreCompleto(sp10);
+            p11.setNombreCompleto(sp11);
+            p12.setNombreCompleto(sp12);
+            p13.setNombreCompleto(sp13);
+            p14.setNombreCompleto(sp14);
+            p15.setNombreCompleto(sp15);
+            p16.setNombreCompleto(sp16);
+            p17.setNombreCompleto(sp17);
+            p18.setNombreCompleto(sp18);
+            p19.setNombreCompleto(sp19);
+            p20.setNombreCompleto(sp20);
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -293,6 +335,23 @@ public class Control {
     }
 
     /**
+     * Este método regresa una lista de personas
+     * @return Regresa una lista de personas
+     */
+    public List<Persona> getPersonasDescifradas() {
+        CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
+        Root<Persona> p = cq.from(Persona.class);
+        cq.select(p);
+        TypedQuery<Persona> query = em.createQuery(cq);
+        List<Persona> personas = query.getResultList();
+        for(int i=0; i < personas.size(); i++) {
+            String dc = descifrar(abc3, personas.get(i).getNombreCompleto());
+            personas.get(i).setNombreCompleto(dc);
+        }
+        return personas;
+    }
+
+    /**
      * Esté metodo regresa una lista de personas que han hecho tramites
      * @param curp CURP de una persona
      * @param nombre Nombre especifico de una persona
@@ -301,6 +360,7 @@ public class Control {
      */
     public List<Persona> getTramitesPersonas(String curp, String nombre, String fecha) {
         List<Persona> personas = new ArrayList<>();
+        personas.clear();
         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
         Root<Tramite> t = cq.from(Tramite.class);
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
@@ -327,6 +387,10 @@ public class Control {
         TypedQuery<Object[]> query = em.createQuery(cq);
         List<Object[]> tramites = query.getResultList();
         tramites.forEach(o -> personas.add((Persona) o[0]));
+        for(int i=0; i < personas.size(); i++) {
+            String dc = descifrar(abc3, personas.get(i).getNombreCompleto());
+            personas.get(i).setNombreCompleto(dc);
+        }
         return personas;
     }
 
@@ -340,6 +404,7 @@ public class Control {
      */
     public List<Tramite> getTramitesReportes(String nombre, String tipo, String fechaInicial, String fechaFinal) {
         List<Tramite> tramites = new ArrayList<>();
+        List<Tramite> tramites3 = new ArrayList<>();
         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
         Root<Tramite> t = cq.from(Tramite.class);
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
@@ -357,7 +422,12 @@ public class Control {
         TypedQuery<Object[]> query = em.createQuery(cq);
         List<Object[]> tramites2 = query.getResultList();
         tramites2.forEach(o -> tramites.add((Tramite) o[0]));
-        return tramites;
+        for(int i=0; i < tramites.size(); i++) {
+            tramites3.add(tramites.get(i));
+            String dc = descifrar(abc3, tramites.get(i).getPersona().getNombreCompleto());
+            tramites3.get(i).getPersona().setNombreCompleto(dc);
+        }
+        return tramites3;
     }
 
     /**
@@ -570,7 +640,7 @@ public class Control {
      * @return Una tabla de personas
      */
     public Tabla getTablaPersonas(JFrame frame) {
-        List<Persona> personas = getPersonas();
+        List<Persona> personas = getPersonasDescifradas();
         return new Tabla(c.personasTableModel(personas));
     }
     
