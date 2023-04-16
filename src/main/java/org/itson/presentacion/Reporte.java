@@ -92,7 +92,7 @@ public class Reporte extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         cbxTipo = new javax.swing.JComboBox<>();
         lbla = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,10 +116,10 @@ public class Reporte extends javax.swing.JDialog {
 
         lbla.setText("a");
 
-        btnBuscar.setText("Filtrar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnFiltrarActionPerformed(evt);
             }
         });
 
@@ -189,7 +189,7 @@ public class Reporte extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRestaurar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar)))
+                        .addComponent(btnFiltrar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -215,7 +215,7 @@ public class Reporte extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
+                    .addComponent(btnFiltrar)
                     .addComponent(btnCancelar)
                     .addComponent(btnImprimir)
                     .addComponent(btnRestaurar))
@@ -229,9 +229,9 @@ public class Reporte extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         int con = 0;
-        String nombre = txtNombre.getText();
+        String nombre = c.cifrar(c.abc2, txtNombre.getText());
         String tipo;
         if(cbxTipo.getSelectedIndex() == 0) {
             tipo = "";
@@ -257,7 +257,7 @@ public class Reporte extends javax.swing.JDialog {
             con++;
         }while(con < 9);
         despliegaTabla(tabla2);
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         int con = 0;
@@ -280,7 +280,7 @@ public class Reporte extends javax.swing.JDialog {
             String path = "src\\main\\java\\org\\itson\\reporte"
                     + "\\TramitesRealizados.jasper";
             Map parametros = new HashMap();
-            parametros.put("nombre_completo", txtNombre.getText());
+            parametros.put("nombre_completo", c.cifrar(c.abc2, txtNombre.getText()));
             if(cbxTipo.getSelectedIndex() != 0) {
                 parametros.put("DTYPE", (String) cbxTipo.getSelectedItem());
             }else {
@@ -311,8 +311,8 @@ public class Reporte extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JComboBox<String> cbxTipo;

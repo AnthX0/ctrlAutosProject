@@ -44,8 +44,8 @@ public class Control {
     CriteriaBuilder cb = em.getCriteriaBuilder();
     JFrame frame;
     String abc = "abcdefghijklmnopqrstuvwxyz";
-    public String abc2 = "abcdefghijklmnñopqrstuvwxyzabc ABCDEFGHIJKLMNOPQRSTUVWXYZABCáéíóúáéí";
-    public String abc3 = "cbazyxwvutsrqpoñnmlkjihgfedcbaCBA ZYXWVUTSRQPONMLKJIHGFEDCBAúóíéáúóí";
+    public String abc2 = "abcdefghijklmnñopqrstuvwxyzabc ABCDEFGHIJKLMNOPQRSTUVWXYZABCáéíóú!?¡";
+    public String abc3 = "cbazyxwvutsrqpoñnmlkjihgfedcbaCBA ZYXWVUTSRQPONMLKJIHGFEDCBA¡?!úóíéáúóá";
     
     //MÉTODOS
     
@@ -360,6 +360,7 @@ public class Control {
      */
     public List<Persona> getTramitesPersonas(String curp, String nombre, String fecha) {
         List<Persona> personas = new ArrayList<>();
+        List<Persona> personas2 = getPersonasDescifradas();
         personas.clear();
         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
         Root<Tramite> t = cq.from(Tramite.class);
@@ -388,8 +389,12 @@ public class Control {
         List<Object[]> tramites = query.getResultList();
         tramites.forEach(o -> personas.add((Persona) o[0]));
         for(int i=0; i < personas.size(); i++) {
-            String dc = descifrar(abc3, personas.get(i).getNombreCompleto());
-            personas.get(i).setNombreCompleto(dc);
+            for(int i2 = 0; i2 < personas2.size(); i2++) {
+                if(personas.get(i).getId().equals(personas2.get(i2).getId())) {
+                    personas.get(i).setNombreCompleto(personas2.get(i2).getNombreCompleto());
+                    System.out.println(personas.get(0).getNombreCompleto());;
+                }
+            }
         }
         return personas;
     }
@@ -404,6 +409,7 @@ public class Control {
      */
     public List<Tramite> getTramitesReportes(String nombre, String tipo, String fechaInicial, String fechaFinal) {
         List<Tramite> tramites = new ArrayList<>();
+        List<Persona> personas = getPersonasDescifradas();
         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
         Root<Tramite> t = cq.from(Tramite.class);
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
@@ -422,8 +428,11 @@ public class Control {
         List<Object[]> tramites2 = query.getResultList();
         tramites2.forEach(o -> tramites.add((Tramite) o[0]));
         for(int i=0; i < tramites.size(); i++) {
-            String dc = descifrar(abc3, tramites.get(i).getPersona().getNombreCompleto());
-            tramites.get(i).getPersona().setNombreCompleto(dc);
+            for(int i2 = 0; i2 < personas.size(); i2++) {
+                if(tramites.get(i).getPersona().getId().equals(personas.get(i2).getId())) {
+                    tramites.get(i).setPersona(personas.get(i2));
+                }
+            }
         }
         return tramites;
     }
