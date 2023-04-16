@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TramitesRealizados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd7ca46d-1826-4742-8c35-9d9d255495c8">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TramitesRealizados" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd7ca46d-1826-4742-8c35-9d9d255495c8">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -85,14 +85,7 @@
 	</style>
 	<subDataset name="Reporte" uuid="143f6b04-d7d9-44a9-bee8-06582641d26f">
 		<queryString language="SQL">
-			<![CDATA[select 
-    p.nombre_completo, 
-    t.DTYPE, 
-    if(t.fecha_expedicion is null, if(t.fecha_recepcion is null, t.fecha_emision, t.fecha_recepcion), t.fecha_expedicion) as fecha, 
-    t.costo
-from tramites as t
-inner join personas as p on t.id_persona = p.id
-order by fecha desc;]]>
+			<![CDATA[]]>
 		</queryString>
 		<field name="nombre_completo" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
@@ -115,22 +108,26 @@ order by fecha desc;]]>
 	<parameter name="DTYPE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="periodo" class="net.sf.jasperreports.types.date.DateRange">
+	<parameter name="fechaI" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="fechaF" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 
     p.nombre_completo, 
     t.DTYPE, 
-    if(t.fecha_expedicion is null, if(t.fecha_recepcion is null, t.fecha_emision, t.fecha_recepcion), t.fecha_expedicion) as fecha, 
-    t.costo
+    pa.fecha_pago,
+    t.costo 
 from tramites as t
 inner join personas as p on t.id_persona = p.id
-where p.nombre_completo like $P!{nombre_completo}
-or t.DTYPE like $P!{DTYPE}
-or t.fecha_expedicion = $P!{periodo}
-or t.fecha_recepcion = $P!{periodo}
-order by fecha desc;]]>
+inner join pagos as pa on p.id = pa.id_persona
+where
+     p.nombre_completo like '%$P!{nombre_completo}%'
+     and t.DTYPE like '%$P!{DTYPE}%'
+     and pa.fecha_pago >= '$P!{fechaI}'
+     and pa.fecha_pago <= '$P!{fechaF}'
+group by t.id
+order by pa.fecha_pago desc;]]>
 	</queryString>
 	<field name="nombre_completo" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -138,7 +135,9 @@ order by fecha desc;]]>
 	<field name="DTYPE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="fecha" class="java.time.LocalDateTime"/>
+	<field name="fecha_pago" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="costo" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -160,14 +159,6 @@ order by fecha desc;]]>
 			</textField>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<staticText>
-				<reportElement x="148" y="7" width="258" height="20" uuid="9b50a043-6aac-4f19-9d47-2eb452fe71a1"/>
-				<text><![CDATA[Tramites realizados por  persona.getNombreCompleto()]]></text>
-			</staticText>
-		</band>
-	</pageHeader>
 	<columnHeader>
 		<band height="24">
 			<staticText>
@@ -203,7 +194,7 @@ order by fecha desc;]]>
 			</textField>
 			<textField>
 				<reportElement x="300" y="4" width="155" height="20" uuid="98adaabf-3d34-4d5e-add9-4c3138cf0bd7"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecha_pago}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="4" width="100" height="20" uuid="ecc9ea5e-fde3-4129-bd2c-80d2d3b6a3dd"/>
@@ -216,7 +207,7 @@ order by fecha desc;]]>
 			<textField>
 				<reportElement x="416" y="20" width="80" height="20" uuid="31e7d529-ebdc-4415-b353-c169cdde9f4d"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="496" y="20" width="40" height="20" uuid="102c3ecb-d99d-43b2-98d9-320b5d4f796a"/>

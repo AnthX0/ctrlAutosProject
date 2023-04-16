@@ -7,6 +7,8 @@ package org.itson.presentacion;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import org.itson.control.Conexion;
 import org.itson.control.Control;
 import org.itson.control.Tabla;
 
@@ -42,7 +43,8 @@ public class Reporte extends javax.swing.JDialog {
     public Reporte(java.awt.Frame frame, boolean modal) {
         super(frame, modal);
         initComponents();
-        Tabla tabla = c.getTablaReporte((JFrame) frame, "", "", "", "");
+        Tabla tabla = c.getTablaReporte((JFrame) frame, "", "", "0-0-0", 
+                "9999-0-0");
         despliegaTabla(tabla);
         centrarVentana(frame);
         setVisible(true);
@@ -241,12 +243,12 @@ public class Reporte extends javax.swing.JDialog {
         if(date1 != null) {
             fechaI = date1.toString();
         }else {
-            fechaI = "";
+            fechaI = "0-0-0";
         }
         if(date2 != null) {
             fechaF = date2.toString();
         }else {
-            fechaF = "";
+            fechaF = "9999-0-0";
         }
         Tabla tabla2 = c.getTablaReporte(null, nombre, tipo, 
                 fechaI, fechaF);
@@ -259,28 +261,42 @@ public class Reporte extends javax.swing.JDialog {
         datePicker1.clear();
         datePicker2.clear();
         Tabla tabla2 = c.getTablaReporte(null, "", 
-                "", "", "");
+                "", "0-0-0", "9999-0-0");
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         try {
-            Conexion con = new Conexion();
-            Connection conn = con.getConexion();
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/agencia_transito", "root", "itson");
             JasperReport report = null;
             String path = "src\\main\\java\\org\\itson\\reporte"
                     + "\\TramitesRealizados.jasper";
             Map parametros = new HashMap();
-            parametros.put("nombre_completo", txtNombre);
-            parametros.put("DTYPE", cbxTipo);
+            parametros.put("nombre_completo", txtNombre.getText());
+            if(cbxTipo.getSelectedIndex() != 0) {
+                parametros.put("DTYPE", (String) cbxTipo.getSelectedItem());
+            }else {
+                parametros.put("DTYPE", "");
+            }
+            if(datePicker1.getDate() != null) {
+                parametros.put("fechaI", datePicker1.getDate().toString());
+            }else {
+                parametros.put("fechaI", "0-0-0");
+            }
+            if(datePicker2.getDate() != null) {
+                parametros.put("fechaF", datePicker2.getDate().toString());
+            }else {
+                parametros.put("fechaF", "9999-0-0");
+            }
             report = (JasperReport) JRLoader.loadObjectFromFile(path);
             JasperPrint jprint = JasperFillManager.fillReport(report, 
-                    parametros, conn);
+                    parametros, con);
             JasperViewer view = new JasperViewer(jprint, 
                     false);
-            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setSize(950, 600);
+            view.setFocusable(true);
             view.setVisible(true);
-        } catch (JRException ex) {
+        } catch (JRException | SQLException ex) {
             Logger.getLogger(Reporte.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
