@@ -392,7 +392,6 @@ public class Control {
             for(int i2 = 0; i2 < personas2.size(); i2++) {
                 if(personas.get(i).getId().equals(personas2.get(i2).getId())) {
                     personas.get(i).setNombreCompleto(personas2.get(i2).getNombreCompleto());
-                    System.out.println(personas.get(0).getNombreCompleto());;
                 }
             }
         }

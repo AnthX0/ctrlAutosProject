@@ -253,7 +253,7 @@ public class Reporte extends javax.swing.JDialog {
         }
         Tabla tabla2 = new Tabla();
         do {
-            c.getTablaReporte(null, nombre, tipo, fechaI, fechaF);
+            tabla2 = c.getTablaReporte(null, nombre, tipo, fechaI, fechaF);
             con++;
         }while(con < 9);
         despliegaTabla(tabla2);
