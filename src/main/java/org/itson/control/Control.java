@@ -63,6 +63,23 @@ public class Control {
         }
         return textoCifrado;
     }
+    
+    /**
+     * Método que descifra un String de texto cifrado
+     * @param letra Letra a cambiar de lugar
+     * @param texto Texto a descifrar
+     * @return El texto descifrado
+     */
+    public static String descifrar(String letra, String texto){
+        String textoDescifrado = "";
+        char car;
+        for(int i=0; i<texto.length(); i++){
+            car = texto.charAt(i);
+            int pos = letra.indexOf(car);
+            textoDescifrado += letra.charAt(pos-3);
+        }
+        return textoDescifrado;
+    }
 
     /**
      * Este método solicita una licencia
