@@ -241,6 +241,7 @@ public class Consultas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        int con = 0;
         String curp = txtCurp.getText();
         String nombre = c.cifrar(c.abc2, txtNombre.getText());
         LocalDate date = datePicker.getDate();
@@ -250,16 +251,24 @@ public class Consultas extends javax.swing.JDialog {
         }else{
             fecha = "";
         }
-        Tabla tabla2 = c.getTablaTramitesPersonas(null, curp, nombre, fecha);
+        Tabla tabla2 = new Tabla();
+        do {
+            tabla2 = c.getTablaTramitesPersonas(null, curp, nombre, fecha);
+            con++;
+        }while(con < 9);
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        int con = 0;
         txtCurp.setText("");
         txtNombre.setText("");
         datePicker.clear();
-        
-        Tabla tabla2 = c.getTablaTramitesPersonas(null, "", "", "");
+        Tabla tabla2 = new Tabla();
+        do {
+            tabla2 = c.getTablaTramitesPersonas(null, "", "", "");
+            con++;
+        }while(con < 9);
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 

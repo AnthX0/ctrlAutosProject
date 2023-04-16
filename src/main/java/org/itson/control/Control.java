@@ -404,7 +404,6 @@ public class Control {
      */
     public List<Tramite> getTramitesReportes(String nombre, String tipo, String fechaInicial, String fechaFinal) {
         List<Tramite> tramites = new ArrayList<>();
-        List<Tramite> tramites3 = new ArrayList<>();
         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
         Root<Tramite> t = cq.from(Tramite.class);
         Join<Tramite, Persona> p = t.join("persona", JoinType.INNER);
@@ -423,11 +422,10 @@ public class Control {
         List<Object[]> tramites2 = query.getResultList();
         tramites2.forEach(o -> tramites.add((Tramite) o[0]));
         for(int i=0; i < tramites.size(); i++) {
-            tramites3.add(tramites.get(i));
             String dc = descifrar(abc3, tramites.get(i).getPersona().getNombreCompleto());
-            tramites3.get(i).getPersona().setNombreCompleto(dc);
+            tramites.get(i).getPersona().setNombreCompleto(dc);
         }
-        return tramites3;
+        return tramites;
     }
 
     /**

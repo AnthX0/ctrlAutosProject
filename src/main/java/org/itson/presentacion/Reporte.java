@@ -230,6 +230,7 @@ public class Reporte extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        int con = 0;
         String nombre = txtNombre.getText();
         String tipo;
         if(cbxTipo.getSelectedIndex() == 0) {
@@ -250,18 +251,25 @@ public class Reporte extends javax.swing.JDialog {
         }else {
             fechaF = "9999-0-0";
         }
-        Tabla tabla2 = c.getTablaReporte(null, nombre, tipo, 
-                fechaI, fechaF);
+        Tabla tabla2 = new Tabla();
+        do {
+            c.getTablaReporte(null, nombre, tipo, fechaI, fechaF);
+            con++;
+        }while(con < 9);
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        int con = 0;
         txtNombre.setText("");
         cbxTipo.setSelectedIndex(0);
         datePicker1.clear();
         datePicker2.clear();
-        Tabla tabla2 = c.getTablaReporte(null, "", 
-                "", "0-0-0", "9999-0-0");
+        Tabla tabla2 = new Tabla();
+        do {
+            tabla2 = c.getTablaReporte(null, "", "", "0-0-0", "9999-0-0");
+            con++;
+        }while(con < 9);
         despliegaTabla(tabla2);
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
